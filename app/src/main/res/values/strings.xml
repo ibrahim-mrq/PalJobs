@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Pal Jobs</string>
+
+    <string name="yes">نعم</string>
+    <string name="no">لا</string>
+    <string name="please_wait">ارجوا انتظر</string>
+
+    <string name="stfErrorMessage">لقد حدث خطأ، رجاء أعد المحاولة لاحقا</string>
+    <string name="stfOfflineMessage">يرجى التحقق من اتصالك</string>
+    <string name="stfEmptyMessage">لا توجد عناصر</string>
+    <string name="stfLoadingMessage">تحميل..</string>
+    <string name="stfButtonText">أعد المحاولة</string>
+
+    <string name="no_internet">لا يوجد اتصال بالإنترنت</string>
+    <string name="empty_data">لا توجد بيانات ، يرجى المحاولة مرة أخرى</string>
+    <string name="empty_field">لا يمكن ترك هذا الحقل فارغا</string>
+    <string name="invalid_email">يرجى إدخال البريد الإلكتروني الصحيح</string>
+    <string name="password_not_match">كلمة المرور غير متطابقة</string>
+    <string name="password_less_6_char">يجب ان تكون كلمة المرور 6 احرف او اكبر</string>
+    <string name="back_exit">اضغط مرة أخرى للخروج.</string>
+
+    <string name="logout">Logout Succssful</string>
+
+</resources>

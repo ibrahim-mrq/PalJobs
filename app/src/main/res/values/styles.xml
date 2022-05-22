@@ -1,0 +1,29 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+<!--    &lt;!&ndash; TODO :  Base application theme. &ndash;&gt;-->
+<!--    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">-->
+<!--        <item name="colorPrimary">@color/colorPrimary</item>-->
+<!--        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+<!--        <item name="colorAccent">@color/colorAccent</item>-->
+<!--        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>-->
+<!--        <item name="colorControlHighlight">@color/textSecondary</item>-->
+<!--        <item name="android:screenOrientation">portrait</item>-->
+<!--        <item name="android:layoutDirection">rtl</item>-->
+<!--    </style>-->
+
+    <!--  TODO : MaterialTheme  -->
+    <style name="MaterialTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+        <item name="colorControlHighlight">@color/textSecondary</item>
+        <item name="android:screenOrientation">portrait</item>
+        <item name="android:layoutDirection">rtl</item>
+    </style>
+
+    <style name="circleImageView">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+</resources>
