@@ -2,7 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-parcelize'
-//    id 'com.google.gms.google-services'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -60,11 +60,11 @@ dependencies {
     // TODO : Stateful Layout
     implementation 'com.github.gturedi:StatefulLayout:1.2.2'
 //    // TODO : firebase
-//    implementation platform('com.google.firebase:firebase-bom:29.3.0')
-//    implementation 'com.google.firebase:firebase-analytics'
-//    implementation 'com.google.firebase:firebase-auth:21.0.4'
-//    implementation 'com.google.firebase:firebase-firestore'
-//    implementation 'com.google.firebase:firebase-messaging'
+    implementation platform('com.google.firebase:firebase-bom:29.3.0')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-auth:21.0.4'
+    implementation 'com.google.firebase:firebase-firestore'
+    implementation 'com.google.firebase:firebase-messaging'
 //    // TODO : retrofit
 //    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
 //    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'

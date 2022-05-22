@@ -20,5 +20,6 @@
     <string name="back_exit">اضغط مرة أخرى للخروج.</string>
 
     <string name="logout">Logout Succssful</string>
+    <string name="skip">Skip</string>
 
 </resources>
