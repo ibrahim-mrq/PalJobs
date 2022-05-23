@@ -15,6 +15,9 @@ import android.widget.Toast;
 
 import com.mrq.paljobs.R;
 import com.mrq.paljobs.controller.fragments.HomeFragment;
+import com.mrq.paljobs.controller.fragments.ProfileFragment;
+import com.mrq.paljobs.controller.fragments.SavedFragment;
+import com.mrq.paljobs.controller.fragments.SubmitFragment;
 import com.mrq.paljobs.databinding.ActivityMainBinding;
 import com.mrq.paljobs.helpers.BaseActivity;
 
@@ -27,6 +30,11 @@ public class MainActivity extends BaseActivity {
 
     private Toast backToasty;
     private long backPressedTime;
+
+    HomeFragment homeFragment = HomeFragment.newInstance();
+    SavedFragment savedFragment = SavedFragment.newInstance();
+    SubmitFragment submitFragment = SubmitFragment.newInstance();
+    ProfileFragment profileFragment = ProfileFragment.newInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +50,9 @@ public class MainActivity extends BaseActivity {
                 R.string.open, R.string.close);
         binding.drawer.addDrawerListener(toggle);
         toggle.syncState();
-//        binding.main.appbar.toolbar.setNavigationIcon(R.drawable.ic_menu);
+        binding.main.appbar.toolbar.setNavigationIcon(R.drawable.ic_menu);
         setSupportActionBar(binding.main.appbar.toolbar);
-        replaceFragment(HomeFragment.newInstance(), R.string.explore);
+        replaceFragment(homeFragment, R.string.explore);
         initNavView();
         bottomNavigation();
     }
@@ -54,16 +62,16 @@ public class MainActivity extends BaseActivity {
         binding.main.bottomNavigation.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.bottom_home:
-                    replaceFragment(HomeFragment.newInstance(), R.string.explore);
+                    replaceFragment(homeFragment, R.string.explore);
                     return true;
                 case R.id.bottom_save:
-                    replaceFragment(HomeFragment.newInstance(), R.string.save);
+                    replaceFragment(savedFragment, R.string.save);
                     return true;
                 case R.id.bottom_submit:
-                    replaceFragment(HomeFragment.newInstance(), R.string.submit);
+                    replaceFragment(submitFragment, R.string.submit);
                     return true;
                 case R.id.bottom_profile:
-                    replaceFragment(HomeFragment.newInstance(), R.string.profile);
+                    replaceFragment(profileFragment, R.string.profile);
                     return true;
             }
             return false;
@@ -75,13 +83,13 @@ public class MainActivity extends BaseActivity {
         binding.navView.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.nav_explore:
-                    replaceFragment(HomeFragment.newInstance(), R.string.explore);
+                    replaceFragment(homeFragment, R.string.explore);
                     break;
                 case R.id.nav_save:
-                    replaceFragment(HomeFragment.newInstance(), R.string.save);
+                    replaceFragment(savedFragment, R.string.save);
                     break;
                 case R.id.nav_submit:
-                    replaceFragment(HomeFragment.newInstance(), R.string.submit_jobs);
+                    replaceFragment(submitFragment, R.string.submit_jobs);
                     break;
                 case R.id.nav_search:
                     replaceFragment(HomeFragment.newInstance(), R.string.search);
