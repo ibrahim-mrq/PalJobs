@@ -1,14 +1,13 @@
 package com.mrq.paljobs.firebase;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.mrq.paljobs.R;
 import com.mrq.paljobs.helpers.NetworkHelper;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -28,7 +27,7 @@ public class ApiRequest<T> {
             result.onLoading(true);
             db.collection(collection)
                     .addSnapshotListener((query, error) -> {
-                        if (Objects.requireNonNull(query).isEmpty()) {
+                        if (query == null) {
                             result.onEmpty();
                         } else {
                             ArrayList<T> list = new ArrayList<>();
@@ -52,6 +51,7 @@ public class ApiRequest<T> {
             Results<T> result
     ) {
         if (NetworkHelper.INSTANCE.isNetworkOnline(context)) {
+            result.onLoading(true);
             db.collection(collection)
                     .document(document)
                     .addSnapshotListener((query, error) -> {
@@ -60,6 +60,7 @@ public class ApiRequest<T> {
                         } else {
                             result.onSuccess(query.toObject(tClass));
                         }
+                        result.onLoading(false);
                     });
         } else {
             result.onFailureInternet(context.getString(R.string.no_internet));
@@ -75,6 +76,7 @@ public class ApiRequest<T> {
             Results<ArrayList<T>> result
     ) {
         if (NetworkHelper.INSTANCE.isNetworkOnline(context)) {
+            result.onLoading(true);
             db.collection(collection)
                     .whereEqualTo(key, value)
                     .addSnapshotListener((query, error) -> {
@@ -87,6 +89,7 @@ public class ApiRequest<T> {
                             }
                             result.onSuccess(list);
                         }
+                        result.onLoading(false);
                     });
         } else {
             result.onFailureInternet(context.getString(R.string.no_internet));
@@ -104,6 +107,7 @@ public class ApiRequest<T> {
             Results<ArrayList<T>> result
     ) {
         if (NetworkHelper.INSTANCE.isNetworkOnline(context)) {
+            result.onLoading(true);
             db.collection(collection)
                     .whereEqualTo(key1, value1)
                     .whereEqualTo(key2, value2)
@@ -117,6 +121,7 @@ public class ApiRequest<T> {
                             }
                             result.onSuccess(list);
                         }
+                        result.onLoading(false);
                     });
         } else {
             result.onFailureInternet(context.getString(R.string.no_internet));
@@ -131,10 +136,11 @@ public class ApiRequest<T> {
             Results<ArrayList<T>> result
     ) {
         if (NetworkHelper.INSTANCE.isNetworkOnline(context)) {
+            result.onLoading(true);
             db.collection(collection)
                     .orderBy(orderBy)
                     .addSnapshotListener((query, error) -> {
-                        if (Objects.requireNonNull(query).isEmpty()) {
+                        if (query == null) {
                             result.onEmpty();
                         } else {
                             ArrayList<T> list = new ArrayList<>();
@@ -143,6 +149,7 @@ public class ApiRequest<T> {
                             }
                             result.onSuccess(list);
                         }
+                        result.onLoading(false);
                     });
         } else {
             result.onFailureInternet(context.getString(R.string.no_internet));

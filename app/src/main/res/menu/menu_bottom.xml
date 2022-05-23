@@ -10,7 +10,7 @@
     <item
         android:id="@+id/bottom_save"
         android:enabled="true"
-        android:icon="@drawable/ic_save"
+        android:icon="@drawable/ic_save_nav"
         android:title="@string/save" />
 
     <item

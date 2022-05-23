@@ -4,19 +4,19 @@
     <group android:checkableBehavior="single">
 
         <item
-            android:id="@+id/nav_home"
+            android:id="@+id/nav_explore"
             android:enabled="true"
-            android:icon="@drawable/ic_home"
+            android:icon="@drawable/ic_explore"
             android:title="@string/explore" />
         <item
             android:id="@+id/nav_save"
             android:enabled="true"
-            android:icon="@drawable/ic_save"
+            android:icon="@drawable/ic_save_nav"
             android:title="@string/save_jobs" />
         <item
             android:id="@+id/nav_submit"
             android:enabled="true"
-            android:icon="@drawable/ic_submit"
+            android:icon="@drawable/ic_submit2"
             android:title="@string/submit_jobs" />
         <item
             android:id="@+id/nav_search"

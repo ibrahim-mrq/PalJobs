@@ -15,19 +15,27 @@
         android:supportsRtl="true"
         android:theme="@style/MaterialTheme"
         tools:ignore="AllowBackup">
-        <activity android:name=".controller.activities.ForgetActivity"></activity>
+
         <activity
             android:name=".controller.activities.SplashActivity"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden">
+            <!--            <intent-filter>-->
+            <!--                <action android:name="android.intent.action.MAIN" />-->
+
+            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--            </intent-filter>-->
+        </activity>
+        <activity
+            android:name=".controller.activities.MainActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".controller.activities.MainActivity"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
             android:name=".controller.activities.LoginActivity"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
@@ -36,6 +44,9 @@
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
             android:name=".controller.activities.BoardActivity"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+        <activity
+            android:name=".controller.activities.ForgetActivity"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
     </application>
 

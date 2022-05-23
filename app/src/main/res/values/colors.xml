@@ -13,6 +13,9 @@
 
     <color name="pinky">#7660AA</color>
     <color name="grey">#ADB0B1</color>
+    <color name="greyItem">#FAFAFA</color>
+    <color name="greyNav">#5d666c</color>
+
     <color name="greyLight">#e6e6e6</color>
     <color name="greyLight2">#D1D4D5</color>
     <color name="blue">#71D0F6</color>
@@ -26,8 +29,5 @@
     <color name="text">#2699FB</color>
     <color name="textSecondary">#9B9B9B</color>
 
-
-    <color name="greenLight">#EBF4F3</color>
-    <color name="greyDark">#5d666c</color>
 
 </resources>
