@@ -52,7 +52,7 @@ open class BaseFragment : Fragment() {
             .show()
     }
 
-    open fun showOfflineAlert(
+    open fun showAlertOffline(
         activity: Activity,
         text: String?
     ) {
@@ -67,7 +67,7 @@ open class BaseFragment : Fragment() {
             .show()
     }
 
-    open fun showErrorAlert(
+    open fun showAlertError(
         activity: Activity,
         text: String?
     ) {
@@ -82,7 +82,7 @@ open class BaseFragment : Fragment() {
             .show()
     }
 
-    open fun showSuccessAlert(
+    open fun showAlertSuccess(
         activity: Activity,
         text: String?
     ) {

@@ -54,7 +54,7 @@ open class BaseActivity : AppCompatActivity() {
             .show()
     }
 
-    open fun showOfflineAlert(
+    open fun showAlertOffline(
         activity: Activity?,
         text: String?
     ) {
@@ -69,7 +69,7 @@ open class BaseActivity : AppCompatActivity() {
             .show()
     }
 
-    open fun showErrorAlert(
+    open fun showAlertError(
         activity: Activity?,
         text: String?
     ) {
@@ -84,7 +84,7 @@ open class BaseActivity : AppCompatActivity() {
             .show()
     }
 
-    open fun showSuccessAlert(
+    open fun showAlertSuccess(
         activity: Activity?,
         text: String?
     ) {

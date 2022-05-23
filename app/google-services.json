@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "840332368992",
+    "project_id": "pal-jobs",
+    "storage_bucket": "pal-jobs.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:840332368992:android:e206e80c40fcb63521b705",
+        "android_client_info": {
+          "package_name": "com.mrq.paljobs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "840332368992-ptvvn84ck93klq9uh2lcg2a365m9ttn9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvNBciMOpcEUcDpquO4h2bufukxPJnrdI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "840332368992-ptvvn84ck93klq9uh2lcg2a365m9ttn9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

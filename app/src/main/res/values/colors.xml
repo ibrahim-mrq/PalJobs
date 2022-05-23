@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#2699FB</color>
-    <color name="colorPrimaryDark">#2699FB</color>
-    <color name="colorAccent">#BCE0FD</color>
+    <color name="colorPrimary">#BCE0FD</color>
+    <color name="colorPrimaryDark">#2289E2</color>
+    <color name="colorAccent">#2699FB</color>
+<!--    <color name="colorAccent">#BCE0FD</color>-->
 
     <color name="stfImageColor">#2699FB</color>
 
@@ -14,6 +15,7 @@
     <color name="greyLight">#e6e6e6</color>
     <color name="greyLight2">#D1D4D5</color>
     <color name="blue">#71D0F6</color>
+    <color name="blueLight">#F1F9FF</color>
     <color name="green">#91C556</color>
     <color name="green_success">#388E3C</color>
     <color name="red">#EE3636</color>

@@ -25,6 +25,7 @@ object Constants {
     const val TYPE_MODEL = "type_model"
 
     const val IS_LOGIN = "is_login"
+    const val IS_FIRST_START = "is_first_start"
     const val USER = "user"
     const val USER_TOKEN = "user_token"
     const val USER_TYPE = "user_type"

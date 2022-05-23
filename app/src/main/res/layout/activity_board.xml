@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F1F9FF"
+    android:background="@color/blueLight"
     android:orientation="vertical"
     tools:context=".controller.activities.BoardActivity">
 
@@ -14,26 +13,65 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
+        android:layout_marginEnd="-5dp"
         android:background="@null"
         android:foreground="?attr/selectableItemBackground"
         android:text="@string/skip"
         android:textAllCaps="false"
-        android:textColor="@color/colorPrimary"
-        tools:ignore="UnusedAttribute" />
+        android:textColor="@color/colorAccent"
+        tools:ignore="RelativeOverlap,UnusedAttribute" />
 
-    <androidx.viewpager2.widget.ViewPager2
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/dots"
+        android:layout_above="@+id/linear"
         android:layout_centerHorizontal="true" />
 
     <LinearLayout
-        android:id="@+id/dots"
+        android:id="@+id/linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:orientation="horizontal" />
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="-5dp"
+            android:background="@null"
+            android:foreground="?attr/selectableItemBackground"
+            android:text="@string/skip"
+            android:textAllCaps="false"
+            android:textColor="@color/colorAccent"
+            android:visibility="invisible"
+            tools:ignore="RelativeOverlap,UnusedAttribute" />
+
+        <LinearLayout
+            android:id="@+id/dots"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="-5dp"
+            android:background="@null"
+            android:foreground="?attr/selectableItemBackground"
+            android:text="@string/next"
+            android:visibility="invisible"
+            android:textAllCaps="false"
+            android:textColor="@color/colorAccent"
+            tools:ignore="RelativeOverlap,UnusedAttribute" />
+
+    </LinearLayout>
+
 
 </RelativeLayout>
