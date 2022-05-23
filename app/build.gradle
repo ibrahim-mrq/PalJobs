@@ -59,7 +59,7 @@ dependencies {
     implementation 'com.github.tapadoo:alerter:7.2.4'
     // TODO : Stateful Layout
     implementation 'com.github.gturedi:StatefulLayout:1.2.2'
-//    // TODO : firebase
+    // TODO : firebase
     implementation platform('com.google.firebase:firebase-bom:29.3.0')
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-auth:21.0.4'

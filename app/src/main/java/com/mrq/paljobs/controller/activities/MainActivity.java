@@ -5,6 +5,7 @@ import androidx.core.view.GravityCompat;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -13,7 +14,7 @@ import com.mrq.paljobs.R;
 import com.mrq.paljobs.databinding.ActivityMainBinding;
 import com.mrq.paljobs.helpers.BaseActivity;
 
-@SuppressLint("StaticFieldLeak")
+@SuppressLint("StaticFieldLeak,NonConstantResourceId")
 public class MainActivity extends BaseActivity {
 
     public static ActivityMainBinding binding;
@@ -38,6 +39,19 @@ public class MainActivity extends BaseActivity {
         binding.drawer.addDrawerListener(toggle);
         toggle.syncState();
         setSupportActionBar(binding.main.appbar.toolbar);
+        initNavView();
+    }
+
+    private void initNavView() {
+        binding.navView.setCheckedItem(R.id.nav_home);
+        binding.navView.setNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.nav_home:
+                    break;
+            }
+            binding.drawer.close();
+            return true;
+        });
     }
 
     @Override
