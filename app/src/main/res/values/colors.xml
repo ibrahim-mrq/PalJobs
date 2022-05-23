@@ -9,6 +9,7 @@
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="item">#93CCFD</color>
 
     <color name="pinky">#7660AA</color>
     <color name="grey">#ADB0B1</color>

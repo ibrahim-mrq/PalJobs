@@ -1,14 +1,13 @@
 package com.mrq.paljobs.controller.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.mrq.paljobs.R;
 import com.mrq.paljobs.databinding.ActivityLoginBinding;
+import com.mrq.paljobs.helpers.BaseActivity;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
     ActivityLoginBinding binding;
 
@@ -31,11 +30,25 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(new Intent(this, RegisterActivity.class));
         });
 
+
+        binding.facebook.setOnClickListener(view -> {
+            showAlert(this, "Soon", R.color.orange);
+        });
+
+        binding.google.setOnClickListener(view -> {
+            showAlert(this, "Soon", R.color.orange);
+        });
+
+        binding.twitter.setOnClickListener(view -> {
+            showAlert(this, "Soon", R.color.orange);
+        });
+
         binding.btnLogin.setOnClickListener(view -> login());
     }
 
     private void login() {
 
+        startActivity(new Intent(this, MainActivity.class));
     }
 
     @Override

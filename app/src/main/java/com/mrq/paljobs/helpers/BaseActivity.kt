@@ -51,6 +51,7 @@ open class BaseActivity : AppCompatActivity() {
             .setContentGravity(Gravity.CENTER)
             .enableSwipeToDismiss()
             .setDuration(2000)
+            .hideIcon()
             .show()
     }
 

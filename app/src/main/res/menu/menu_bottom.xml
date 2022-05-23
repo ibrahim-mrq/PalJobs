@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bottom_home"
+        android:enabled="true"
+        android:icon="@drawable/ic_home"
+        android:title="@string/home" />
+
+    <item
+        android:id="@+id/bottom_save"
+        android:enabled="true"
+        android:icon="@drawable/ic_save"
+        android:title="@string/save" />
+
+    <item
+        android:id="@+id/bottom_submit"
+        android:enabled="true"
+        android:icon="@drawable/ic_submit"
+        android:title="@string/submit" />
+
+    <item
+        android:id="@+id/bottom_profile"
+        android:enabled="true"
+        android:icon="@drawable/ic_profile"
+        android:title="@string/profile" />
+
+</menu>

@@ -26,4 +26,14 @@
         <item name="cornerSize">50%</item>
     </style>
 
+    <!-- TODO :  bottomBar   -->
+    <style name="bottomBarStyle">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- TODO :  navigation   -->
+    <style name="navigationViewStyleBoldText">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
 </resources>

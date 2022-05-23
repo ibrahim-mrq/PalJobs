@@ -80,12 +80,12 @@ public class BoardActivity extends BaseActivity {
         for (int i = 0; i < count; i++) {
             textDots[i] = new TextView(this);
             textDots[i].setText(Html.fromHtml("&#8226;"));
-            textDots[i].setTextSize(35);
-            textDots[i].setTextColor(getResources().getColor(R.color.colorAccent));
+            textDots[i].setTextSize(40);
+            textDots[i].setTextColor(getResources().getColor(R.color.colorPrimary));
             binding.dots.addView(textDots[i]);
         }
         if (textDots.length > 0) {
-            textDots[position].setTextColor(getResources().getColor(R.color.colorPrimary));
+            textDots[position].setTextColor(getResources().getColor(R.color.colorAccent));
         }
     }
 

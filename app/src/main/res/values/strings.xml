@@ -1,9 +1,13 @@
 <resources>
     <string name="app_name">Pal Jobs</string>
 
-    <string name="yes">نعم</string>
-    <string name="no">لا</string>
-    <string name="please_wait">ارجوا انتظر</string>
+
+    <string name="open">open</string>
+    <string name="close">close</string>
+
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="please_wait">Please Wait</string>
 
     <string name="stfErrorMessage">An error occurred, please try again</string>
     <string name="stfOfflineMessage">Please check your internet connection</string>
@@ -25,14 +29,6 @@
 
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="login">Login</string>
-
-    <string name="dont_have_account">Don\'t have an account?</string>
-    <string name="register_now">Register now</string>
-    <string name="forget_password">Forget Password</string>
-    <string name="log_in_to_your_account">Log in to your account</string>
-    <string name="create_an_account">Create an Account</string>
-    <string name="register">Register</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="confirm_password">Confirm Password</string>
@@ -40,5 +36,23 @@
     <string name="restore_password">Restore Password</string>
     <string name="restore">Restore</string>
     <string name="terms">By creating an account you agree to our Terms of Privacy Policy</string>
+    <string name="dont_have_account">Don\'t have an account?</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="register_now">Register now</string>
+    <string name="forget_password">Forget Password</string>
+    <string name="log_in_to_your_account">Log in to your account</string>
+    <string name="create_an_account">Create an Account</string>
+
+    <string name="profile">Profile</string>
+    <string name="submit">Submit</string>
+    <string name="save">Save</string>
+    <string name="home">Home</string>
+    <string name="explore">Explore</string>
+    <string name="save_jobs">Save Jobs</string>
+    <string name="submit_jobs">Submit Jobs</string>
+    <string name="search">Search</string>
+    <string name="about">About App</string>
+    <string name="setting">Setting</string>
 
 </resources>
