@@ -28,6 +28,7 @@
 
     <color name="text">#2699FB</color>
     <color name="textSecondary">#9B9B9B</color>
+    <color name="itemNav">#804F4F4F</color>
 
 
 </resources>

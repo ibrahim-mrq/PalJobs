@@ -23,7 +23,9 @@
     <string name="error">An error occurred, please try again</string>
     <string name="back_exit">Press again to exit.</string>
 
-    <string name="logout">You are logged in successfully</string>
+    <string name="login_successfully">You are logged in successfully</string>
+    <string name="logout_successfully">Signed out successfully</string>
+    <string name="logout">Logout</string>
     <string name="skip">Skip</string>
     <string name="next">Next</string>
 
@@ -87,6 +89,15 @@
     <string name="update_profile_successfully">Update Profile Successfully</string>
     <string name="update_image_file">Edit Image and CV File</string>
     <string name="update">Update</string>
+    <string name="must_select_skills">At least one skill must be selected</string>
+    <string name="must_select_photo">At least one photo must be selected</string>
+    <string name="must_select_file">You must choose a CV file first</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="general">General</string>
+    <string name="account">Account</string>
+    <string name="privacy">Privacy</string>
+    <string name="help">Help</string>
 
 
 </resources>

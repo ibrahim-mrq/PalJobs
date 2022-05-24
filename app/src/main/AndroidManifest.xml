@@ -48,6 +48,9 @@
         <activity
             android:name=".controller.activities.MainActivity"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+        <activity
+            android:name=".controller.activities.SettingActivity"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
     </application>
 
 </manifest>

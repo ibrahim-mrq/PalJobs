@@ -17,6 +17,7 @@ import com.mrq.paljobs.R;
 import com.mrq.paljobs.controller.fragments.HomeFragment;
 import com.mrq.paljobs.controller.fragments.ProfileFragment;
 import com.mrq.paljobs.controller.fragments.SavedFragment;
+import com.mrq.paljobs.controller.fragments.SettingFragment;
 import com.mrq.paljobs.controller.fragments.SubmitFragment;
 import com.mrq.paljobs.databinding.ActivityMainBinding;
 import com.mrq.paljobs.helpers.BaseActivity;
@@ -35,6 +36,7 @@ public class MainActivity extends BaseActivity {
     SavedFragment savedFragment = SavedFragment.newInstance();
     SubmitFragment submitFragment = SubmitFragment.newInstance();
     ProfileFragment profileFragment = ProfileFragment.newInstance();
+    SettingFragment settingFragment = SettingFragment.newInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +97,7 @@ public class MainActivity extends BaseActivity {
                     replaceFragment(HomeFragment.newInstance(), R.string.search);
                     break;
                 case R.id.nav_setting:
-                    replaceFragment(HomeFragment.newInstance(), R.string.setting);
+                    replaceFragment(settingFragment, R.string.setting);
                     break;
                 case R.id.nav_about:
                     replaceFragment(HomeFragment.newInstance(), R.string.about);

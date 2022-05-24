@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".controller.fragments.SettingFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="20dp">
+
+        <TextView
+            android:id="@+id/general"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/shape_primary"
+            android:backgroundTint="#F1F9FF"
+            android:drawableStart="@drawable/ic_setting"
+            android:drawablePadding="20dp"
+            android:padding="15dp"
+            android:text="@string/general"
+            android:textAllCaps="false"
+            android:textColor="@color/text"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:drawableTint="@color/colorAccent" />
+
+        <TextView
+            android:id="@+id/account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/shape_primary"
+            android:backgroundTint="#F1F9FF"
+            android:drawableStart="@drawable/ic_user"
+            android:drawablePadding="20dp"
+            android:padding="15dp"
+            android:text="@string/account"
+            android:textAllCaps="false"
+            android:textColor="@color/text"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:drawableTint="@color/colorAccent" />
+
+        <TextView
+            android:id="@+id/privacy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/shape_primary"
+            android:backgroundTint="#F1F9FF"
+            android:drawableStart="@drawable/ic_submit2"
+            android:drawablePadding="20dp"
+            android:padding="15dp"
+            android:text="@string/privacy"
+            android:textAllCaps="false"
+            android:textColor="@color/text"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:drawableTint="@color/colorAccent" />
+
+        <TextView
+            android:id="@+id/help"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/shape_primary"
+            android:backgroundTint="#F1F9FF"
+            android:drawableStart="@drawable/ic_help"
+            android:drawablePadding="20dp"
+            android:padding="15dp"
+            android:text="@string/help"
+            android:textAllCaps="false"
+            android:textColor="@color/text"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:drawableTint="@color/colorAccent" />
+
+        <TextView
+            android:id="@+id/logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/shape_primary"
+            android:backgroundTint="#F1F9FF"
+            android:drawableStart="@drawable/ic_logout"
+            android:drawablePadding="20dp"
+            android:padding="15dp"
+            android:text="@string/logout"
+            android:textAllCaps="false"
+            android:textColor="@color/text"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:drawableTint="@color/colorAccent" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

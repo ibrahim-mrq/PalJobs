@@ -85,8 +85,8 @@ public class RegisterActivity extends BaseActivity {
             new ApiRequest<String>().register(this, user, new Results<String>() {
                 @Override
                 public void onSuccess(String s) {
+                    showAlert(RegisterActivity.this, getString(R.string.create_an_account), R.color.green_success);
                     new Handler().postDelayed(() -> {
-                        showAlert(RegisterActivity.this, getString(R.string.create_an_account), R.color.green_success);
                         if (type.equals(Constants.TYPE_COMPANY)) {
                             startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                         } else {

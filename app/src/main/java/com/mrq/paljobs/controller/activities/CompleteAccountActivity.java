@@ -40,6 +40,9 @@ public class CompleteAccountActivity extends BaseActivity {
     ArrayList<String> skillsString = new ArrayList<>();
     ArrayList<String> localSkills = new ArrayList<>();
     SkillsSelectedAdapter adapter;
+    String file = "";
+    String cover = "";
+    String photo = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,18 +87,29 @@ public class CompleteAccountActivity extends BaseActivity {
     }
 
     private void complete() {
-        enableElements(false);
-        DocumentReference docRef = db.collection("User").document(Hawk.get(Constants.USER_TOKEN));
-        docRef.update("jobTitle", getText(binding.etJobTitle));
-        docRef.update("gender", getText(binding.etGender));
-        docRef.update("skills", localSkills);
-        docRef.addSnapshotListener((value, error) -> {
-            showAlert(CompleteAccountActivity.this,
-                    getString(R.string.update_profile_successfully), R.color.green_success);
-            enableElements(true);
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
-        });
+        if (isNotEmpty(binding.etJobTitle, binding.tvJobTitle)
+                && isNotEmpty(binding.etGender, binding.tvGender)
+                && isNotEmpty(binding.etCv, binding.tvCv)
+                && isNotEmpty(binding.etCv, binding.tvCv)
+                && isListNotEmpty(this, localSkills, binding.uploadSkills)
+                && isListNotEmpty(this, localSkills, binding.uploadSkills)
+                && isStringNotEmpty(this, photo)
+                && isStringNotEmpty(this, cover)
+                && isFileStringNotEmpty(this, file)
+        ) {
+            enableElements(false);
+            DocumentReference docRef = db.collection("User").document(Hawk.get(Constants.USER_TOKEN));
+            docRef.update("jobTitle", getText(binding.etJobTitle));
+            docRef.update("gender", getText(binding.etGender));
+            docRef.update("skills", localSkills);
+            docRef.addSnapshotListener((value, error) -> {
+                showAlert(CompleteAccountActivity.this,
+                        getString(R.string.update_profile_successfully), R.color.green_success);
+                enableElements(true);
+                startActivity(new Intent(this, MainActivity.class));
+                finish();
+            });
+        }
     }
 
     private void genders() {
@@ -214,12 +228,15 @@ public class CompleteAccountActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null) {
             if (requestCode == Constants.REQUEST_FILE_CODE) {
+                file = data.getData().toString();
                 binding.etCv.setText(Constants.getFileName(this, data.getData()));
                 uploadFile(data.getData(), Constants.getFileName(this, data.getData()));
             } else if (requestCode == Constants.REQUEST_PHOTO_GALLERY_CODE) {
+                photo = data.getData().toString();
                 Picasso.get().load(data.getData()).into(binding.photo);
                 uploadImage(data.getData(), Constants.getFileName(this, data.getData()), Constants.TYPE_PHOTO);
             } else if (requestCode == Constants.REQUEST_COVER_GALLERY_CODE) {
+                cover = data.getData().toString();
                 Picasso.get().load(data.getData()).into(binding.cover);
                 binding.cover.setScaleType(ImageView.ScaleType.FIT_XY);
                 uploadImage(data.getData(), Constants.getFileName(this, data.getData()), Constants.TYPE_PHOTO_COVER);

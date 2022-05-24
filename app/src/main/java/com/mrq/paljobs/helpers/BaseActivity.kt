@@ -8,6 +8,7 @@ import android.util.Patterns
 import android.view.Gravity
 import android.widget.AutoCompleteTextView
 import android.widget.CheckBox
+import android.widget.LinearLayout
 import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
@@ -56,51 +57,6 @@ open class BaseActivity : AppCompatActivity() {
             .show()
     }
 
-    open fun showAlertOffline(
-        activity: Activity?,
-        text: String?
-    ) {
-        Alerter.create(activity!!)
-            .setTitle("")
-            .setText(text!!)
-            .setBackgroundColorRes(R.color.orange)
-            .setContentGravity(Gravity.CENTER)
-            .enableSwipeToDismiss()
-            .setDuration(2000)
-            .hideIcon()
-            .show()
-    }
-
-    open fun showAlertError(
-        activity: Activity?,
-        text: String?
-    ) {
-        Alerter.create(activity!!)
-            .setTitle("")
-            .setText(text!!)
-            .setBackgroundColorRes(R.color.red)
-            .setContentGravity(Gravity.CENTER)
-            .enableSwipeToDismiss()
-            .setDuration(2000)
-            .hideIcon()
-            .show()
-    }
-
-    open fun showAlertSuccess(
-        activity: Activity?,
-        text: String?
-    ) {
-        Alerter.create(activity!!)
-            .setTitle("")
-            .setText(text!!)
-            .setBackgroundColorRes(R.color.green_success)
-            .setContentGravity(Gravity.CENTER)
-            .enableSwipeToDismiss()
-            .setDuration(2000)
-            .hideIcon()
-            .show()
-    }
-
     fun isNotEmpty(editText: TextInputEditText, textInputLayout: TextInputLayout): Boolean {
         return if (editText.text.toString().isBlank()) {
             textInputLayout.isErrorEnabled = true
@@ -108,6 +64,45 @@ open class BaseActivity : AppCompatActivity() {
             false
         } else {
             textInputLayout.isErrorEnabled = false
+            true
+        }
+    }
+
+    fun isListNotEmpty(
+        activity: Activity?,
+        list: ArrayList<String>,
+        linear: LinearLayout
+    ): Boolean {
+        return if (list.isEmpty()) {
+            Constants.showAlert(activity!!, getString(R.string.must_select_skills), R.color.red)
+            linear.setBackgroundResource(R.drawable.shape_red_stroke)
+            false
+        } else {
+            linear.setBackgroundResource(R.drawable.shape_accent_stroke)
+            true
+        }
+    }
+
+    fun isStringNotEmpty(
+        activity: Activity?,
+        string: String,
+    ): Boolean {
+        return if (string.isEmpty()) {
+            Constants.showAlert(activity!!, getString(R.string.must_select_photo), R.color.red)
+            false
+        } else {
+            true
+        }
+    }
+
+    fun isFileStringNotEmpty(
+        activity: Activity?,
+        string: String,
+    ): Boolean {
+        return if (string.isEmpty()) {
+            Constants.showAlert(activity!!, getString(R.string.must_select_file), R.color.red)
+            false
+        } else {
             true
         }
     }

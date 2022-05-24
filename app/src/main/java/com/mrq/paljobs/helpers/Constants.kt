@@ -64,7 +64,7 @@ object Constants {
     @JvmStatic
     fun logout(context: Context) {
         Hawk.deleteAll()
-        Toast.makeText(context, context.getString(R.string.logout), Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, context.getString(R.string.logout_successfully), Toast.LENGTH_SHORT).show()
         context.startActivity(Intent(context, SplashActivity::class.java))
     }
 
