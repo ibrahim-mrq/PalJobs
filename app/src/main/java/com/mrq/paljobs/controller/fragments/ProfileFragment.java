@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.mrq.paljobs.R;
 import com.mrq.paljobs.controller.adapters.SkillsAdapter;
 import com.mrq.paljobs.databinding.FragmentProfileBinding;
@@ -39,6 +41,7 @@ public class ProfileFragment extends BaseFragment {
     }
 
     FragmentProfileBinding binding;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     SkillsAdapter adapter;
 
     @Override
@@ -60,6 +63,21 @@ public class ProfileFragment extends BaseFragment {
         binding.recyclerView.setHasFixedSize(true);
         binding.recyclerView.setAdapter(adapter);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
+        binding.btnUpdate.setOnClickListener(view -> update());
+    }
+
+    private void update() {
+        enableElements(false);
+        DocumentReference docRef = db.collection("User").document(Hawk.get(Constants.USER_TOKEN));
+        docRef.update("firstName", getText(binding.etFName));
+        docRef.update("lastName", getText(binding.etLName));
+        docRef.update("phone", getText(binding.etPhone));
+        docRef.update("address", getText(binding.etAddress));
+        docRef.update("jobTitle", getText(binding.etJobTitle));
+        docRef.addSnapshotListener((value, error) -> {
+            showAlert(requireActivity(), getString(R.string.update_profile_successfully), R.color.green_success);
+            enableElements(true);
+        });
     }
 
     @Override
@@ -77,8 +95,6 @@ public class ProfileFragment extends BaseFragment {
                 new Results<User>() {
                     @Override
                     public void onSuccess(User user) {
-                        Log.e("response", "user = " + user);
-
                         binding.etFName.setText(user.getFirstName());
                         binding.etLName.setText(user.getLastName());
                         binding.etEmail.setText(user.getEmail());
@@ -126,7 +142,6 @@ public class ProfileFragment extends BaseFragment {
         binding.etFName.setEnabled(enable);
         binding.etLName.setEnabled(enable);
         binding.etPhone.setEnabled(enable);
-        binding.etPassword.setEnabled(enable);
         binding.etAddress.setEnabled(enable);
         binding.etJobTitle.setEnabled(enable);
     }
