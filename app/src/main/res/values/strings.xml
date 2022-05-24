@@ -44,6 +44,17 @@
     <string name="log_in_to_your_account">Log in to your account</string>
     <string name="create_an_account">Create an Account</string>
 
+    <string name="con_not_create_account">It is not possible to create an account, please make sure that all data is correct</string>
+    <string name="con_not_login">Unable to login, please verify that the data is correct</string>
+    <string name="account_successfully">New account created successfully</string>
+    <string name="checkBox_field">You must agree to the terms and conditions first</string>
+
+    <string name="error_upload_image">The image cannot be uploaded, please verify that the data is correct</string>
+    <string name="error_upload_file">The file cannot be uploaded, please verify that the data is correct</string>
+
+    <string name="upload_picture_successfully">Upload Picture Successfully</string>
+    <string name="upload_file_successfully">Upload File Successfully</string>
+
     <string name="profile">Profile</string>
     <string name="submit">Submit</string>
     <string name="save">Save</string>
@@ -54,8 +65,28 @@
     <string name="search">Search</string>
     <string name="about">About App</string>
     <string name="setting">Setting</string>
+
+    <string name="phone">Phone</string>
+    <string name="address">Address</string>
+    <string name="jobTitle">Job Title</string>
+    <string name="edit_cover_photo">Edit cover Photo</string>
+    <string name="upload_profile_picture">Upload Profile Picture</string>
+    <string name="skills">Skills</string>
+    <string name="confirm">Confirm</string>
+    <string name="gender">Gender</string>
+    <string name="cv">Upload CV PDF File</string>
+    <string name="download_cv">download CV PDF File</string>
+    <string name="register_as">Choose the registration method</string>
+    <string name="employee">Employee</string>
+    <string name="company">Company</string>
+    <string name="register_type">Register Type</string>
     <string name="submit_your_proposal">Submit Your Proposal</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="complete_profile">Complete Your Profile</string>
+    <string name="select_skills">Select the skills you have</string>
+    <string name="update_profile_successfully">Update Profile Successfully</string>
+    <string name="update_image_file">Edit Image and CV File</string>
+    <string name="update">Update</string>
+
 
 </resources>

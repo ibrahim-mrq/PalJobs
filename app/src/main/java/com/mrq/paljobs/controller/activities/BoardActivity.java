@@ -13,6 +13,8 @@ import com.mrq.paljobs.controller.adapters.ViewPagerAdapter;
 import com.mrq.paljobs.controller.fragments.BoardFragment;
 import com.mrq.paljobs.databinding.ActivityBoardBinding;
 import com.mrq.paljobs.helpers.BaseActivity;
+import com.mrq.paljobs.helpers.Constants;
+import com.orhanobut.hawk.Hawk;
 
 public class BoardActivity extends BaseActivity {
 
@@ -27,8 +29,9 @@ public class BoardActivity extends BaseActivity {
     }
 
     private void initView() {
-//        Hawk.put(Constants.IS_FIRST_START, true);
+        Hawk.put(Constants.IS_FIRST_START, true);
         initPager();
+
         binding.skip.setOnClickListener(view -> {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
@@ -44,9 +47,9 @@ public class BoardActivity extends BaseActivity {
 
     private void initPager() {
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(BoardFragment.newInstance("Main Title", "Ut labore et dolore roipi mana aliqua. Enim \n" + "adeop minim veeniam nostruklad"), "");
-        adapter.addFragment(BoardFragment.newInstance("Main Title", "Ut labore et dolore roipi mana aliqua. Enim \n" + "adeop minim veeniam nostruklad"), "");
-        adapter.addFragment(BoardFragment.newInstance("Main Title", "Ut labore et dolore roipi mana aliqua. Enim \n" + "adeop minim veeniam nostruklad"), "");
+        adapter.addFragment(BoardFragment.newInstance("Main Title", "Ut labore et dolore roipi mana aliqua. Enim \n adeop minim veeniam nostruklad" + ""), "");
+        adapter.addFragment(BoardFragment.newInstance("Main Title", "Ut labore et dolore roipi mana aliqua. Enim \n adeop minim veeniam nostruklad" + ""), "");
+        adapter.addFragment(BoardFragment.newInstance("Main Title", "Ut labore et dolore roipi mana aliqua. Enim \n adeop minim veeniam nostruklad" + ""), "");
         binding.viewpager.setAdapter(adapter);
         loadDots(0);
         binding.viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

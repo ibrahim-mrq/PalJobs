@@ -6,10 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.mrq.paljobs.R;
 import com.mrq.paljobs.databinding.CustomProposalBinding;
@@ -64,10 +62,15 @@ public class ProposalAdapter extends RecyclerView.Adapter<ProposalAdapter.Propos
         }
 
         private void bind(Proposal model) {
-            Picasso.get().load(model.getCompanyImage())
-                    .placeholder(R.drawable.ic_user)
-                    .error(R.drawable.ic_user)
-                    .into(binding.image);
+            if (!model.getCompanyImage().isEmpty()) {
+                Picasso.get().load(model.getCompanyImage())
+                        .placeholder(R.drawable.ic_user)
+                        .error(R.drawable.ic_user)
+                        .into(binding.image);
+            } else {
+                Picasso.get().load(R.drawable.ic_user).into(binding.image);
+            }
+
             binding.title.setText(model.getTitle());
             binding.name.setText(model.getCompanyName());
             binding.time.setText(model.getTime());

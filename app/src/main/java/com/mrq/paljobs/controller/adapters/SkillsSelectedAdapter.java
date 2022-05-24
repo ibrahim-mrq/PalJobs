@@ -9,16 +9,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mrq.paljobs.R;
+import com.mrq.paljobs.controller.interfaceis.RemoveSkillsInterface;
 import com.mrq.paljobs.databinding.CustomSkillsBinding;
 
 import java.util.ArrayList;
 
-public class SkillsAdapter extends RecyclerView.Adapter<SkillsAdapter.SkillsViewHolder> {
+public class SkillsSelectedAdapter extends RecyclerView.Adapter<SkillsSelectedAdapter.SkillsViewHolder> {
 
     Context mContext;
     ArrayList<String> list;
+    RemoveSkillsInterface anInterface;
 
-    public SkillsAdapter(Context mContext) {
+    public SkillsSelectedAdapter(Context mContext) {
         this.mContext = mContext;
     }
 
@@ -30,6 +32,11 @@ public class SkillsAdapter extends RecyclerView.Adapter<SkillsAdapter.SkillsView
         this.list = list;
         notifyDataSetChanged();
     }
+
+    public void removeSkills(RemoveSkillsInterface anInterface) {
+        this.anInterface = anInterface;
+    }
+
     @NonNull
     @Override
     public SkillsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -41,6 +48,7 @@ public class SkillsAdapter extends RecyclerView.Adapter<SkillsAdapter.SkillsView
     public void onBindViewHolder(@NonNull SkillsViewHolder holder, int position) {
         String model = list.get(position);
         holder.bind(model);
+        holder.itemView.setOnClickListener(view -> anInterface.remove(model, position));
     }
 
     @Override

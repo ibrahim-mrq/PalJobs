@@ -2,11 +2,12 @@ package com.mrq.paljobs.helpers
 
 import android.app.Activity
 import android.app.Dialog
-import android.content.DialogInterface
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.util.Patterns
 import android.view.Gravity
-import android.view.View
 import android.widget.AutoCompleteTextView
+import android.widget.CheckBox
 import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
@@ -107,6 +108,17 @@ open class BaseActivity : AppCompatActivity() {
             false
         } else {
             textInputLayout.isErrorEnabled = false
+            true
+        }
+    }
+
+    fun isCheckBoxChecked(checkBox: CheckBox): Boolean {
+        return if (!checkBox.isChecked) {
+            checkBox.buttonTintList = ColorStateList.valueOf(Color.parseColor("#EE3636"))
+            checkBox.error = getString(R.string.checkBox_field)
+            false
+        } else {
+            checkBox.buttonTintList = ColorStateList.valueOf(Color.parseColor("#2699FB"))
             true
         }
     }

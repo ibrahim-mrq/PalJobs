@@ -5,6 +5,7 @@
 
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".helpers.MyApplication"
@@ -20,22 +21,15 @@
             android:name=".controller.activities.SplashActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden">
-            <!--            <intent-filter>-->
-            <!--                <action android:name="android.intent.action.MAIN" />-->
-
-            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-            <!--            </intent-filter>-->
-        </activity>
-        <activity
-            android:name=".controller.activities.MainActivity"
-            android:exported="true"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".controller.activities.ChooseLoginActivity"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
             android:name=".controller.activities.LoginActivity"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
@@ -47,6 +41,12 @@
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
             android:name=".controller.activities.ForgetActivity"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+        <activity
+            android:name=".controller.activities.CompleteAccountActivity"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+        <activity
+            android:name=".controller.activities.MainActivity"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
     </application>
 

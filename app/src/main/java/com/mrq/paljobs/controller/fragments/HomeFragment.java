@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.firestore.Query;
 import com.mrq.paljobs.controller.adapters.ProposalAdapter;
 import com.mrq.paljobs.databinding.FragmentHomeBinding;
 import com.mrq.paljobs.firebase.ApiRequest;
@@ -62,44 +63,12 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     }
 
     private void loadData() {
-//        binding.include.swipeToRefresh.setRefreshing(false);
-//        new ApiRequest<Proposal>().getDataOrderBy(
-//                getActivity(),
-//                "Proposal",
-//                "date",
-//                Proposal.class,
-//                new Results<ArrayList<Proposal>>() {
-//                    @Override
-//                    public void onSuccess(ArrayList<Proposal> proposals) {
-//                        binding.include.statefulLayout.showContent();
-//                        adapter.setList(proposals);
-//                    }
-//
-//                    @Override
-//                    public void onFailureInternet(@NotNull String offline) {
-//                        binding.include.statefulLayout.showOffline(offline, view -> loadData());
-//                    }
-//
-//                    @Override
-//                    public void onEmpty() {
-//                        binding.include.statefulLayout.showEmpty();
-//                    }
-//
-//                    @Override
-//                    public void onLoading(boolean loading) {
-//                        if (loading) {
-//                            binding.include.statefulLayout.showLoading();
-//                        }
-//                    }
-//                }
-//        );
-
-
-
         binding.include.swipeToRefresh.setRefreshing(false);
-        new ApiRequest<Proposal>().getData(
+        new ApiRequest<Proposal>().getDataOrderBy(
                 getActivity(),
                 "Proposal",
+                "time",
+                Query.Direction.DESCENDING,
                 Proposal.class,
                 new Results<ArrayList<Proposal>>() {
                     @Override
@@ -116,6 +85,11 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                     @Override
                     public void onEmpty() {
                         binding.include.statefulLayout.showEmpty();
+                    }
+
+                    @Override
+                    public void onException(@NotNull String exception) {
+                        binding.include.statefulLayout.showError(exception, view -> loadData());
                     }
 
                     @Override

@@ -55,6 +55,8 @@ dependencies {
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
     // TODO : Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
+    // TODO : image picker
+    implementation 'com.github.dhaval2404:imagepicker-support:1.7.1'
     // TODO : alerter
     implementation 'com.github.tapadoo:alerter:7.2.4'
     // TODO : Stateful Layout
@@ -62,9 +64,10 @@ dependencies {
     // TODO : firebase
     implementation platform('com.google.firebase:firebase-bom:29.3.0')
     implementation 'com.google.firebase:firebase-analytics'
-    implementation 'com.google.firebase:firebase-auth:21.0.4'
+    implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-firestore'
     implementation 'com.google.firebase:firebase-messaging'
+    implementation 'com.google.firebase:firebase-storage'
 //    // TODO : retrofit
 //    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
 //    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'

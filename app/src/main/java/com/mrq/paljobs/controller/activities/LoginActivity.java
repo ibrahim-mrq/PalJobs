@@ -27,7 +27,7 @@ public class LoginActivity extends BaseActivity {
             startActivity(new Intent(this, ForgetActivity.class));
         });
         binding.register.setOnClickListener(view -> {
-            startActivity(new Intent(this, RegisterActivity.class));
+            startActivity(new Intent(this, ChooseLoginActivity.class));
         });
 
 

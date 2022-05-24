@@ -10,6 +10,10 @@ public class Skills {
     public Skills() {
     }
 
+    public Skills(String name) {
+        this.name = name;
+    }
+
     @NotNull
     @Override
     public String toString() {
