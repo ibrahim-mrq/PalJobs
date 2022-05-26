@@ -12,18 +12,18 @@ import android.net.Uri
 import android.provider.OpenableColumns
 import android.util.Log
 import android.view.Gravity
-import android.widget.DatePicker
-import android.widget.TextView
-import android.widget.TimePicker
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.ColorRes
 import com.mrq.paljobs.R
 import com.mrq.paljobs.controller.activities.SplashActivity
+import com.mrq.paljobs.models.Favorite
+import com.mrq.paljobs.models.Proposal
 import com.orhanobut.hawk.Hawk
 import com.tapadoo.alerter.Alerter
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 @SuppressLint("SetTextI18n,Range")
 object Constants {
@@ -64,7 +64,8 @@ object Constants {
     @JvmStatic
     fun logout(context: Context) {
         Hawk.deleteAll()
-        Toast.makeText(context, context.getString(R.string.logout_successfully), Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, context.getString(R.string.logout_successfully), Toast.LENGTH_SHORT)
+            .show()
         context.startActivity(Intent(context, SplashActivity::class.java))
     }
 
@@ -137,6 +138,18 @@ object Constants {
         return if (minute < 10)
             "0$minute"
         else minute.toString()
+    }
+
+    fun ifItemInFavorite(product: Proposal, imageView: ImageView) {
+
+
+        val list: ArrayList<Favorite> = ArrayList()
+        val index = list.indexOfFirst { it.proposalId == product.id } // -1 if not found
+        if (index >= 0) {
+            imageView.setImageResource(R.drawable.ic_save)
+        } else {
+            imageView.setImageResource(R.drawable.ic_unsave)
+        }
     }
 
 }

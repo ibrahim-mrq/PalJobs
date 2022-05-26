@@ -4,20 +4,23 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-public class Proposal {
+public class Favorite {
 
     private String id;
     private String companyImage;
     private String companyName;
     private String companyId;
+
+    private String customerId;
+    private String proposalId;
+
     private String title;
     private String content;
     private ArrayList<String> skills;
     private String requirement;
     private String time;
-    private boolean saved;
 
-    public Proposal() {
+    public Favorite() {
     }
 
     @NotNull
@@ -28,12 +31,13 @@ public class Proposal {
                 ", companyImage='" + companyImage + '\'' +
                 ", companyName='" + companyName + '\'' +
                 ", companyId='" + companyId + '\'' +
+                ", customerId='" + customerId + '\'' +
+                ", proposalId='" + proposalId + '\'' +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", skills=" + skills +
                 ", requirement='" + requirement + '\'' +
                 ", time='" + time + '\'' +
-                ", saved='" + saved + '\'' +
                 '}';
     }
 
@@ -109,11 +113,19 @@ public class Proposal {
         this.time = time;
     }
 
-    public boolean getSaved() {
-        return saved;
+    public String getCustomerId() {
+        return customerId;
     }
 
-    public void setSaved(boolean saved) {
-        this.saved = saved;
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
+    public String getProposalId() {
+        return proposalId;
+    }
+
+    public void setProposalId(String proposalId) {
+        this.proposalId = proposalId;
     }
 }

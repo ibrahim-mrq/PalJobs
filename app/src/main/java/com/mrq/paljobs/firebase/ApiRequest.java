@@ -15,6 +15,8 @@ import com.google.firebase.storage.StorageReference;
 import com.mrq.paljobs.R;
 import com.mrq.paljobs.helpers.Constants;
 import com.mrq.paljobs.helpers.NetworkHelper;
+import com.mrq.paljobs.models.Favorite;
+import com.mrq.paljobs.models.Proposal;
 import com.mrq.paljobs.models.User;
 import com.orhanobut.hawk.Hawk;
 
@@ -296,5 +298,29 @@ public class ApiRequest<T> {
         }
     }
 
+    public void addFavorite(
+            Context context,
+            String collection,
+            Favorite favorite,
+            Results<String> result
+    ) {
+        if (NetworkHelper.INSTANCE.isNetworkOnline(context)) {
+            result.onLoading(true);
+            db.collection(collection)
+                    .add(favorite)
+                    .addOnSuccessListener(document -> {
+                        result.onLoading(false);
+                        Log.e("response", "document = " + document.getId());
+                        document.update("id", document.getId());
+                        result.onSuccess("uri.toString()");
+                    })
+                    .addOnFailureListener(error -> {
+                        result.onLoading(false);
+                        result.onException(context.getString(R.string.error));
+                    });
+        } else {
+            result.onFailureInternet(context.getString(R.string.no_internet));
+        }
+    }
 
 }
