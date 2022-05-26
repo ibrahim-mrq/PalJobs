@@ -6,6 +6,7 @@ import android.util.Patterns
 import android.view.Gravity
 import android.widget.AutoCompleteTextView
 import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
 import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -49,6 +50,23 @@ open class BaseFragment : Fragment() {
             .setContentGravity(Gravity.CENTER)
             .enableSwipeToDismiss()
             .setDuration(2000)
+            .show()
+    }
+
+    open fun showAlert(
+        activity: Activity,
+        text: String?,
+        @ColorRes color: Int,
+        @DrawableRes icon: Int,
+    ) {
+        Alerter.create(activity)
+            .setTitle("")
+            .setText(text!!)
+            .setBackgroundColorRes(color)
+            .setContentGravity(Gravity.CENTER)
+            .enableSwipeToDismiss()
+            .setDuration(2000)
+            .setIcon(icon)
             .show()
     }
 

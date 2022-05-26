@@ -140,15 +140,19 @@ object Constants {
         else minute.toString()
     }
 
-    fun ifItemInFavorite(product: Proposal, imageView: ImageView) {
-
-
-        val list: ArrayList<Favorite> = ArrayList()
+    @JvmStatic
+    fun ifItemInFavorite(
+        product: Proposal,
+        list: ArrayList<Favorite>,
+        imageView: ImageView
+    ): Boolean {
         val index = list.indexOfFirst { it.proposalId == product.id } // -1 if not found
-        if (index >= 0) {
+        return if (index >= 0) {
             imageView.setImageResource(R.drawable.ic_save)
+            true
         } else {
             imageView.setImageResource(R.drawable.ic_unsave)
+            false
         }
     }
 

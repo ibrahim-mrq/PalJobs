@@ -3,7 +3,6 @@ package com.mrq.paljobs.firebase;
 import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
-import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -16,7 +15,6 @@ import com.mrq.paljobs.R;
 import com.mrq.paljobs.helpers.Constants;
 import com.mrq.paljobs.helpers.NetworkHelper;
 import com.mrq.paljobs.models.Favorite;
-import com.mrq.paljobs.models.Proposal;
 import com.mrq.paljobs.models.User;
 import com.orhanobut.hawk.Hawk;
 
@@ -28,6 +26,136 @@ public class ApiRequest<T> {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseAuth auth = FirebaseAuth.getInstance();
+
+    public void login(
+            Activity context,
+            String email,
+            String password,
+            Results<User> result
+    ) {
+        if (NetworkHelper.INSTANCE.isNetworkOnline(context)) {
+            result.onLoading(true);
+            auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            db.collection("User")
+                                    .document(Objects.requireNonNull(auth.getUid()))
+                                    .get()
+                                    .addOnSuccessListener(snapshot -> {
+                                        User user = snapshot.toObject(User.class);
+                                        result.onSuccess(user);
+                                        Hawk.put(Constants.IS_LOGIN, true);
+                                        Hawk.put(Constants.USER, user);
+                                        Hawk.put(Constants.USER_TOKEN, auth.getUid());
+                                        Hawk.put(Constants.USER_TYPE, Objects.requireNonNull(user).getUserType());
+                                        result.onLoading(false);
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        result.onException(context.getString(R.string.error));
+                                        result.onLoading(false);
+                                    });
+                        } else {
+                            result.onLoading(false);
+                            result.onException(context.getString(R.string.con_not_login));
+                        }
+                    });
+        } else {
+            result.onFailureInternet(context.getString(R.string.no_internet));
+        }
+    }
+
+    public void register(
+            Activity context,
+            User user,
+            Results<String> result
+    ) {
+        if (NetworkHelper.INSTANCE.isNetworkOnline(context)) {
+            result.onLoading(true);
+            auth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            user.setId(auth.getUid());
+                            db.collection("User")
+                                    .document(Objects.requireNonNull(auth.getUid()))
+                                    .set(user)
+                                    .addOnSuccessListener(unused -> {
+                                        result.onSuccess(context.getString(R.string.account_successfully));
+                                        Hawk.put(Constants.IS_LOGIN, true);
+                                        Hawk.put(Constants.USER, user);
+                                        Hawk.put(Constants.USER_TOKEN, auth.getUid());
+                                        Hawk.put(Constants.USER_TYPE, user.getUserType());
+                                        result.onLoading(false);
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        result.onLoading(false);
+                                        result.onException(context.getString(R.string.error));
+                                    });
+                        } else {
+                            result.onLoading(false);
+                            result.onException(context.getString(R.string.con_not_create_account));
+                        }
+                    });
+        } else {
+            result.onFailureInternet(context.getString(R.string.no_internet));
+        }
+    }
+
+    public void uploadImage(
+            Activity context,
+            Uri imagePath,
+            String fileName,
+            String photoType,
+            Results<String> result
+    ) {
+        if (NetworkHelper.INSTANCE.isNetworkOnline(context)) {
+            result.onLoading(true);
+            StorageReference reference = FirebaseStorage.getInstance().getReference()
+                    .child("images/" + UUID.randomUUID().toString() + fileName);
+            reference.putFile(imagePath)
+                    .addOnSuccessListener(taskSnapshot -> {
+                        result.onLoading(false);
+                        reference.getDownloadUrl().addOnSuccessListener(uri -> {
+                            result.onSuccess(uri.toString());
+                            DocumentReference docRef = db.collection("User").document(Hawk.get(Constants.USER_TOKEN));
+                            docRef.update(photoType, uri.toString());
+                        });
+                    })
+                    .addOnFailureListener(e -> {
+                        result.onLoading(false);
+                        result.onException(context.getString(R.string.error_upload_image));
+                    });
+        } else {
+            result.onFailureInternet(context.getString(R.string.no_internet));
+        }
+    }
+
+    public void uploadFile(
+            Activity context,
+            Uri filePath,
+            String fileName,
+            Results<String> result
+    ) {
+        if (NetworkHelper.INSTANCE.isNetworkOnline(context)) {
+            result.onLoading(true);
+            StorageReference reference = FirebaseStorage.getInstance().getReference()
+                    .child("files/" + UUID.randomUUID().toString() + fileName);
+            reference.putFile(filePath)
+                    .addOnSuccessListener(taskSnapshot -> {
+                        result.onLoading(false);
+                        reference.getDownloadUrl().addOnSuccessListener(uri -> {
+                            result.onSuccess(uri.toString());
+                            DocumentReference docRef = db.collection("User").document(Hawk.get(Constants.USER_TOKEN));
+                            docRef.update("cv", uri.toString());
+                        });
+                    })
+                    .addOnFailureListener(e -> {
+                        result.onLoading(false);
+                        result.onException(context.getString(R.string.error_upload_file));
+                    });
+        } else {
+            result.onFailureInternet(context.getString(R.string.no_internet));
+        }
+    }
 
     public void getData(
             Context context,
@@ -168,156 +296,43 @@ public class ApiRequest<T> {
         }
     }
 
-    public void login(
-            Activity context,
-            String email,
-            String password,
-            Results<User> result
-    ) {
-        if (NetworkHelper.INSTANCE.isNetworkOnline(context)) {
-            result.onLoading(true);
-            auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            db.collection("User")
-                                    .document(Objects.requireNonNull(auth.getUid()))
-                                    .get()
-                                    .addOnSuccessListener(snapshot -> {
-                                        User user = snapshot.toObject(User.class);
-                                        result.onSuccess(user);
-                                        Hawk.put(Constants.IS_LOGIN, true);
-                                        Hawk.put(Constants.USER, user);
-                                        Hawk.put(Constants.USER_TOKEN, auth.getUid());
-                                        Hawk.put(Constants.USER_TYPE, Objects.requireNonNull(user).getUserType());
-                                        result.onLoading(false);
-                                    })
-                                    .addOnFailureListener(e -> {
-                                        result.onException(context.getString(R.string.error));
-                                        result.onLoading(false);
-                                    });
-                        } else {
-                            result.onLoading(false);
-                            result.onException(context.getString(R.string.con_not_login));
-                        }
-                    });
-        } else {
-            result.onFailureInternet(context.getString(R.string.no_internet));
-        }
-    }
-
-    public void register(
-            Activity context,
-            User user,
-            Results<String> result
-    ) {
-        if (NetworkHelper.INSTANCE.isNetworkOnline(context)) {
-            result.onLoading(true);
-            auth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            user.setId(auth.getUid());
-                            db.collection("User")
-                                    .document(Objects.requireNonNull(auth.getUid()))
-                                    .set(user)
-                                    .addOnSuccessListener(unused -> {
-                                        result.onSuccess(context.getString(R.string.account_successfully));
-                                        Hawk.put(Constants.IS_LOGIN, true);
-                                        Hawk.put(Constants.USER, user);
-                                        Hawk.put(Constants.USER_TOKEN, auth.getUid());
-                                        Hawk.put(Constants.USER_TYPE, user.getUserType());
-                                        result.onLoading(false);
-                                    })
-                                    .addOnFailureListener(e -> {
-                                        result.onLoading(false);
-                                        result.onException(context.getString(R.string.error));
-                                    });
-                        } else {
-                            result.onLoading(false);
-                            result.onException(context.getString(R.string.con_not_create_account));
-                        }
-                    });
-        } else {
-            result.onFailureInternet(context.getString(R.string.no_internet));
-        }
-    }
-
-    public void uploadImage(
-            Activity context,
-            Uri imagePath,
-            String fileName,
-            String photoType,
-            Results<String> result
-    ) {
-        if (NetworkHelper.INSTANCE.isNetworkOnline(context)) {
-            result.onLoading(true);
-            StorageReference reference = FirebaseStorage.getInstance().getReference()
-                    .child("images/" + UUID.randomUUID().toString() + fileName);
-            reference.putFile(imagePath)
-                    .addOnSuccessListener(taskSnapshot -> {
-                        result.onLoading(false);
-                        reference.getDownloadUrl().addOnSuccessListener(uri -> {
-                            result.onSuccess(uri.toString());
-                            DocumentReference docRef = db.collection("User").document(Hawk.get(Constants.USER_TOKEN));
-                            docRef.update(photoType, uri.toString());
-                        });
-                    })
-                    .addOnFailureListener(e -> {
-                        result.onLoading(false);
-                        result.onException(context.getString(R.string.error_upload_image));
-                    });
-        } else {
-            result.onFailureInternet(context.getString(R.string.no_internet));
-        }
-    }
-
-    public void uploadFile(
-            Activity context,
-            Uri filePath,
-            String fileName,
-            Results<String> result
-    ) {
-        if (NetworkHelper.INSTANCE.isNetworkOnline(context)) {
-            result.onLoading(true);
-            StorageReference reference = FirebaseStorage.getInstance().getReference()
-                    .child("files/" + UUID.randomUUID().toString() + fileName);
-            reference.putFile(filePath)
-                    .addOnSuccessListener(taskSnapshot -> {
-                        result.onLoading(false);
-                        reference.getDownloadUrl().addOnSuccessListener(uri -> {
-                            result.onSuccess(uri.toString());
-                            DocumentReference docRef = db.collection("User").document(Hawk.get(Constants.USER_TOKEN));
-                            docRef.update("cv", uri.toString());
-                        });
-                    })
-                    .addOnFailureListener(e -> {
-                        result.onLoading(false);
-                        result.onException(context.getString(R.string.error_upload_file));
-                    });
-        } else {
-            result.onFailureInternet(context.getString(R.string.no_internet));
-        }
-    }
-
     public void addFavorite(
             Context context,
-            String collection,
             Favorite favorite,
             Results<String> result
     ) {
         if (NetworkHelper.INSTANCE.isNetworkOnline(context)) {
             result.onLoading(true);
-            db.collection(collection)
+            db.collection("FavoriteProposal")
                     .add(favorite)
                     .addOnSuccessListener(document -> {
-                        result.onLoading(false);
-                        Log.e("response", "document = " + document.getId());
                         document.update("id", document.getId());
-                        result.onSuccess("uri.toString()");
+                        result.onSuccess(context.getString(R.string.add_favorite_success));
+                        result.onLoading(false);
                     })
                     .addOnFailureListener(error -> {
                         result.onLoading(false);
                         result.onException(context.getString(R.string.error));
                     });
+        } else {
+            result.onFailureInternet(context.getString(R.string.no_internet));
+        }
+    }
+
+    public void removeFavorite(
+            Context context,
+            String id,
+            Results<String> result
+    ) {
+        if (NetworkHelper.INSTANCE.isNetworkOnline(context)) {
+            result.onLoading(true);
+            db.collection("FavoriteProposal").document(id).delete().addOnSuccessListener(runnable -> {
+                result.onLoading(false);
+                result.onSuccess(context.getString(R.string.remove_favorite_success));
+            }).addOnFailureListener(error -> {
+                result.onLoading(false);
+                result.onException(context.getString(R.string.error));
+            });
         } else {
             result.onFailureInternet(context.getString(R.string.no_internet));
         }

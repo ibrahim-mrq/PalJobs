@@ -30,6 +30,7 @@ public class ProposalAdapter extends RecyclerView.Adapter<ProposalAdapter.Propos
 
     Context mContext;
     ArrayList<Proposal> list;
+    ArrayList<Favorite> favorites;
     SaveInterface anInterface;
 
     public ProposalAdapter(Context mContext) {
@@ -40,8 +41,9 @@ public class ProposalAdapter extends RecyclerView.Adapter<ProposalAdapter.Propos
         return list;
     }
 
-    public void setList(ArrayList<Proposal> list) {
+    public void setList(ArrayList<Proposal> list, ArrayList<Favorite> favorites) {
         this.list = list;
+        this.favorites = favorites;
         notifyDataSetChanged();
     }
 
@@ -61,11 +63,12 @@ public class ProposalAdapter extends RecyclerView.Adapter<ProposalAdapter.Propos
         Proposal model = list.get(position);
         holder.bind(model);
 
-        loadSavedProposals(holder.binding.save);
+        model.setSaved(Constants.ifItemInFavorite(model, favorites, holder.binding.save));
 
         holder.binding.save.setOnClickListener(view -> {
             anInterface.onclick(model, holder.binding.save);
         });
+
     }
 
     @Override

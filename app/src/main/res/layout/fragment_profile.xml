@@ -117,7 +117,7 @@
                 android:enabled="false"
                 android:inputType="textEmailAddress"
                 android:textAlignment="textStart"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/textSecondary"
                 android:textStyle="bold"
                 tools:ignore="RtlSymmetry" />
 
@@ -169,7 +169,7 @@
                 android:enabled="false"
                 android:inputType="textPassword"
                 android:textAlignment="textStart"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/textSecondary"
                 android:textStyle="bold"
                 tools:ignore="RtlSymmetry" />
 
@@ -247,7 +247,7 @@
                 android:imeOptions="actionDone"
                 android:inputType="text"
                 android:textAlignment="textStart"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/textSecondary"
                 android:textStyle="bold"
                 tools:ignore="RtlSymmetry" />
 

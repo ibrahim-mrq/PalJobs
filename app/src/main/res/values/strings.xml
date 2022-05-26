@@ -23,6 +23,9 @@
     <string name="error">An error occurred, please try again</string>
     <string name="back_exit">Press again to exit.</string>
 
+    <string name="remove_favorite_success">Successfully removed from favourites</string>
+    <string name="add_favorite_success">Successfully added to favourites</string>
+
     <string name="login_successfully">You are logged in successfully</string>
     <string name="logout_successfully">Signed out successfully</string>
     <string name="logout">Logout</string>
@@ -60,7 +63,7 @@
     <string name="profile">Profile</string>
     <string name="submit">Submit</string>
     <string name="save">Save</string>
-    <string name="home">Home</string>
+    <string name="home">Jobs</string>
     <string name="explore">Explore</string>
     <string name="save_jobs">Save Jobs</string>
     <string name="submit_jobs">Submit Jobs</string>
@@ -92,12 +95,12 @@
     <string name="must_select_skills">At least one skill must be selected</string>
     <string name="must_select_photo">At least one photo must be selected</string>
     <string name="must_select_file">You must choose a CV file first</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="general">General</string>
     <string name="account">Account</string>
     <string name="privacy">Privacy</string>
     <string name="help">Help</string>
+    <string name="jobs">Jobs</string>
 
 
 </resources>
