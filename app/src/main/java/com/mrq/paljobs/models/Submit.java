@@ -7,17 +7,24 @@ import java.util.ArrayList;
 public class Submit {
 
     private String id;
+
     private String companyImage;
     private String companyName;
     private String companyId;
 
     private String customerId;
+    private String customerName;
+    private String customerEmail;
+    private String customerPhone;
+    private String customerCv;
+
     private String proposalId;
 
     private String title;
     private String content;
     private ArrayList<String> skills;
     private String requirement;
+
     private String time;
 
     private boolean saved;
@@ -34,6 +41,10 @@ public class Submit {
                 ", companyName='" + companyName + '\'' +
                 ", companyId='" + companyId + '\'' +
                 ", customerId='" + customerId + '\'' +
+                ", customerName='" + customerName + '\'' +
+                ", customerEmail='" + customerEmail + '\'' +
+                ", customerPhone='" + customerPhone + '\'' +
+                ", customerCv='" + customerCv + '\'' +
                 ", proposalId='" + proposalId + '\'' +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
@@ -82,6 +93,38 @@ public class Submit {
 
     public void setCustomerId(String customerId) {
         this.customerId = customerId;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getCustomerEmail() {
+        return customerEmail;
+    }
+
+    public void setCustomerEmail(String customerEmail) {
+        this.customerEmail = customerEmail;
+    }
+
+    public String getCustomerPhone() {
+        return customerPhone;
+    }
+
+    public void setCustomerPhone(String customerPhone) {
+        this.customerPhone = customerPhone;
+    }
+
+    public String getCustomerCv() {
+        return customerCv;
+    }
+
+    public void setCustomerCv(String customerCv) {
+        this.customerCv = customerCv;
     }
 
     public String getProposalId() {

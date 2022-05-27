@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/relativeMainView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/shape_white">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:includeFontPadding="false"
+                    android:text="Filters"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvTitle"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:checkedButton="@+id/rbDateAddedLatestFirst"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/rbAlphabetically"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/five"
+                        android:buttonTint="@color/colorRed"
+                        android:fontFamily="@font/mulish_600"
+                        android:gravity="center"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:tag="ALPHA"
+                        android:text="Alphabetically"
+                        android:textSize="@dimen/onefour" />
+
+
+                    <RelativeLayout
+                        android:layout_width="@dimen/oneeightzero"
+                        android:layout_height="@dimen/fourzero"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp">
+
+                        <LinearLayout
+                            android:layout_width="@dimen/oneeightzero"
+                            android:layout_height="@dimen/fourzero"
+                            android:layout_gravity="center"
+                            android:background="@drawable/bg_rounded_white_grey_border"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/four"
+                            android:weightSum="2">
+
+                            <RelativeLayout
+                                android:id="@+id/relativeLeftAtoZ"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
+
+                                <TextView
+                                    android:id="@+id/textLeftAtoZ"
+                                    style="@style/font_mulish_300"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_centerVertical="true"
+                                    android:text="A to Z"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/colorBlack"
+                                    android:textSize="@dimen/onetwo" />
+
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/relativeRightZtoA"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
+
+                                <TextView
+                                    android:id="@+id/textRightZtoA"
+                                    style="@style/font_mulish_300"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_centerVertical="true"
+                                    android:text="Z to A"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/colorBlack"
+                                    android:textSize="@dimen/onetwo" />
+
+
+                            </RelativeLayout>
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linearAlphabetically"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                        </LinearLayout>
+                    </RelativeLayout>
+
+
+                    <RadioButton
+                        android:id="@+id/rbPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="15dp"
+                        android:buttonTint="@color/colorRed"
+                        android:checked="false"
+                        android:fontFamily="@font/mulish_600"
+                        android:gravity="center"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:tag="PRICE"
+                        android:text="Price"
+                        android:textSize="@dimen/onefour" />
+
+
+                    <RelativeLayout
+                        android:layout_width="@dimen/twothreezero"
+                        android:layout_height="@dimen/fourzero"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="@dimen/twothreezero"
+                            android:layout_height="@dimen/fourzero"
+                            android:layout_gravity="center"
+                            android:background="@drawable/bg_rounded_white_grey_border"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/four"
+                            android:weightSum="2">
+
+                            <RelativeLayout
+                                android:id="@+id/relativeLeftLowtoHigh"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
+
+                                <TextView
+                                    android:id="@+id/textLeftLowtoHigh"
+                                    style="@style/font_mulish_300"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_centerVertical="true"
+                                    android:text="Low to High"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/colorBlack"
+                                    android:textSize="@dimen/onetwo" />
+
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/relativeRightHightoLow"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
+
+                                <TextView
+                                    android:id="@+id/textRightHightoLow"
+                                    style="@style/font_mulish_300"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_centerVertical="true"
+                                    android:text="High to Low"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/colorBlack"
+                                    android:textSize="@dimen/onetwo" />
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linearPrice"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+
+                    <RadioButton
+                        android:id="@+id/rbDateAddedLatestFirst"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="15dp"
+                        android:buttonTint="@color/colorRed"
+                        android:checked="false"
+                        android:fontFamily="@font/mulish_600"
+                        android:gravity="center"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:tag="DATE_ADDED"
+                        android:text="Date Added  (latest First)"
+                        android:textSize="@dimen/onefour" />
+
+
+                </RadioGroup>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <Button
+                        android:id="@+id/btb_reset"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/shape_primary"
+                        android:stateListAnimator="@null"
+                        android:text="Reset"
+                        android:textAllCaps="false"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+
+                    <Button
+                        android:id="@+id/btn_apply"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/shape_primary"
+                        android:stateListAnimator="@null"
+                        android:text="Apply"
+                        android:textAllCaps="false"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeClose"
+        android:layout_width="@dimen/fourzero"
+        android:layout_height="@dimen/fourzero"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/twofive"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/bg_black_circle_button">
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="@dimen/twozero"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/icon_arrow_up" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
+

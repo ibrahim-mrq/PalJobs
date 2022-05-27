@@ -105,8 +105,10 @@ public class ProfileFragment extends BaseFragment {
                         binding.etJobTitle.setText(user.getJobTitle());
                         binding.etGender.setText(user.getGender());
                         adapter.setList(user.getSkills());
-                        Picasso.get().load(user.getPhotoCover()).placeholder(R.drawable.ic_img_blank).into(binding.cover);
-                        Picasso.get().load(user.getPhoto()).placeholder(R.drawable.ic_img_blank).into(binding.photo);
+                        Picasso.get().load(user.getPhotoCover())
+                                .placeholder(R.drawable.ic_img_blank)
+                                .into(binding.cover);
+                        Picasso.get().load(user.getPhoto()).placeholder(R.drawable.shape_accent).into(binding.photo);
                     }
 
                     @Override

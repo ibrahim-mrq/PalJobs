@@ -103,6 +103,7 @@
     <string name="jobs">Jobs</string>
     <string name="submitted">Submitted</string>
     <string name="proposal_already__saved">Proposal has already been saved</string>
+    <string name="search_here">search here</string>
 
 
 </resources>

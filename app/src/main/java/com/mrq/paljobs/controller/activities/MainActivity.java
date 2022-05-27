@@ -1,7 +1,6 @@
 package com.mrq.paljobs.controller.activities;
 
 import androidx.annotation.StringRes;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -10,8 +9,6 @@ import androidx.fragment.app.FragmentTransaction;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.mrq.paljobs.R;
@@ -26,11 +23,16 @@ import com.mrq.paljobs.helpers.BaseActivity;
 @SuppressLint("NonConstantResourceId")
 public class MainActivity extends BaseActivity {
 
-    ActionBarDrawerToggle toggle;
     ActivityMainBinding binding;
-   public static MainActivity context;
+    public static MainActivity context;
     Toast backToasty;
     long backPressedTime;
+
+
+    HomeFragment homeFragment = HomeFragment.newInstance();
+    FavoriteFragment favoriteFragment = FavoriteFragment.newInstance();
+    SubmitFragment submitFragment = SubmitFragment.newInstance();
+    ProfileFragment profileFragment = ProfileFragment.newInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,15 +44,18 @@ public class MainActivity extends BaseActivity {
 
     private void initView() {
         context = MainActivity.this;
-        toggle = new ActionBarDrawerToggle(this, binding.drawer, binding.main.appbar.toolbar,
-                R.string.open, R.string.close);
-        binding.drawer.addDrawerListener(toggle);
-        toggle.syncState();
-        binding.main.appbar.toolbar.setNavigationIcon(R.drawable.ic_menu);
-        setSupportActionBar(binding.main.appbar.toolbar);
-        replaceFragment(HomeFragment.newInstance(), R.string.jobs);
+        replaceFragment(homeFragment, R.string.jobs);
         initBottomNavigation();
         initNavView();
+
+        binding.main.appbar.imgMenu.setOnClickListener(view -> {
+            binding.drawer.open();
+        });
+
+        binding.main.appbar.imgSearch.setOnClickListener(view -> {
+            startActivity(new Intent(this, SearchActivity.class));
+        });
+
     }
 
     private void initBottomNavigation() {
@@ -58,16 +63,19 @@ public class MainActivity extends BaseActivity {
         binding.main.bottomNavigation.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.bottom_home:
-                    replaceFragment(HomeFragment.newInstance(), R.string.jobs);
+                    binding.navView.setCheckedItem(R.id.nav_explore);
+                    replaceFragment(homeFragment, R.string.jobs);
                     return true;
                 case R.id.bottom_save:
-                    replaceFragment(FavoriteFragment.newInstance(), R.string.save_jobs);
+                    binding.navView.setCheckedItem(R.id.nav_save);
+                    replaceFragment(favoriteFragment, R.string.save_jobs);
                     return true;
                 case R.id.bottom_submit:
-                    replaceFragment(SubmitFragment.newInstance(), R.string.save_jobs);
+                    binding.navView.setCheckedItem(R.id.nav_submit);
+                    replaceFragment(submitFragment, R.string.save_jobs);
                     return true;
                 case R.id.bottom_profile:
-                    replaceFragment(ProfileFragment.newInstance(), R.string.profile);
+                    replaceFragment(profileFragment, R.string.profile);
                     return true;
             }
             return false;
@@ -79,13 +87,16 @@ public class MainActivity extends BaseActivity {
         binding.navView.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.nav_explore:
-                    replaceFragment(HomeFragment.newInstance(), R.string.jobs);
+                    binding.main.bottomNavigation.setSelectedItemId(R.id.bottom_home);
+                    replaceFragment(homeFragment, R.string.jobs);
                     break;
                 case R.id.nav_save:
-                    replaceFragment(FavoriteFragment.newInstance(), R.string.save_jobs);
+                    binding.main.bottomNavigation.setSelectedItemId(R.id.bottom_save);
+                    replaceFragment(favoriteFragment, R.string.save_jobs);
                     break;
                 case R.id.nav_submit:
-                    replaceFragment(SubmitFragment.newInstance(), R.string.submit_jobs);
+                    binding.main.bottomNavigation.setSelectedItemId(R.id.bottom_submit);
+                    replaceFragment(submitFragment, R.string.submit_jobs);
                     break;
                 case R.id.nav_search:
 //                    replaceFragment(HomeFragment.newInstance(), R.string.search);
@@ -103,26 +114,11 @@ public class MainActivity extends BaseActivity {
     }
 
     public void replaceFragment(Fragment fragment, @StringRes int title) {
-        binding.main.appbar.toolbar.setTitle(getResources().getText(title));
+        binding.main.appbar.tvTool.setText(getResources().getText(title));
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.main_frame, fragment);
         transaction.commit();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_appbar, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.appbar_search) {
-            startActivity(new Intent(this, SearchActivity.class));
-            return true;
-        }
-        return toggle.onOptionsItemSelected(item);
     }
 
     @Override
