@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-public class Favorite {
+public class Submit {
 
     private String id;
     private String companyImage;
@@ -19,15 +19,16 @@ public class Favorite {
     private ArrayList<String> skills;
     private String requirement;
     private String time;
-    private boolean submit;
 
-    public Favorite() {
+    private boolean saved;
+
+    public Submit() {
     }
 
     @NotNull
     @Override
     public String toString() {
-        return "Proposal{" +
+        return "Submit{" +
                 "id='" + id + '\'' +
                 ", companyImage='" + companyImage + '\'' +
                 ", companyName='" + companyName + '\'' +
@@ -39,7 +40,7 @@ public class Favorite {
                 ", skills=" + skills +
                 ", requirement='" + requirement + '\'' +
                 ", time='" + time + '\'' +
-                ", submit='" + submit + '\'' +
+                ", saved=" + saved +
                 '}';
     }
 
@@ -73,6 +74,22 @@ public class Favorite {
 
     public void setCompanyId(String companyId) {
         this.companyId = companyId;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
+    public String getProposalId() {
+        return proposalId;
+    }
+
+    public void setProposalId(String proposalId) {
+        this.proposalId = proposalId;
     }
 
     public String getTitle() {
@@ -115,27 +132,11 @@ public class Favorite {
         this.time = time;
     }
 
-    public String getCustomerId() {
-        return customerId;
+    public boolean isSaved() {
+        return saved;
     }
 
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
-    }
-
-    public String getProposalId() {
-        return proposalId;
-    }
-
-    public void setProposalId(String proposalId) {
-        this.proposalId = proposalId;
-    }
-
-    public boolean isSubmit() {
-        return submit;
-    }
-
-    public void setSubmit(boolean submit) {
-        this.submit = submit;
+    public void setSaved(boolean saved) {
+        this.saved = saved;
     }
 }

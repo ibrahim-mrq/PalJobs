@@ -3,6 +3,9 @@ package com.mrq.paljobs.firebase;
 import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -207,7 +210,7 @@ public class ApiRequest<T> {
     }
 
     public void getData(
-            Context context,
+            Activity context,
             String collection,
             String key,
             String value,
@@ -303,7 +306,7 @@ public class ApiRequest<T> {
     ) {
         if (NetworkHelper.INSTANCE.isNetworkOnline(context)) {
             result.onLoading(true);
-            db.collection("FavoriteProposal")
+            db.collection("Favorite")
                     .add(favorite)
                     .addOnSuccessListener(document -> {
                         document.update("id", document.getId());
@@ -326,7 +329,7 @@ public class ApiRequest<T> {
     ) {
         if (NetworkHelper.INSTANCE.isNetworkOnline(context)) {
             result.onLoading(true);
-            db.collection("FavoriteProposal").document(id).delete().addOnSuccessListener(runnable -> {
+            db.collection("Favorite").document(id).delete().addOnSuccessListener(runnable -> {
                 result.onLoading(false);
                 result.onSuccess(context.getString(R.string.remove_favorite_success));
             }).addOnFailureListener(error -> {

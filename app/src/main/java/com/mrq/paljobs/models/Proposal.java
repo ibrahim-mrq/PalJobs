@@ -16,6 +16,7 @@ public class Proposal {
     private String requirement;
     private String time;
     private boolean saved;
+    private boolean submit;
 
     public Proposal() {
     }
@@ -34,6 +35,7 @@ public class Proposal {
                 ", requirement='" + requirement + '\'' +
                 ", time='" + time + '\'' +
                 ", saved='" + saved + '\'' +
+                ", submit='" + submit + '\'' +
                 '}';
     }
 
@@ -115,5 +117,13 @@ public class Proposal {
 
     public void setSaved(boolean saved) {
         this.saved = saved;
+    }
+
+    public boolean getSubmit() {
+        return submit;
+    }
+
+    public void setSubmit(boolean submit) {
+        this.submit = submit;
     }
 }

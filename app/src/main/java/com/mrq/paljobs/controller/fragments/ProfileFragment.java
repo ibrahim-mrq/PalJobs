@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.mrq.paljobs.R;
+import com.mrq.paljobs.controller.activities.MainActivity;
 import com.mrq.paljobs.controller.adapters.SkillsAdapter;
 import com.mrq.paljobs.databinding.FragmentProfileBinding;
 import com.mrq.paljobs.firebase.ApiRequest;
@@ -88,7 +89,7 @@ public class ProfileFragment extends BaseFragment {
 
     private void loadData() {
         new ApiRequest<User>().getData(
-                getActivity(),
+                MainActivity.context,
                 "User",
                 Hawk.get(Constants.USER_TOKEN),
                 User.class,

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mrq.paljobs.R;
+import com.mrq.paljobs.controller.activities.MainActivity;
 import com.mrq.paljobs.controller.adapters.FavoriteAdapter;
 import com.mrq.paljobs.databinding.FragmentFavoriteBinding;
 import com.mrq.paljobs.firebase.ApiRequest;
@@ -68,8 +69,8 @@ public class FavoriteFragment extends BaseFragment implements SwipeRefreshLayout
     private void initFavorite() {
         binding.include.swipeToRefresh.setRefreshing(false);
         new ApiRequest<Favorite>().getData(
-                requireActivity(),
-                "FavoriteProposal",
+                MainActivity.context,
+                "Favorite",
                 "customerId",
                 Hawk.get(Constants.USER_TOKEN),
                 Favorite.class,
@@ -107,7 +108,7 @@ public class FavoriteFragment extends BaseFragment implements SwipeRefreshLayout
 
     private void removeFavorite(String id) {
         new ApiRequest<String>().removeFavorite(
-                requireActivity(),
+                MainActivity.context,
                 id,
                 new Results<String>() {
                     @Override

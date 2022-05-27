@@ -14,10 +14,12 @@ import android.util.Log
 import android.view.Gravity
 import android.widget.*
 import androidx.annotation.ColorRes
+import androidx.core.content.ContextCompat
 import com.mrq.paljobs.R
 import com.mrq.paljobs.controller.activities.SplashActivity
 import com.mrq.paljobs.models.Favorite
 import com.mrq.paljobs.models.Proposal
+import com.mrq.paljobs.models.Submit
 import com.orhanobut.hawk.Hawk
 import com.tapadoo.alerter.Alerter
 import java.io.File
@@ -149,10 +151,35 @@ object Constants {
         val index = list.indexOfFirst { it.proposalId == product.id } // -1 if not found
         return if (index >= 0) {
             imageView.setImageResource(R.drawable.ic_save)
+//            imageView.isEnabled = false
             true
         } else {
             imageView.setImageResource(R.drawable.ic_unsave)
+//            imageView.isEnabled = true
             false
+        }
+    }
+
+    @JvmStatic
+    fun ifItemIsSubmit(
+        context: Context,
+        product: Proposal,
+        list: ArrayList<Submit>,
+        button: Button
+    ): Boolean {
+        val index = list.indexOfFirst { it.proposalId == product.id } // -1 if not found
+        return if (index >= 0) {
+            button.setBackgroundResource(R.drawable.shape_gray)
+            button.setText(R.string.submit_your_proposal)
+            button.setTextColor(ContextCompat.getColor(context, R.color.textPrimary))
+            button.isEnabled = true
+            false
+        } else {
+            button.setBackgroundResource(R.drawable.shape_accent)
+            button.setText(R.string.submitted)
+            button.setTextColor(ContextCompat.getColor(context, R.color.white))
+            button.isEnabled = false
+            true
         }
     }
 

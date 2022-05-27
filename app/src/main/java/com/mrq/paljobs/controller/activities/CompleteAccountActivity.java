@@ -141,7 +141,10 @@ public class CompleteAccountActivity extends BaseActivity {
     }
 
     private void loadSkills() {
-        new ApiRequest<Skills>().getData(this, "Skills", Skills.class,
+        new ApiRequest<Skills>().getData(
+                this,
+                "Skills",
+                Skills.class,
                 new Results<ArrayList<Skills>>() {
                     @Override
                     public void onSuccess(ArrayList<Skills> listSkills) {
@@ -245,63 +248,72 @@ public class CompleteAccountActivity extends BaseActivity {
     }
 
     private void uploadImage(Uri imagePath, String fileName, String photoType) {
-        new ApiRequest<>().uploadImage(this, imagePath, fileName, photoType, new Results<String>() {
-            @Override
-            public void onSuccess(String s) {
-                showAlert(CompleteAccountActivity.this,
-                        getString(R.string.upload_picture_successfully), R.color.green_success);
-            }
+        new ApiRequest<>().uploadImage(
+                this,
+                imagePath,
+                fileName,
+                photoType,
+                new Results<String>() {
+                    @Override
+                    public void onSuccess(String s) {
+                        showAlert(CompleteAccountActivity.this,
+                                getString(R.string.upload_picture_successfully), R.color.green_success);
+                    }
 
-            @Override
-            public void onFailureInternet(@NotNull String offline) {
-                showAlert(CompleteAccountActivity.this, offline, R.color.orange);
-            }
+                    @Override
+                    public void onFailureInternet(@NotNull String offline) {
+                        showAlert(CompleteAccountActivity.this, offline, R.color.orange);
+                    }
 
-            @Override
-            public void onException(@NotNull String exception) {
-                showAlert(CompleteAccountActivity.this, exception, R.color.red);
-            }
+                    @Override
+                    public void onException(@NotNull String exception) {
+                        showAlert(CompleteAccountActivity.this, exception, R.color.red);
+                    }
 
-            @Override
-            public void onEmpty() {
+                    @Override
+                    public void onEmpty() {
 
-            }
+                    }
 
-            @Override
-            public void onLoading(boolean loading) {
-                enableElements(!loading);
-            }
-        });
+                    @Override
+                    public void onLoading(boolean loading) {
+                        enableElements(!loading);
+                    }
+                });
     }
 
     private void uploadFile(Uri filePath, String fileName) {
-        new ApiRequest<>().uploadFile(this, filePath, fileName, new Results<String>() {
-            @Override
-            public void onSuccess(String s) {
-                showAlert(CompleteAccountActivity.this,
-                        getString(R.string.upload_file_successfully), R.color.green_success);
-            }
+        new ApiRequest<>().uploadFile(
+                this,
+                filePath,
+                fileName,
+                new Results<String>() {
+                    @Override
+                    public void onSuccess(String s) {
+                        showAlert(CompleteAccountActivity.this,
+                                getString(R.string.upload_file_successfully), R.color.green_success);
+                    }
 
-            @Override
-            public void onFailureInternet(@NotNull String offline) {
-                showAlert(CompleteAccountActivity.this, offline, R.color.orange);
-            }
+                    @Override
+                    public void onFailureInternet(@NotNull String offline) {
+                        showAlert(CompleteAccountActivity.this, offline, R.color.orange);
+                    }
 
-            @Override
-            public void onException(@NotNull String exception) {
-                showAlert(CompleteAccountActivity.this, exception, R.color.red);
-            }
+                    @Override
+                    public void onException(@NotNull String exception) {
+                        showAlert(CompleteAccountActivity.this, exception, R.color.red);
+                    }
 
-            @Override
-            public void onEmpty() {
+                    @Override
+                    public void onEmpty() {
 
-            }
+                    }
 
-            @Override
-            public void onLoading(boolean loading) {
-                enableElements(!loading);
-            }
-        });
+                    @Override
+                    public void onLoading(boolean loading) {
+                        enableElements(!loading);
+                    }
+                });
     }
 
     @Override

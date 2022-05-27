@@ -101,6 +101,8 @@
     <string name="privacy">Privacy</string>
     <string name="help">Help</string>
     <string name="jobs">Jobs</string>
+    <string name="submitted">Submitted</string>
+    <string name="proposal_already__saved">Proposal has already been saved</string>
 
 
 </resources>
