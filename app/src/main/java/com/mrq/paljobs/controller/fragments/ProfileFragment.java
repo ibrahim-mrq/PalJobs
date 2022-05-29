@@ -7,7 +7,6 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +64,15 @@ public class ProfileFragment extends BaseFragment {
         binding.recyclerView.setAdapter(adapter);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
         binding.btnUpdate.setOnClickListener(view -> update());
+
+        if (Hawk.get(Constants.USER_TYPE, Constants.TYPE_EMPLOYEE).equals(Constants.TYPE_COMPANY)) {
+            binding.tvSkills.setVisibility(View.GONE);
+            binding.uploadSkills.setVisibility(View.GONE);
+            binding.tvJobTitle.setVisibility(View.GONE);
+            binding.tvGender.setVisibility(View.GONE);
+            binding.tvCv.setVisibility(View.GONE);
+        }
+
     }
 
     private void update() {
@@ -105,10 +113,18 @@ public class ProfileFragment extends BaseFragment {
                         binding.etJobTitle.setText(user.getJobTitle());
                         binding.etGender.setText(user.getGender());
                         adapter.setList(user.getSkills());
-                        Picasso.get().load(user.getPhotoCover())
-                                .placeholder(R.drawable.ic_img_blank)
-                                .into(binding.cover);
-                        Picasso.get().load(user.getPhoto()).placeholder(R.drawable.shape_accent).into(binding.photo);
+
+                        if (user.getSkills().isEmpty()) {
+                            binding.tvSkills.setVisibility(View.GONE);
+                            binding.uploadSkills.setVisibility(View.GONE);
+                        }
+
+                        if (!user.getPhotoCover().isEmpty())
+                            Picasso.get().load(user.getPhotoCover())
+                                    .placeholder(R.drawable.ic_img_blank)
+                                    .into(binding.cover);
+                        if (!user.getPhoto().isEmpty())
+                            Picasso.get().load(user.getPhoto()).placeholder(R.drawable.shape_accent).into(binding.photo);
                     }
 
                     @Override

@@ -12,13 +12,17 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.mrq.paljobs.R;
+import com.mrq.paljobs.controller.fragments.CompanyFragment;
 import com.mrq.paljobs.controller.fragments.HomeFragment;
 import com.mrq.paljobs.controller.fragments.ProfileFragment;
 import com.mrq.paljobs.controller.fragments.FavoriteFragment;
+import com.mrq.paljobs.controller.fragments.ReceivedFragment;
 import com.mrq.paljobs.controller.fragments.SettingFragment;
 import com.mrq.paljobs.controller.fragments.SubmitFragment;
 import com.mrq.paljobs.databinding.ActivityMainBinding;
 import com.mrq.paljobs.helpers.BaseActivity;
+import com.mrq.paljobs.helpers.Constants;
+import com.orhanobut.hawk.Hawk;
 
 @SuppressLint("NonConstantResourceId")
 public class MainActivity extends BaseActivity {
@@ -28,7 +32,10 @@ public class MainActivity extends BaseActivity {
     Toast backToasty;
     long backPressedTime;
 
-
+    // TODO : company
+    CompanyFragment companyFragment = CompanyFragment.newInstance();
+    ReceivedFragment receivedFragment = ReceivedFragment.newInstance();
+    // TODO : Employee
     HomeFragment homeFragment = HomeFragment.newInstance();
     FavoriteFragment favoriteFragment = FavoriteFragment.newInstance();
     SubmitFragment submitFragment = SubmitFragment.newInstance();
@@ -44,7 +51,6 @@ public class MainActivity extends BaseActivity {
 
     private void initView() {
         context = MainActivity.this;
-        replaceFragment(homeFragment, R.string.jobs);
         initBottomNavigation();
         initNavView();
 
@@ -59,7 +65,16 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initBottomNavigation() {
-        binding.main.bottomNavigation.setSelectedItemId(R.id.bottom_home);
+        binding.main.bottomNavigation.getMenu().clear();
+        if (Hawk.get(Constants.USER_TYPE, Constants.TYPE_EMPLOYEE).equals(Constants.TYPE_COMPANY)) {
+            binding.main.bottomNavigation.inflateMenu(R.menu.menu_bottom_company);
+            replaceFragment(companyFragment, R.string.my_jobs);
+            binding.main.bottomNavigation.setSelectedItemId(R.id.bottom_c_home);
+        } else {
+            binding.main.bottomNavigation.inflateMenu(R.menu.menu_bottom);
+            replaceFragment(homeFragment, R.string.jobs);
+            binding.main.bottomNavigation.setSelectedItemId(R.id.bottom_home);
+        }
         binding.main.bottomNavigation.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.bottom_home:
@@ -76,6 +91,14 @@ public class MainActivity extends BaseActivity {
                     return true;
                 case R.id.bottom_profile:
                     replaceFragment(profileFragment, R.string.profile);
+                    return true;
+                // TODO : Company
+
+                case R.id.bottom_c_home:
+                    replaceFragment(companyFragment, R.string.my_jobs);
+                    return true;
+                case R.id.bottom_c_received:
+                    replaceFragment(receivedFragment, R.string.received_jobs);
                     return true;
             }
             return false;

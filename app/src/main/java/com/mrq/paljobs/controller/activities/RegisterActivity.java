@@ -77,6 +77,7 @@ public class RegisterActivity extends BaseActivity {
             user.setPhoto("");
             user.setPhotoCover("");
             user.setAddress(getText(binding.etAddress));
+            user.setGender("");
             user.setJobTitle("");
             user.setCv("");
             user.setUserType(type);
