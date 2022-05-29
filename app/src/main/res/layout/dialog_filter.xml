@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/relativeMainView"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/transparent">
@@ -30,7 +30,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
                     android:includeFontPadding="false"
-                    android:text="Filters"
+                    android:text="@string/filters"
                     android:textAllCaps="true"
                     android:textColor="@color/black"
                     android:textSize="18sp"
@@ -40,199 +40,111 @@
                     android:id="@+id/radioGroup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvTitle"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:checkedButton="@+id/rbDateAddedLatestFirst"
                     android:orientation="vertical">
 
-                    <RadioButton
-                        android:id="@+id/rbAlphabetically"
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/skills"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/five"
-                        android:buttonTint="@color/colorRed"
-                        android:fontFamily="@font/mulish_600"
+                        android:layout_marginTop="5dp"
+                        android:buttonTint="@color/colorAccent"
                         android:gravity="center"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
+                        android:paddingHorizontal="10dp"
                         android:tag="ALPHA"
-                        android:text="Alphabetically"
-                        android:textSize="@dimen/onefour" />
+                        android:text="@string/skills"
+                        android:textSize="14sp" />
 
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tv_skills"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="20dp"
+                        android:hint="@string/skills"
+                        app:boxStrokeColor="@color/colorAccent"
+                        app:endIconDrawable="@drawable/ic_add"
+                        app:endIconMode="custom"
+                        app:endIconTint="@color/colorAccent"
+                        app:hintAnimationEnabled="true"
+                        app:hintEnabled="true"
+                        app:hintTextColor="@color/colorAccent">
 
-                    <RelativeLayout
-                        android:layout_width="@dimen/oneeightzero"
-                        android:layout_height="@dimen/fourzero"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="10dp">
-
-                        <LinearLayout
-                            android:layout_width="@dimen/oneeightzero"
-                            android:layout_height="@dimen/fourzero"
-                            android:layout_gravity="center"
-                            android:background="@drawable/bg_rounded_white_grey_border"
-                            android:orientation="horizontal"
-                            android:padding="@dimen/four"
-                            android:weightSum="2">
-
-                            <RelativeLayout
-                                android:id="@+id/relativeLeftAtoZ"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1">
-
-                                <TextView
-                                    android:id="@+id/textLeftAtoZ"
-                                    style="@style/font_mulish_300"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerHorizontal="true"
-                                    android:layout_centerVertical="true"
-                                    android:text="A to Z"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/colorBlack"
-                                    android:textSize="@dimen/onetwo" />
-
-                            </RelativeLayout>
-
-                            <RelativeLayout
-                                android:id="@+id/relativeRightZtoA"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1">
-
-                                <TextView
-                                    android:id="@+id/textRightZtoA"
-                                    style="@style/font_mulish_300"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerHorizontal="true"
-                                    android:layout_centerVertical="true"
-                                    android:text="Z to A"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/colorBlack"
-                                    android:textSize="@dimen/onetwo" />
-
-
-                            </RelativeLayout>
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/linearAlphabetically"
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_skills"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical">
+                            android:clickable="true"
+                            android:cursorVisible="false"
+                            android:focusable="false"
+                            android:inputType="text"
+                            android:longClickable="false"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/colorAccent"
+                            android:textStyle="bold"
+                            tools:ignore="KeyboardInaccessibleWidget" />
 
-                        </LinearLayout>
-                    </RelativeLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-
-                    <RadioButton
-                        android:id="@+id/rbPrice"
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/company"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginTop="15dp"
-                        android:buttonTint="@color/colorRed"
+                        android:buttonTint="@color/colorAccent"
                         android:checked="false"
-                        android:fontFamily="@font/mulish_600"
                         android:gravity="center"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
+                        android:paddingHorizontal="10dp"
                         android:tag="PRICE"
-                        android:text="Price"
-                        android:textSize="@dimen/onefour" />
+                        android:text="@string/company"
+                        android:textSize="14sp" />
 
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tv_company"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="20dp"
+                        android:hint="@string/company"
+                        app:boxStrokeColor="@color/colorAccent"
+                        app:endIconDrawable="@drawable/ic_add"
+                        app:endIconMode="custom"
+                        app:endIconTint="@color/colorAccent"
+                        app:hintAnimationEnabled="true"
+                        app:hintEnabled="true"
+                        app:hintTextColor="@color/colorAccent">
 
-                    <RelativeLayout
-                        android:layout_width="@dimen/twothreezero"
-                        android:layout_height="@dimen/fourzero"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="@dimen/twothreezero"
-                            android:layout_height="@dimen/fourzero"
-                            android:layout_gravity="center"
-                            android:background="@drawable/bg_rounded_white_grey_border"
-                            android:orientation="horizontal"
-                            android:padding="@dimen/four"
-                            android:weightSum="2">
-
-                            <RelativeLayout
-                                android:id="@+id/relativeLeftLowtoHigh"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1">
-
-                                <TextView
-                                    android:id="@+id/textLeftLowtoHigh"
-                                    style="@style/font_mulish_300"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerHorizontal="true"
-                                    android:layout_centerVertical="true"
-                                    android:text="Low to High"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/colorBlack"
-                                    android:textSize="@dimen/onetwo" />
-
-                            </RelativeLayout>
-
-                            <RelativeLayout
-                                android:id="@+id/relativeRightHightoLow"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1">
-
-                                <TextView
-                                    android:id="@+id/textRightHightoLow"
-                                    style="@style/font_mulish_300"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerHorizontal="true"
-                                    android:layout_centerVertical="true"
-                                    android:text="High to Low"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/colorBlack"
-                                    android:textSize="@dimen/onetwo" />
-
-                            </RelativeLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/linearPrice"
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_company"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical">
+                            android:clickable="true"
+                            android:cursorVisible="false"
+                            android:focusable="false"
+                            android:inputType="text"
+                            android:longClickable="false"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/colorAccent"
+                            android:textStyle="bold"
+                            tools:ignore="KeyboardInaccessibleWidget" />
 
-                        </LinearLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    </RelativeLayout>
-
-
-                    <RadioButton
-                        android:id="@+id/rbDateAddedLatestFirst"
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginTop="15dp"
-                        android:buttonTint="@color/colorRed"
-                        android:checked="false"
-                        android:fontFamily="@font/mulish_600"
+                        android:buttonTint="@color/colorAccent"
+                        android:checked="true"
                         android:gravity="center"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
+                        android:paddingHorizontal="10dp"
                         android:tag="DATE_ADDED"
-                        android:text="Date Added  (latest First)"
-                        android:textSize="@dimen/onefour" />
-
+                        android:text="@string/date_first"
+                        android:textSize="14sp" />
 
                 </RadioGroup>
 
@@ -243,29 +155,29 @@
                     android:orientation="horizontal"
                     android:padding="5dp">
 
-                    <Button
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btb_reset"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="5dp"
                         android:layout_weight="1"
-                        android:background="@drawable/shape_primary"
+                        android:background="@drawable/shape_select_corner_grey"
                         android:stateListAnimator="@null"
-                        android:text="Reset"
+                        android:text="@string/reset"
                         android:textAllCaps="false"
                         android:textAppearance="?android:textAppearanceMedium"
                         android:textColor="@color/white"
                         android:textSize="14sp" />
 
-                    <Button
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btn_apply"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="5dp"
                         android:layout_weight="1"
-                        android:background="@drawable/shape_primary"
+                        android:background="@drawable/shape_select_corner_accent"
                         android:stateListAnimator="@null"
-                        android:text="Apply"
+                        android:text="@string/apply"
                         android:textAllCaps="false"
                         android:textAppearance="?android:textAppearanceMedium"
                         android:textColor="@color/white"
@@ -277,27 +189,26 @@
 
         </androidx.core.widget.NestedScrollView>
 
-
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/relativeClose"
-        android:layout_width="@dimen/fourzero"
-        android:layout_height="@dimen/fourzero"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/twofive"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/bg_black_circle_button">
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/shape_black">
 
         <ImageView
             android:layout_width="15dp"
-            android:layout_height="@dimen/twozero"
+            android:layout_height="24dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/icon_arrow_up" />
+            android:background="@drawable/ic_arrow_up"
+            tools:ignore="ContentDescription" />
 
     </RelativeLayout>
-
 
 </RelativeLayout>
 

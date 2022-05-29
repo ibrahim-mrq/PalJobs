@@ -1,14 +1,4 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-<!--    &lt;!&ndash; TODO :  Base application theme. &ndash;&gt;-->
-<!--    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">-->
-<!--        <item name="colorPrimary">@color/colorPrimary</item>-->
-<!--        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
-<!--        <item name="colorAccent">@color/colorAccent</item>-->
-<!--        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>-->
-<!--        <item name="colorControlHighlight">@color/textSecondary</item>-->
-<!--        <item name="android:screenOrientation">portrait</item>-->
-<!--        <item name="android:layoutDirection">rtl</item>-->
-<!--    </style>-->
 
     <!--  TODO : MaterialTheme  -->
     <style name="MaterialTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
@@ -20,6 +10,7 @@
         <item name="android:screenOrientation">portrait</item>
     </style>
 
+    <!-- TODO :  corner ImageView   -->
     <style name="cornerImageView">
         <item name="cornerSize">50%</item>
     </style>
@@ -32,6 +23,12 @@
     <!-- TODO :  navigation   -->
     <style name="navigationViewStyleBoldText">
         <item name="android:textColor">@color/black</item>
+    </style>
+
+    <!-- TODO :  Dialog Animation   -->
+    <style name="animationName" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/animation_on</item>
+        <item name="android:windowExitAnimation">@anim/animation_off</item>
     </style>
 
 </resources>

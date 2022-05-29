@@ -5,13 +5,16 @@ package com.mrq.paljobs.helpers
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.provider.OpenableColumns
 import android.util.Log
-import android.view.Gravity
+import android.view.*
 import android.widget.*
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
@@ -181,6 +184,29 @@ object Constants {
             button.isEnabled = false
             true
         }
+    }
+
+    @JvmStatic
+    fun showFilterDialog(context: Activity) {
+        val dialog = Dialog(context)
+        dialog.setCancelable(true)
+        dialog.setCanceledOnTouchOutside(true)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_filter)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window!!.setWindowAnimations(R.style.animationName)
+
+        val params: ViewGroup.LayoutParams = context.window.attributes
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT
+        context.window.attributes = params as WindowManager.LayoutParams
+
+
+        val relativeClose = dialog.findViewById(R.id.relativeClose) as RelativeLayout
+        relativeClose.setOnClickListener { dialog.dismiss() }
+
+
+        dialog.show()
+
     }
 
 }

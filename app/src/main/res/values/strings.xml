@@ -104,6 +104,10 @@
     <string name="submitted">Submitted</string>
     <string name="proposal_already__saved">Proposal has already been saved</string>
     <string name="search_here">search here</string>
+    <string name="filters">Filters</string>
+    <string name="date_first">Date Added (latest First)</string>
+    <string name="reset">Reset</string>
+    <string name="apply">Apply</string>
 
 
 </resources>

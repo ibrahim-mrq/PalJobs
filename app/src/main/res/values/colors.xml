@@ -15,9 +15,15 @@
     <color name="grey">#ADB0B1</color>
     <color name="greyItem">#FAFAFA</color>
     <color name="greyNav">#5d666c</color>
-
     <color name="greyLight">#e6e6e6</color>
     <color name="greyLight2">#D1D4D5</color>
+
+    <color name="colorGrey">#C5C3C3</color>
+    <color name="colorGreyDark1">#808080</color>
+
+    <color name="colorRed">#FE6852</color>
+    <color name="colorRed_lite">#D7FE6852</color>
+
     <color name="blue">#71D0F6</color>
     <color name="blueLight">#F1F9FF</color>
     <color name="green">#91C556</color>

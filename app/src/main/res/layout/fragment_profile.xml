@@ -104,10 +104,10 @@
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="10dp"
             android:hint="@string/email"
-            app:boxStrokeColor="@color/colorAccent"
+            app:boxStrokeColor="@color/textSecondary"
             app:hintAnimationEnabled="true"
             app:hintEnabled="true"
-            app:hintTextColor="@color/colorAccent">
+            app:hintTextColor="@color/textSecondary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_email"
@@ -155,11 +155,11 @@
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="10dp"
             android:hint="@string/password"
-            app:boxStrokeColor="@color/colorAccent"
+            app:boxStrokeColor="@color/textSecondary"
             app:endIconMode="password_toggle"
             app:hintAnimationEnabled="true"
             app:hintEnabled="true"
-            app:hintTextColor="@color/colorAccent">
+            app:hintTextColor="@color/textSecondary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_password"
@@ -233,10 +233,10 @@
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="10dp"
             android:hint="@string/gender"
-            app:boxStrokeColor="@color/colorAccent"
+            app:boxStrokeColor="@color/textSecondary"
             app:hintAnimationEnabled="true"
             app:hintEnabled="true"
-            app:hintTextColor="@color/colorAccent">
+            app:hintTextColor="@color/textSecondary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_gender"
