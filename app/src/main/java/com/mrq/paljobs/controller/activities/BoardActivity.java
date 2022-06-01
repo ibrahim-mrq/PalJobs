@@ -63,8 +63,10 @@ public class BoardActivity extends BaseActivity {
                 loadDots(position);
                 if (position == adapter.getCount() - 1) {
                     binding.next.setVisibility(View.VISIBLE);
+                    binding.skip.setVisibility(View.INVISIBLE);
                 } else {
                     binding.next.setVisibility(View.INVISIBLE);
+                    binding.skip.setVisibility(View.VISIBLE);
                 }
             }
 

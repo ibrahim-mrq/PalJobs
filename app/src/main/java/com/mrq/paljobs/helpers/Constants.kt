@@ -53,12 +53,13 @@ object Constants {
     const val TYPE_COMPANY = "Company"
 
     const val TYPE_PHOTO = "photo"
-    const val TYPE_PHOTO_COVER = "photoCover"
 
     const val TYPE_LANGUAGE = "type_language"
     const val TYPE_LANGUAGE_AR = "ar"
     const val TYPE_LANGUAGE_EN = "en"
 
+    const val TYPE_FAVORITE = "favorite"
+    const val TYPE_PROPOSAL = "proposal"
 
     @JvmStatic
     fun getCurrentDate(): String? {
@@ -164,23 +165,46 @@ object Constants {
     @JvmStatic
     fun ifItemIsSubmit(
         context: Context,
+        product: Favorite,
+        list: ArrayList<Submit>,
+        button: Button
+    ): Boolean {
+        val index = list.indexOfFirst { it.proposalId == product.proposalId } // -1 if not found
+        return if (index >= 0) {
+            button.setBackgroundResource(R.drawable.shape_gray)
+            button.setText(R.string.submitted)
+            button.setTextColor(ContextCompat.getColor(context, R.color.textPrimary))
+            button.isEnabled = false
+            true
+        } else {
+            button.setBackgroundResource(R.drawable.shape_accent)
+            button.setText(R.string.submit_your_proposal)
+            button.setTextColor(ContextCompat.getColor(context, R.color.white))
+            button.isEnabled = true
+            false
+        }
+    }
+
+    @JvmStatic
+    fun ifItemIsSubmit(
+        context: Context,
         product: Proposal,
         list: ArrayList<Submit>,
         button: Button
     ): Boolean {
         val index = list.indexOfFirst { it.proposalId == product.id } // -1 if not found
         return if (index >= 0) {
-            button.setBackgroundResource(R.drawable.shape_accent)
-            button.setText(R.string.submit_your_proposal)
-            button.setTextColor(ContextCompat.getColor(context, R.color.white))
-            button.isEnabled = true
-            false
-        } else {
             button.setBackgroundResource(R.drawable.shape_gray)
             button.setText(R.string.submitted)
             button.setTextColor(ContextCompat.getColor(context, R.color.textPrimary))
             button.isEnabled = false
             true
+        } else {
+            button.setBackgroundResource(R.drawable.shape_accent)
+            button.setText(R.string.submit_your_proposal)
+            button.setTextColor(ContextCompat.getColor(context, R.color.white))
+            button.isEnabled = true
+            false
         }
     }
 
@@ -201,7 +225,6 @@ object Constants {
 
         val relativeClose = dialog.findViewById(R.id.relativeClose) as RelativeLayout
         relativeClose.setOnClickListener { dialog.dismiss() }
-
 
         dialog.show()
 

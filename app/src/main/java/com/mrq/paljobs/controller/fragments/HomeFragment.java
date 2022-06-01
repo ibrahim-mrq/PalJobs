@@ -210,7 +210,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         favorite.setTitle(model.getTitle());
         favorite.setCustomerId(Hawk.get(Constants.USER_TOKEN));
 
-        new ApiRequest<String>().addFavorite(
+        new ApiRequest<Favorite>().addFavorite(
                 MainActivity.context,
                 favorite,
                 new Results<String>() {

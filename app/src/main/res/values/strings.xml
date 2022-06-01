@@ -121,6 +121,10 @@
     <string name="your_proposal">Your Proposal</string>
     <string name="write_a_description_about_your_job">Write a description about your job</string>
     <string name="requirements">Requirements</string>
+    <string name="set_your_account_as">Set your account as</string>
+    <string name="choose_your_skills">Choose your skills</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="resume">Resume</string>
 
 
 </resources>

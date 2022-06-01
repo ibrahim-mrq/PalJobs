@@ -20,6 +20,7 @@ import com.mrq.paljobs.firebase.Results;
 import com.mrq.paljobs.helpers.BaseFragment;
 import com.mrq.paljobs.helpers.Constants;
 import com.mrq.paljobs.models.Favorite;
+import com.mrq.paljobs.models.Submit;
 import com.orhanobut.hawk.Hawk;
 
 import org.jetbrains.annotations.NotNull;
@@ -63,10 +64,48 @@ public class FavoriteFragment extends BaseFragment implements SwipeRefreshLayout
         binding.include.recyclerView.setAdapter(adapter);
         binding.include.recyclerView.setHasFixedSize(true);
         binding.include.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        initFavorite();
+        initSubmit();
     }
 
-    private void initFavorite() {
+    private void initSubmit() {
+        new ApiRequest<Submit>().getData(
+                MainActivity.context,
+                "Submit",
+                "customerId",
+                Hawk.get(Constants.USER_TOKEN),
+                Submit.class,
+                new Results<ArrayList<Submit>>() {
+                    @Override
+                    public void onSuccess(ArrayList<Submit> submit) {
+                        initFavorite(submit);
+                    }
+
+                    @Override
+                    public void onFailureInternet(@NotNull String offline) {
+                        binding.include.statefulLayout.showOffline(offline, view -> initSubmit());
+                    }
+
+                    @Override
+                    public void onEmpty() {
+                        initFavorite(new ArrayList<>());
+                    }
+
+                    @Override
+                    public void onException(@NotNull String exception) {
+                        initFavorite(new ArrayList<>());
+                    }
+
+                    @Override
+                    public void onLoading(boolean loading) {
+                        if (loading) {
+                            binding.include.statefulLayout.showLoading();
+                        }
+                    }
+                }
+        );
+    }
+
+    private void initFavorite(ArrayList<Submit> submits) {
         binding.include.swipeToRefresh.setRefreshing(false);
         new ApiRequest<Favorite>().getData(
                 MainActivity.context,
@@ -78,12 +117,12 @@ public class FavoriteFragment extends BaseFragment implements SwipeRefreshLayout
                     @Override
                     public void onSuccess(ArrayList<Favorite> favorites) {
                         binding.include.statefulLayout.showContent();
-                        adapter.setList(favorites);
+                        adapter.setList(favorites, submits);
                     }
 
                     @Override
                     public void onFailureInternet(@NotNull String offline) {
-                        binding.include.statefulLayout.showOffline(offline, view -> initFavorite());
+                        binding.include.statefulLayout.showOffline(offline, view -> initFavorite(submits));
                     }
 
                     @Override
@@ -93,14 +132,11 @@ public class FavoriteFragment extends BaseFragment implements SwipeRefreshLayout
 
                     @Override
                     public void onException(@NotNull String exception) {
-                        binding.include.statefulLayout.showError(exception, view -> initFavorite());
+                        binding.include.statefulLayout.showError(exception, view -> initFavorite(submits));
                     }
 
                     @Override
                     public void onLoading(boolean loading) {
-                        if (loading) {
-                            binding.include.statefulLayout.showLoading();
-                        }
                     }
                 }
         );
@@ -143,7 +179,7 @@ public class FavoriteFragment extends BaseFragment implements SwipeRefreshLayout
 
     @Override
     public void onRefresh() {
-        initFavorite();
+        initSubmit();
     }
 
 }

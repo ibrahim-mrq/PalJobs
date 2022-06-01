@@ -3,9 +3,6 @@ package com.mrq.paljobs.firebase;
 import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -18,6 +15,7 @@ import com.mrq.paljobs.R;
 import com.mrq.paljobs.helpers.Constants;
 import com.mrq.paljobs.helpers.NetworkHelper;
 import com.mrq.paljobs.models.Favorite;
+import com.mrq.paljobs.models.Submit;
 import com.mrq.paljobs.models.User;
 import com.orhanobut.hawk.Hawk;
 
@@ -341,4 +339,27 @@ public class ApiRequest<T> {
         }
     }
 
+
+    public void addToSubmit(
+            Context context,
+            Submit submit,
+            Results<String> result
+    ) {
+        if (NetworkHelper.INSTANCE.isNetworkOnline(context)) {
+            result.onLoading(true);
+            db.collection("Submit")
+                    .add(submit)
+                    .addOnSuccessListener(document -> {
+                        document.update("id", document.getId());
+                        result.onSuccess(context.getString(R.string.add_favorite_success));
+                        result.onLoading(false);
+                    })
+                    .addOnFailureListener(error -> {
+                        result.onLoading(false);
+                        result.onException(context.getString(R.string.error));
+                    });
+        } else {
+            result.onFailureInternet(context.getString(R.string.no_internet));
+        }
+    }
 }

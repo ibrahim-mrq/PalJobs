@@ -13,9 +13,8 @@ public class User {
     private String password;
     private String phone;
     private String photo;
-    private String photoCover;
     private String address;
-    private String jobTitle;
+    private String jobField;
     private String about;
     private String cv;
     private String gender;
@@ -36,9 +35,9 @@ public class User {
                 ", password='" + password + '\'' +
                 ", phone='" + phone + '\'' +
                 ", photo='" + photo + '\'' +
-                ", photoCover='" + photoCover + '\'' +
                 ", address='" + address + '\'' +
-                ", jobTitle='" + jobTitle + '\'' +
+                ", jobField='" + jobField + '\'' +
+                "about" + about + '\'' +
                 ", cv='" + cv + '\'' +
                 ", gender='" + gender + '\'' +
                 ", userType='" + userType + '\'' +
@@ -102,14 +101,6 @@ public class User {
         this.photo = photo;
     }
 
-    public String getPhotoCover() {
-        return photoCover;
-    }
-
-    public void setPhotoCover(String photoCover) {
-        this.photoCover = photoCover;
-    }
-
     public String getGender() {
         return gender;
     }
@@ -126,12 +117,20 @@ public class User {
         this.address = address;
     }
 
-    public String getJobTitle() {
-        return jobTitle;
+    public String getJobField() {
+        return jobField;
     }
 
-    public void setJobTitle(String jobTitle) {
-        this.jobTitle = jobTitle;
+    public void setJobField(String jobField) {
+        this.jobField = jobField;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
     }
 
     public String getCv() {

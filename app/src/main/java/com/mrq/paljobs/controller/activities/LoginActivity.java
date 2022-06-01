@@ -29,7 +29,6 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void initView() {
-        binding.appbar.imgBack.setOnClickListener(view -> onBackPressed());
         binding.appbar.tvTool.setText(getString(R.string.login));
 
         binding.forget.setOnClickListener(view -> {
@@ -109,7 +108,6 @@ public class LoginActivity extends BaseActivity {
             binding.btnLogin.setBackground(ContextCompat.getDrawable(this, R.drawable.shape_accent));
             binding.progressBar.setVisibility(View.INVISIBLE);
         }
-        binding.appbar.imgBack.setEnabled(enable);
         binding.etEmail.setEnabled(enable);
         binding.etPassword.setEnabled(enable);
     }

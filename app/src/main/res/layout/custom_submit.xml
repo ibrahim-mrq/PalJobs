@@ -104,11 +104,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:background="@null"
-            tools:itemCount="7"
-            tools:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-            tools:listitem="@layout/custom_skills"
-            tools:orientation="horizontal"
-            tools:spanCount="2" />
+            android:orientation="vertical"
+            android:overScrollMode="never"
+            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+            app:spanCount="4"
+            tools:itemCount="10"
+            tools:listitem="@layout/custom_skills" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_submit"
@@ -118,13 +119,14 @@
             android:layout_marginHorizontal="10dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/shape_gray"
+            android:enabled="false"
             android:foreground="?attr/selectableItemBackground"
             android:gravity="center"
             android:text="@string/submitted"
-            android:textStyle="bold"
             android:textAllCaps="false"
             android:textColor="@color/textPrimary"
             android:textSize="16sp"
+            android:textStyle="bold"
             tools:ignore="UnusedAttribute" />
 
     </LinearLayout>

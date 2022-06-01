@@ -1,5 +1,6 @@
 package com.mrq.paljobs.controller.activities;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +26,9 @@ public class JobDetailsActivity extends BaseActivity {
     ActivityJobDetailsBinding binding;
     SkillsAdapter adapter;
     Proposal proposal;
+    Favorite favorite;
+    String type;
+    boolean saved = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,44 +39,110 @@ public class JobDetailsActivity extends BaseActivity {
     }
 
     private void initView() {
-        proposal = (Proposal) getIntent().getSerializableExtra(Constants.TYPE_MODEL);
-
+        type = getIntent().getStringExtra(Constants.TYPE_TITLE);
         binding.appbar.imgBack.setOnClickListener(view -> onBackPressed());
         binding.appbar.tvTool.setText(getString(R.string.submit_proposal));
 
-        binding.name.setText(proposal.getCompanyName());
-        binding.time.setText(proposal.getTime());
-        binding.title.setText(proposal.getTitle());
-        binding.content.setText(proposal.getContent());
-        binding.requirements.setText(proposal.getRequirement());
 
-        if (!proposal.getCompanyImage().isEmpty())
-            Picasso.get().load(proposal.getCompanyImage()).into(binding.image);
+        if (type.equals(Constants.TYPE_FAVORITE)) {
+            favorite = (Favorite) getIntent().getSerializableExtra(Constants.TYPE_MODEL);
 
-        adapter = new SkillsAdapter(this);
-        adapter.setList(proposal.getSkills());
-        binding.recyclerview.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-        binding.recyclerview.setHasFixedSize(true);
-        binding.recyclerview.setAdapter(adapter);
+            binding.name.setText(favorite.getCompanyName());
+            binding.time.setText(favorite.getTime());
+            binding.title.setText(favorite.getTitle());
+            binding.content.setText(favorite.getContent());
+            binding.requirements.setText(favorite.getRequirement());
 
-        if (proposal.getSaved()) {
+            if (!favorite.getCompanyImage().isEmpty())
+                Picasso.get().load(favorite.getCompanyImage()).into(binding.image);
+
+            adapter = new SkillsAdapter(this);
+            adapter.setList(favorite.getSkills());
+//            binding.recyclerview.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+            binding.recyclerview.setHasFixedSize(true);
+            binding.recyclerview.setAdapter(adapter);
             binding.save.setImageResource(R.drawable.ic_save);
-        } else {
-            binding.save.setImageResource(R.drawable.ic_unsave);
-        }
-        binding.save.setOnClickListener(view -> {
-            if (proposal.getSaved()) {
-                showAlert(this, getString(R.string.proposal_already__saved), R.color.green);
+
+            binding.save.setOnClickListener(view -> {
+                if (saved) {
+                    removeFavorite(favorite.getId());
+                } else {
+                    showAlert(this, getString(R.string.remove_favorite_success), R.color.green);
+                }
+                saved = !saved;
+            });
+
+            if (favorite.getSubmit()) {
+                binding.btnSubmit.setBackgroundResource(R.drawable.shape_gray);
+                binding.btnSubmit.setText(R.string.submitted);
+                binding.btnSubmit.setTextColor(ContextCompat.getColor(this, R.color.textPrimary));
+                binding.btnSubmit.setEnabled(false);
             } else {
-                addFavorite(proposal);
+                binding.btnSubmit.setBackgroundResource(R.drawable.shape_accent);
+                binding.btnSubmit.setText(R.string.submit_your_proposal);
+                binding.btnSubmit.setTextColor(ContextCompat.getColor(this, R.color.white));
+                binding.btnSubmit.setEnabled(true);
             }
 
-        });
+            binding.btnSubmit.setOnClickListener(view -> {
+                startActivity(new Intent(this, SubmitActivity.class)
+                        .putExtra(Constants.TYPE_TITLE, Constants.TYPE_FAVORITE)
+                        .putExtra(Constants.TYPE_MODEL, favorite)
+                );
+            });
 
-        binding.btnSubmit.setOnClickListener(view -> {
-            startActivity(new Intent(this, SubmitActivity.class)
-                    .putExtra(Constants.TYPE_MODEL, proposal));
-        });
+        } else {
+            proposal = (Proposal) getIntent().getSerializableExtra(Constants.TYPE_MODEL);
+
+            binding.name.setText(proposal.getCompanyName());
+            binding.time.setText(proposal.getTime());
+            binding.title.setText(proposal.getTitle());
+            binding.content.setText(proposal.getContent());
+            binding.requirements.setText(proposal.getRequirement());
+
+            if (!proposal.getCompanyImage().isEmpty())
+                Picasso.get().load(proposal.getCompanyImage()).into(binding.image);
+
+            adapter = new SkillsAdapter(this);
+            adapter.setList(proposal.getSkills());
+//            binding.recyclerview.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+            binding.recyclerview.setHasFixedSize(true);
+            binding.recyclerview.setAdapter(adapter);
+
+            if (proposal.getSaved()) {
+                binding.save.setImageResource(R.drawable.ic_save);
+            } else {
+                binding.save.setImageResource(R.drawable.ic_unsave);
+            }
+            binding.save.setOnClickListener(view -> {
+                if (proposal.getSaved()) {
+                    showAlert(this, getString(R.string.proposal_already__saved), R.color.green);
+                } else {
+                    addFavorite(proposal);
+                }
+            });
+
+            if (proposal.getSubmit()) {
+                binding.btnSubmit.setBackgroundResource(R.drawable.shape_gray);
+                binding.btnSubmit.setText(R.string.submitted);
+                binding.btnSubmit.setTextColor(ContextCompat.getColor(this, R.color.textPrimary));
+                binding.btnSubmit.setEnabled(false);
+            } else {
+                binding.btnSubmit.setBackgroundResource(R.drawable.shape_accent);
+                binding.btnSubmit.setText(R.string.submit_your_proposal);
+                binding.btnSubmit.setTextColor(ContextCompat.getColor(this, R.color.white));
+                binding.btnSubmit.setEnabled(true);
+            }
+
+            binding.btnSubmit.setOnClickListener(view -> {
+                startActivity(new Intent(this, SubmitActivity.class)
+                        .putExtra(Constants.TYPE_TITLE, Constants.TYPE_PROPOSAL)
+                        .putExtra(Constants.TYPE_MODEL, proposal)
+                );
+            });
+
+        }
+
     }
 
     private void addFavorite(Proposal model) {
@@ -101,6 +171,41 @@ public class JobDetailsActivity extends BaseActivity {
                         proposal.setSaved(true);
                         binding.save.setImageResource(R.drawable.ic_save);
                         showAlert(JobDetailsActivity.this, success, R.color.green_success);
+                    }
+
+                    @Override
+                    public void onFailureInternet(@NotNull String offline) {
+                        showAlert(JobDetailsActivity.this, offline, R.color.orange);
+                    }
+
+                    @Override
+                    public void onException(@NotNull String exception) {
+                        showAlert(JobDetailsActivity.this, exception, R.color.red);
+                    }
+
+                    @Override
+                    public void onEmpty() {
+
+                    }
+
+                    @Override
+                    public void onLoading(boolean loading) {
+                        if (loading)
+                            showCustomProgress(false);
+                        else dismissCustomProgress();
+                    }
+                }
+        );
+    }
+
+    private void removeFavorite(String id) {
+        new ApiRequest<String>().removeFavorite(
+                MainActivity.context,
+                id,
+                new Results<String>() {
+                    @Override
+                    public void onSuccess(String success) {
+                        showAlert(JobDetailsActivity.this, success, R.color.orange);
                     }
 
                     @Override

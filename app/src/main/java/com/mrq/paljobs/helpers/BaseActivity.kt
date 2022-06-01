@@ -6,9 +6,7 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.util.Patterns
 import android.view.Gravity
-import android.widget.AutoCompleteTextView
-import android.widget.CheckBox
-import android.widget.LinearLayout
+import android.widget.*
 import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
@@ -68,6 +66,28 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
+    fun isNotEmpty(editText: AutoCompleteTextView, textInputLayout: TextInputLayout): Boolean {
+        return if (editText.text.toString().isBlank()) {
+            textInputLayout.isErrorEnabled = true
+            textInputLayout.error = getString(R.string.empty_field)
+            false
+        } else {
+            textInputLayout.isErrorEnabled = false
+            true
+        }
+    }
+
+    fun isNotEmpty(textView: TextView, linear: LinearLayout): Boolean {
+        return if (textView.text.toString().isBlank()) {
+            linear.background = getDrawable(R.drawable.shape_red_stroke)
+            textView.error = getString(R.string.empty_field)
+            false
+        } else {
+            linear.background = getDrawable(R.drawable.shape_gray2)
+            true
+        }
+    }
+
     fun isListNotEmpty(
         activity: Activity?,
         list: ArrayList<String>,
@@ -118,17 +138,6 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
-    fun isNotEmpty(editText: AutoCompleteTextView, textInputLayout: TextInputLayout): Boolean {
-        return if (editText.text.toString().isBlank()) {
-            textInputLayout.isErrorEnabled = true
-            textInputLayout.error = getString(R.string.empty_field)
-            false
-        } else {
-            textInputLayout.isErrorEnabled = false
-            true
-        }
-    }
-
     fun isValidEmail(editText: TextInputEditText, textInputLayout: TextInputLayout): Boolean {
         return if (Patterns.EMAIL_ADDRESS.matcher(editText.text.toString()).matches()) {
             textInputLayout.isErrorEnabled = false
@@ -175,6 +184,10 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     fun getText(editText: AutoCompleteTextView): String {
+        return editText.text.toString().trim()
+    }
+
+    fun getText(editText: EditText): String {
         return editText.text.toString().trim()
     }
 

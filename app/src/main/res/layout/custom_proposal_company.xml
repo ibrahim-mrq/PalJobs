@@ -104,11 +104,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:background="@null"
+            android:orientation="vertical"
+            android:overScrollMode="never"
+            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+            app:spanCount="4"
             tools:itemCount="7"
-            tools:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-            tools:listitem="@layout/custom_skills"
-            tools:orientation="horizontal"
-            tools:spanCount="2" />
+            tools:listitem="@layout/custom_skills" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_edit"

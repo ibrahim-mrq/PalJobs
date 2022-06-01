@@ -17,8 +17,10 @@ public class Submit {
     private String customerEmail;
     private String customerPhone;
     private String customerCv;
+    private ArrayList<String> customerSkills;
 
     private String proposalId;
+    private String proposal;
 
     private String title;
     private String content;
@@ -45,7 +47,9 @@ public class Submit {
                 ", customerEmail='" + customerEmail + '\'' +
                 ", customerPhone='" + customerPhone + '\'' +
                 ", customerCv='" + customerCv + '\'' +
+                ", customerSkills='" + customerSkills + '\'' +
                 ", proposalId='" + proposalId + '\'' +
+                ", proposal='" + proposal + '\'' +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", skills=" + skills +
@@ -127,12 +131,28 @@ public class Submit {
         this.customerCv = customerCv;
     }
 
+    public ArrayList<String> getCustomerSkills() {
+        return customerSkills;
+    }
+
+    public void setCustomerSkills(ArrayList<String> customerSkills) {
+        this.customerSkills = customerSkills;
+    }
+
     public String getProposalId() {
         return proposalId;
     }
 
     public void setProposalId(String proposalId) {
         this.proposalId = proposalId;
+    }
+
+    public String getProposal() {
+        return proposal;
+    }
+
+    public void setProposal(String proposal) {
+        this.proposal = proposal;
     }
 
     public String getTitle() {

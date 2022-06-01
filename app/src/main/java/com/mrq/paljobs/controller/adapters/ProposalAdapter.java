@@ -63,20 +63,21 @@ public class ProposalAdapter extends RecyclerView.Adapter<ProposalAdapter.Propos
         holder.bind(model);
 
         model.setSaved(Constants.ifItemInFavorite(model, favorites, holder.binding.save));
-//        model.setSubmit(Constants.ifItemIsSubmit(mContext, model, submit, holder.binding.btnSubmit));
+        model.setSubmit(Constants.ifItemIsSubmit(mContext, model, submit, holder.binding.btnSubmit));
 
         holder.binding.save.setOnClickListener(view -> {
             anInterface.onclick(model, holder.binding.save);
         });
 
-
         holder.itemView.setOnClickListener(view -> {
             mContext.startActivity(new Intent(mContext, JobDetailsActivity.class)
+                    .putExtra(Constants.TYPE_TITLE, Constants.TYPE_PROPOSAL)
                     .putExtra(Constants.TYPE_MODEL, model));
         });
 
         holder.binding.btnSubmit.setOnClickListener(view -> {
             mContext.startActivity(new Intent(mContext, SubmitActivity.class)
+                    .putExtra(Constants.TYPE_TITLE, Constants.TYPE_PROPOSAL)
                     .putExtra(Constants.TYPE_MODEL, model));
         });
 
@@ -110,7 +111,7 @@ public class ProposalAdapter extends RecyclerView.Adapter<ProposalAdapter.Propos
             binding.content.setText(model.getContent());
             SkillsAdapter adapter = new SkillsAdapter(mContext);
             adapter.setList(model.getSkills());
-            binding.recyclerview.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false));
+//            binding.recyclerview.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false));
             binding.recyclerview.setHasFixedSize(true);
             binding.recyclerview.setAdapter(adapter);
 

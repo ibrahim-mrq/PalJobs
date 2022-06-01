@@ -51,6 +51,7 @@
                 android:layout_toEndOf="@+id/frame_image"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
+                <!--                android:layout_toStartOf="@+id/save"-->
 
                 <TextView
                     android:id="@+id/name"
@@ -71,6 +72,20 @@
                     tools:text="10 Oct 2022, 08:36" />
 
             </LinearLayout>
+
+            <!--            <ImageView-->
+            <!--                android:id="@+id/save"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_alignTop="@+id/frame_image"-->
+            <!--                android:layout_alignBottom="@id/frame_image"-->
+            <!--                android:layout_alignParentEnd="true"-->
+            <!--                android:background="@drawable/shape_gray"-->
+            <!--                android:foreground="?attr/selectableItemBackground"-->
+            <!--                android:paddingHorizontal="13dp"-->
+            <!--                android:paddingVertical="10dp"-->
+            <!--                android:src="@drawable/ic_unsave"-->
+            <!--                tools:ignore="UnusedAttribute,ContentDescription" />-->
 
         </RelativeLayout>
 

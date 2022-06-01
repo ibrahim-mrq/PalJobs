@@ -1,18 +1,18 @@
 package com.mrq.paljobs.controller.fragments;
 
+import android.annotation.SuppressLint;
+import android.app.DownloadManager;
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.mrq.paljobs.R;
 import com.mrq.paljobs.controller.activities.MainActivity;
 import com.mrq.paljobs.controller.adapters.SkillsAdapter;
@@ -27,6 +27,7 @@ import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
+@SuppressLint("SetTextI18n")
 public class ProfileFragment extends BaseFragment {
 
     public ProfileFragment() {
@@ -41,7 +42,6 @@ public class ProfileFragment extends BaseFragment {
     }
 
     FragmentProfileBinding binding;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
     SkillsAdapter adapter;
 
     @Override
@@ -62,37 +62,12 @@ public class ProfileFragment extends BaseFragment {
         adapter = new SkillsAdapter(requireActivity());
         binding.recyclerView.setHasFixedSize(true);
         binding.recyclerView.setAdapter(adapter);
-        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
-        binding.btnUpdate.setOnClickListener(view -> update());
 
+        loadData();
         if (Hawk.get(Constants.USER_TYPE, Constants.TYPE_EMPLOYEE).equals(Constants.TYPE_COMPANY)) {
-            binding.tvSkills.setVisibility(View.GONE);
-            binding.uploadSkills.setVisibility(View.GONE);
-            binding.tvJobTitle.setVisibility(View.GONE);
-            binding.tvGender.setVisibility(View.GONE);
-            binding.tvCv.setVisibility(View.GONE);
+            binding.linearUser.setVisibility(View.GONE);
         }
 
-    }
-
-    private void update() {
-        enableElements(false);
-        DocumentReference docRef = db.collection("User").document(Hawk.get(Constants.USER_TOKEN));
-        docRef.update("firstName", getText(binding.etFName));
-        docRef.update("lastName", getText(binding.etLName));
-        docRef.update("phone", getText(binding.etPhone));
-        docRef.update("address", getText(binding.etAddress));
-        docRef.update("jobTitle", getText(binding.etJobTitle));
-        docRef.addSnapshotListener((value, error) -> {
-            showAlert(requireActivity(), getString(R.string.update_profile_successfully), R.color.green_success);
-            enableElements(true);
-        });
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        loadData();
     }
 
     private void loadData() {
@@ -104,27 +79,22 @@ public class ProfileFragment extends BaseFragment {
                 new Results<User>() {
                     @Override
                     public void onSuccess(User user) {
-                        binding.etFName.setText(user.getFirstName());
-                        binding.etLName.setText(user.getLastName());
-                        binding.etEmail.setText(user.getEmail());
-                        binding.etPhone.setText(user.getPhone());
-                        binding.etPassword.setText(user.getPassword());
-                        binding.etAddress.setText(user.getAddress());
-                        binding.etJobTitle.setText(user.getJobTitle());
-                        binding.etGender.setText(user.getGender());
+                        binding.name.setText(user.getFirstName() + " " + user.getLastName());
+                        binding.email.setText(user.getEmail());
+                        binding.address.setText(user.getAddress());
+                        binding.about.setText(user.getAbout());
+
                         adapter.setList(user.getSkills());
 
                         if (user.getSkills().isEmpty()) {
                             binding.tvSkills.setVisibility(View.GONE);
-                            binding.uploadSkills.setVisibility(View.GONE);
+                            binding.recyclerView.setVisibility(View.GONE);
                         }
 
-                        if (!user.getPhotoCover().isEmpty())
-                            Picasso.get().load(user.getPhotoCover())
-                                    .placeholder(R.drawable.ic_img_blank)
-                                    .into(binding.cover);
                         if (!user.getPhoto().isEmpty())
                             Picasso.get().load(user.getPhoto()).placeholder(R.drawable.shape_accent).into(binding.photo);
+
+                        binding.cv.setOnClickListener(view -> load(user.getCv()));
                     }
 
                     @Override
@@ -144,25 +114,24 @@ public class ProfileFragment extends BaseFragment {
 
                     @Override
                     public void onLoading(boolean loading) {
-                        enableElements(!loading);
+                        if (loading)
+                            showCustomProgress(false);
+                        else dismissCustomProgress();
                     }
                 });
     }
 
-    private void enableElements(boolean enable) {
-        binding.btnUpdate.setEnabled(enable);
-        if (!enable) {
-            binding.btnUpdate.setBackgroundResource(R.drawable.shape_gray);
-            binding.progressBar.setVisibility(View.VISIBLE);
-        } else {
-            binding.btnUpdate.setBackgroundResource(R.drawable.shape_accent);
-            binding.progressBar.setVisibility(View.INVISIBLE);
-        }
-        binding.etFName.setEnabled(enable);
-        binding.etLName.setEnabled(enable);
-        binding.etPhone.setEnabled(enable);
-        binding.etAddress.setEnabled(enable);
-        binding.etJobTitle.setEnabled(enable);
+    private void load(String url) {
+        DownloadManager downloadmanager = (DownloadManager)
+                requireActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+        Uri uri = Uri.parse(url);
+
+        DownloadManager.Request request = new DownloadManager.Request(uri);
+        request.setTitle("My CV File");
+        request.setDescription("Downloading");
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.setVisibleInDownloadsUi(true);
+        downloadmanager.enqueue(request);
     }
 
 }

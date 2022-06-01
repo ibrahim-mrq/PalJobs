@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -41,7 +40,6 @@ public class CompleteAccountActivity extends BaseActivity {
     ArrayList<String> localSkills = new ArrayList<>();
     SkillsSelectedAdapter adapter;
     String file = "";
-    String cover = "";
     String photo = "";
 
     @Override
@@ -54,27 +52,18 @@ public class CompleteAccountActivity extends BaseActivity {
 
     private void initView() {
         binding.appbar.tvTool.setText(getString(R.string.complete_profile));
-        binding.appbar.imgBack.setOnClickListener(view -> onBackPressed());
 
         genders();
         skills();
 
-        binding.etCv.setOnClickListener(view -> {
+        binding.cv.setOnClickListener(view -> {
             Intent intent = new Intent();
             intent.setType("application/pdf");
             intent.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(intent, Constants.REQUEST_FILE_CODE);
         });
 
-        binding.uploadCover.setOnClickListener(view -> {
-            ImagePicker.Companion.with(this)
-                    .crop(1, 1)
-                    .compress(1024)
-                    .maxResultSize(1080, 1080)
-                    .start(Constants.REQUEST_COVER_GALLERY_CODE);
-        });
-
-        binding.uploadPhoto.setOnClickListener(view -> {
+        binding.camera.setOnClickListener(view -> {
             ImagePicker.Companion.with(this)
                     .crop(1, 1)
                     .compress(1024)
@@ -87,21 +76,20 @@ public class CompleteAccountActivity extends BaseActivity {
     }
 
     private void complete() {
-        if (isNotEmpty(binding.etJobTitle, binding.tvJobTitle)
+        if (isNotEmpty(binding.etJobField, binding.tvJobField)
                 && isNotEmpty(binding.etGender, binding.tvGender)
-                && isNotEmpty(binding.etCv, binding.tvCv)
-                && isNotEmpty(binding.etCv, binding.tvCv)
+                && isNotEmpty(binding.tvCv, binding.cv)
                 && isListNotEmpty(this, localSkills, binding.uploadSkills)
                 && isListNotEmpty(this, localSkills, binding.uploadSkills)
                 && isStringNotEmpty(this, photo)
-                && isStringNotEmpty(this, cover)
                 && isFileStringNotEmpty(this, file)
         ) {
             enableElements(false);
             DocumentReference docRef = db.collection("User").document(Hawk.get(Constants.USER_TOKEN));
-            docRef.update("jobTitle", getText(binding.etJobTitle));
+            docRef.update("jobField", getText(binding.etJobField));
             docRef.update("gender", getText(binding.etGender));
             docRef.update("skills", localSkills);
+            docRef.update("about", getText(binding.about));
             docRef.addSnapshotListener((value, error) -> {
                 showAlert(CompleteAccountActivity.this,
                         getString(R.string.update_profile_successfully), R.color.green_success);
@@ -151,7 +139,7 @@ public class CompleteAccountActivity extends BaseActivity {
                         for (int i = 0; i < listSkills.size(); i++) {
                             skillsString.add(listSkills.get(i).getName());
                         }
-                        binding.etSkills.setOnClickListener(view -> {
+                        binding.skills.setOnClickListener(view -> {
                             dialogSkills(getString(R.string.select_skills), skillsString);
                         });
                     }
@@ -217,13 +205,13 @@ public class CompleteAccountActivity extends BaseActivity {
             binding.btnConfirm.setBackground(ContextCompat.getDrawable(this, R.drawable.shape_accent));
             binding.progressBar.setVisibility(View.INVISIBLE);
         }
-        binding.appbar.imgBack.setEnabled(enable);
-        binding.uploadCover.setEnabled(enable);
-        binding.uploadPhoto.setEnabled(enable);
-        binding.etJobTitle.setEnabled(enable);
+        binding.photo.setEnabled(enable);
+        binding.camera.setEnabled(enable);
+
+        binding.etJobField.setEnabled(enable);
         binding.etGender.setEnabled(enable);
-        binding.etSkills.setEnabled(enable);
-        binding.etCv.setEnabled(enable);
+        binding.skills.setEnabled(enable);
+        binding.cv.setEnabled(enable);
     }
 
     @Override
@@ -232,27 +220,22 @@ public class CompleteAccountActivity extends BaseActivity {
         if (resultCode == RESULT_OK && data != null) {
             if (requestCode == Constants.REQUEST_FILE_CODE) {
                 file = data.getData().toString();
-                binding.etCv.setText(Constants.getFileName(this, data.getData()));
+                binding.tvCv.setText(Constants.getFileName(this, data.getData()));
                 uploadFile(data.getData(), Constants.getFileName(this, data.getData()));
             } else if (requestCode == Constants.REQUEST_PHOTO_GALLERY_CODE) {
                 photo = data.getData().toString();
                 Picasso.get().load(data.getData()).into(binding.photo);
-                uploadImage(data.getData(), Constants.getFileName(this, data.getData()), Constants.TYPE_PHOTO);
-            } else if (requestCode == Constants.REQUEST_COVER_GALLERY_CODE) {
-                cover = data.getData().toString();
-                Picasso.get().load(data.getData()).into(binding.cover);
-                binding.cover.setScaleType(ImageView.ScaleType.FIT_XY);
-                uploadImage(data.getData(), Constants.getFileName(this, data.getData()), Constants.TYPE_PHOTO_COVER);
+                uploadImage(data.getData(), Constants.getFileName(this, data.getData()));
             }
         }
     }
 
-    private void uploadImage(Uri imagePath, String fileName, String photoType) {
+    private void uploadImage(Uri imagePath, String fileName) {
         new ApiRequest<>().uploadImage(
                 this,
                 imagePath,
                 fileName,
-                photoType,
+                Constants.TYPE_PHOTO,
                 new Results<String>() {
                     @Override
                     public void onSuccess(String s) {

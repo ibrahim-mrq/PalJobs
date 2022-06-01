@@ -75,10 +75,10 @@ public class RegisterActivity extends BaseActivity {
             user.setPassword(getText(binding.etPassword));
             user.setPhone(getText(binding.etPhone));
             user.setPhoto("");
-            user.setPhotoCover("");
             user.setAddress(getText(binding.etAddress));
             user.setGender("");
-            user.setJobTitle("");
+            user.setJobField("");
+            user.setAbout("");
             user.setCv("");
             user.setUserType(type);
             user.setSkills(new ArrayList<>());

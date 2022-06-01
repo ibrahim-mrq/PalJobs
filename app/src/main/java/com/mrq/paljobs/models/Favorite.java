@@ -2,9 +2,10 @@ package com.mrq.paljobs.models;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Favorite {
+public class Favorite implements Serializable {
 
     private String id;
     private String companyImage;
@@ -19,6 +20,7 @@ public class Favorite {
     private ArrayList<String> skills;
     private String requirement;
     private String time;
+
     private boolean submit;
 
     public Favorite() {
@@ -131,7 +133,7 @@ public class Favorite {
         this.proposalId = proposalId;
     }
 
-    public boolean isSubmit() {
+    public boolean getSubmit() {
         return submit;
     }
 

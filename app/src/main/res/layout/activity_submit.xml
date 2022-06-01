@@ -107,11 +107,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@null"
-                android:padding="5dp"
-                tools:itemCount="7"
-                tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/custom_skills"
-                tools:orientation="horizontal" />
+                android:orientation="vertical"
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                app:spanCount="4"
+                tools:itemCount="10"
+                tools:listitem="@layout/custom_skills" />
 
             <View
                 android:layout_width="match_parent"
