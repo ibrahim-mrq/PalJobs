@@ -124,9 +124,7 @@ public class ProfileFragment extends BaseFragment {
     private void load(String url) {
         DownloadManager downloadmanager = (DownloadManager)
                 requireActivity().getSystemService(Context.DOWNLOAD_SERVICE);
-        Uri uri = Uri.parse(url);
-
-        DownloadManager.Request request = new DownloadManager.Request(uri);
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         request.setTitle("My CV File");
         request.setDescription("Downloading");
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
