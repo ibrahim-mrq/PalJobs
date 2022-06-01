@@ -2,9 +2,10 @@ package com.mrq.paljobs.models;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Proposal {
+public class Proposal implements Serializable {
 
     private String id;
     private String companyImage;

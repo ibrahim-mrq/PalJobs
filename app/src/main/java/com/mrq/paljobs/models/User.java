@@ -16,6 +16,7 @@ public class User {
     private String photoCover;
     private String address;
     private String jobTitle;
+    private String about;
     private String cv;
     private String gender;
     private String userType;

@@ -1,6 +1,7 @@
 package com.mrq.paljobs.controller.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mrq.paljobs.R;
+import com.mrq.paljobs.controller.activities.JobDetailsActivity;
+import com.mrq.paljobs.controller.activities.SubmitActivity;
 import com.mrq.paljobs.controller.interfaceis.SaveInterface;
 import com.mrq.paljobs.databinding.CustomProposalBinding;
 import com.mrq.paljobs.helpers.Constants;
@@ -60,10 +63,21 @@ public class ProposalAdapter extends RecyclerView.Adapter<ProposalAdapter.Propos
         holder.bind(model);
 
         model.setSaved(Constants.ifItemInFavorite(model, favorites, holder.binding.save));
-        model.setSubmit(Constants.ifItemIsSubmit(mContext, model, submit, holder.binding.btnSubmit));
+//        model.setSubmit(Constants.ifItemIsSubmit(mContext, model, submit, holder.binding.btnSubmit));
 
         holder.binding.save.setOnClickListener(view -> {
             anInterface.onclick(model, holder.binding.save);
+        });
+
+
+        holder.itemView.setOnClickListener(view -> {
+            mContext.startActivity(new Intent(mContext, JobDetailsActivity.class)
+                    .putExtra(Constants.TYPE_MODEL, model));
+        });
+
+        holder.binding.btnSubmit.setOnClickListener(view -> {
+            mContext.startActivity(new Intent(mContext, SubmitActivity.class)
+                    .putExtra(Constants.TYPE_MODEL, model));
         });
 
     }

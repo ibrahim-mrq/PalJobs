@@ -16,7 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/MaterialTheme"
         tools:ignore="AllowBackup">
-        <activity android:name=".controller.activities.SearchActivity"></activity>
+        <activity android:name=".controller.activities.JobDetailsActivity"></activity>
+        <activity android:name=".controller.activities.SubmitActivity" />
+        <activity android:name=".controller.activities.SearchActivity" />
         <activity
             android:name=".controller.activities.SplashActivity"
             android:exported="true"

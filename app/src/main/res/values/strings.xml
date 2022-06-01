@@ -76,7 +76,7 @@
 
     <string name="phone">Phone</string>
     <string name="address">Address</string>
-    <string name="jobTitle">Job Title</string>
+    <string name="jobField">Job field</string>
     <string name="edit_cover_photo">Edit cover Photo</string>
     <string name="upload_profile_picture">Upload Profile Picture</string>
     <string name="skills">Skills</string>
@@ -89,6 +89,7 @@
     <string name="company">Company</string>
     <string name="register_type">Register Type</string>
     <string name="submit_your_proposal">Submit Your Proposal</string>
+    <string name="submit_proposal">Submit Proposal</string>
 
     <string name="complete_profile">Complete Your Profile</string>
     <string name="select_skills">Select the skills you have</string>
@@ -111,9 +112,15 @@
     <string name="date_first">Date Added (latest First)</string>
     <string name="reset">Reset</string>
     <string name="apply">Apply</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="edit_proposal">Edit Proposal</string>
+    <string name="job_field">Job field</string>
+    <string name="search_for_specific_skills">Search for specific skills</string>
+    <string name="specific_job">Specific job</string>
+    <string name="search_for_job_field">Search for job field</string>
+    <string name="your_proposal">Your Proposal</string>
+    <string name="write_a_description_about_your_job">Write a description about your job</string>
+    <string name="requirements">Requirements</string>
 
 
 </resources>

@@ -154,11 +154,9 @@ object Constants {
         val index = list.indexOfFirst { it.proposalId == product.id } // -1 if not found
         return if (index >= 0) {
             imageView.setImageResource(R.drawable.ic_save)
-//            imageView.isEnabled = false
             true
         } else {
             imageView.setImageResource(R.drawable.ic_unsave)
-//            imageView.isEnabled = true
             false
         }
     }
@@ -172,15 +170,15 @@ object Constants {
     ): Boolean {
         val index = list.indexOfFirst { it.proposalId == product.id } // -1 if not found
         return if (index >= 0) {
-            button.setBackgroundResource(R.drawable.shape_gray)
+            button.setBackgroundResource(R.drawable.shape_accent)
             button.setText(R.string.submit_your_proposal)
-            button.setTextColor(ContextCompat.getColor(context, R.color.textPrimary))
+            button.setTextColor(ContextCompat.getColor(context, R.color.white))
             button.isEnabled = true
             false
         } else {
-            button.setBackgroundResource(R.drawable.shape_accent)
+            button.setBackgroundResource(R.drawable.shape_gray)
             button.setText(R.string.submitted)
-            button.setTextColor(ContextCompat.getColor(context, R.color.white))
+            button.setTextColor(ContextCompat.getColor(context, R.color.textPrimary))
             button.isEnabled = false
             true
         }
