@@ -151,7 +151,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="5dp"
                 android:layout_marginTop="15dp"
-                android:text="@string/your_proposal"
+                android:text="@string/upload_your_resume"
                 android:textColor="@color/colorAccent"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -166,7 +166,7 @@
                 android:drawableEnd="@drawable/ic_upload"
                 android:gravity="start"
                 android:padding="15dp"
-                android:text="@string/cv"
+                android:text="@string/cv_new"
                 android:textColor="@color/black"
                 android:textSize="12sp" />
 
@@ -175,7 +175,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginHorizontal="30dp"
+                android:layout_marginHorizontal="5dp"
                 android:layout_marginVertical="30dp"
                 android:background="@drawable/shape_accent"
                 android:foreground="?attr/selectableItemBackground"

@@ -1,10 +1,11 @@
 package com.mrq.paljobs.controller.activities;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.annotation.Nullable;
 
 import com.mrq.paljobs.R;
 import com.mrq.paljobs.controller.adapters.SkillsAdapter;
@@ -78,12 +79,19 @@ public class SubmitActivity extends BaseActivity {
 
             adapter = new SkillsAdapter(this);
             adapter.setList(proposal.getSkills());
-//            binding.recyclerview.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
             binding.recyclerview.setHasFixedSize(true);
             binding.recyclerview.setAdapter(adapter);
 
             binding.btnSubmit.setOnClickListener(view -> {
                 addToSubmit(proposal);
+            });
+
+            binding.cv.setOnClickListener(view -> {
+                Intent intent = new Intent();
+                intent.setType("application/pdf");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(intent, Constants.REQUEST_FILE_CODE);
+
             });
         }
 
@@ -221,4 +229,50 @@ public class SubmitActivity extends BaseActivity {
         finish();
     }
 
+    private void uploadFile(Uri filePath, String fileName) {
+        new ApiRequest<>().uploadFile(
+                this,
+                filePath,
+                fileName,
+                new Results<String>() {
+                    @Override
+                    public void onSuccess(String s) {
+                        showAlert(SubmitActivity.this,
+                                getString(R.string.upload_file_successfully), R.color.green_success);
+                    }
+
+                    @Override
+                    public void onFailureInternet(@NotNull String offline) {
+                        showAlert(SubmitActivity.this, offline, R.color.orange);
+                    }
+
+                    @Override
+                    public void onException(@NotNull String exception) {
+                        showAlert(SubmitActivity.this, exception, R.color.red);
+                    }
+
+                    @Override
+                    public void onEmpty() {
+
+                    }
+
+                    @Override
+                    public void onLoading(boolean loading) {
+                        if (loading)
+                            showCustomProgress(false);
+                        else dismissCustomProgress();
+                    }
+                });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && data != null) {
+            if (requestCode == Constants.REQUEST_FILE_CODE) {
+                binding.cv.setText(Constants.getFileName(this, data.getData()));
+                uploadFile(data.getData(), Constants.getFileName(this, data.getData()));
+            }
+        }
+    }
 }

@@ -1,16 +1,8 @@
 package com.mrq.paljobs.controller.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
-import android.view.View;
 
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.mrq.paljobs.R;
-import com.mrq.paljobs.controller.adapters.SkillsAdapter;
 import com.mrq.paljobs.databinding.ActivityProfileBinding;
 import com.mrq.paljobs.firebase.ApiRequest;
 import com.mrq.paljobs.firebase.Results;
@@ -25,8 +17,6 @@ import org.jetbrains.annotations.NotNull;
 public class ProfileActivity extends BaseActivity {
 
     ActivityProfileBinding binding;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    SkillsAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,39 +27,8 @@ public class ProfileActivity extends BaseActivity {
     }
 
     private void initView() {
-        adapter = new SkillsAdapter(ProfileActivity.this);
-        binding.recyclerView.setHasFixedSize(true);
-        binding.recyclerView.setAdapter(adapter);
-        binding.recyclerView.setLayoutManager(new LinearLayoutManager(ProfileActivity.this, RecyclerView.HORIZONTAL, false));
-        binding.btnUpdate.setOnClickListener(view -> update());
-
-        if (Hawk.get(Constants.USER_TYPE, Constants.TYPE_EMPLOYEE).equals(Constants.TYPE_COMPANY)) {
-            binding.tvSkills.setVisibility(View.GONE);
-            binding.uploadSkills.setVisibility(View.GONE);
-            binding.tvJobField.setVisibility(View.GONE);
-            binding.tvGender.setVisibility(View.GONE);
-            binding.tvCv.setVisibility(View.GONE);
-        }
-
-    }
-
-    private void update() {
-        enableElements(false);
-        DocumentReference docRef = db.collection("User").document(Hawk.get(Constants.USER_TOKEN));
-        docRef.update("firstName", getText(binding.etFName));
-        docRef.update("lastName", getText(binding.etLName));
-        docRef.update("phone", getText(binding.etPhone));
-        docRef.update("address", getText(binding.etAddress));
-        docRef.update("jobField", getText(binding.etJobField));
-        docRef.addSnapshotListener((value, error) -> {
-            showAlert(ProfileActivity.this, getString(R.string.update_profile_successfully), R.color.green_success);
-            enableElements(true);
-        });
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
+        binding.appbar.tvTool.setText(getString(R.string.profile));
+        binding.appbar.imgBack.setOnClickListener(view -> onBackPressed());
         loadData();
     }
 
@@ -82,21 +41,10 @@ public class ProfileActivity extends BaseActivity {
                 new Results<User>() {
                     @Override
                     public void onSuccess(User user) {
-                        binding.etFName.setText(user.getFirstName());
-                        binding.etLName.setText(user.getLastName());
-                        binding.etEmail.setText(user.getEmail());
-                        binding.etPhone.setText(user.getPhone());
-                        binding.etPassword.setText(user.getPassword());
-                        binding.etAddress.setText(user.getAddress());
-                        binding.etJobField.setText(user.getJobField());
-                        binding.etGender.setText(user.getGender());
-                        adapter.setList(user.getSkills());
-
-                        if (user.getSkills().isEmpty()) {
-                            binding.tvSkills.setVisibility(View.GONE);
-                            binding.uploadSkills.setVisibility(View.GONE);
-                        }
-
+                        binding.name.setText(user.getFirstName());
+                        binding.email.setText(user.getEmail());
+                        binding.address.setText(user.getAddress());
+                        binding.about.setText(user.getAbout());
                         if (!user.getPhoto().isEmpty())
                             Picasso.get().load(user.getPhoto()).placeholder(R.drawable.shape_accent).into(binding.photo);
                     }
@@ -118,24 +66,16 @@ public class ProfileActivity extends BaseActivity {
 
                     @Override
                     public void onLoading(boolean loading) {
-                        enableElements(!loading);
+                        if (loading)
+                            showCustomProgress(false);
+                        else dismissCustomProgress();
                     }
                 });
     }
 
-    private void enableElements(boolean enable) {
-        binding.btnUpdate.setEnabled(enable);
-        if (!enable) {
-            binding.btnUpdate.setBackgroundResource(R.drawable.shape_gray);
-            binding.progressBar.setVisibility(View.VISIBLE);
-        } else {
-            binding.btnUpdate.setBackgroundResource(R.drawable.shape_accent);
-            binding.progressBar.setVisibility(View.INVISIBLE);
-        }
-        binding.etFName.setEnabled(enable);
-        binding.etLName.setEnabled(enable);
-        binding.etPhone.setEnabled(enable);
-        binding.etAddress.setEnabled(enable);
-        binding.etJobField.setEnabled(enable);
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

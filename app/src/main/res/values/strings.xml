@@ -83,6 +83,7 @@
     <string name="confirm">Confirm</string>
     <string name="gender">Gender</string>
     <string name="cv">Upload CV PDF File</string>
+    <string name="cv_new">Upload new CV File</string>
     <string name="download_cv">download CV PDF File</string>
     <string name="register_as">Choose the registration method</string>
     <string name="employee">Employee</string>
@@ -136,6 +137,7 @@
     <string name="jobs_proposals">Jobs Proposals</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="upload_your_resume">Upload Your Resume</string>
 
 
 </resources>

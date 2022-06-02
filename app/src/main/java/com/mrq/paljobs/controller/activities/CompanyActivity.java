@@ -1,24 +1,17 @@
-package com.mrq.paljobs.controller.fragments;
+package com.mrq.paljobs.controller.activities;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.mrq.paljobs.controller.activities.AddProposalActivity;
-import com.mrq.paljobs.controller.activities.MainActivity;
+import com.mrq.paljobs.R;
 import com.mrq.paljobs.controller.adapters.CompanyAdapter;
-import com.mrq.paljobs.databinding.FragmentCompanyBinding;
+import com.mrq.paljobs.databinding.ActivityCompanyBinding;
 import com.mrq.paljobs.firebase.ApiRequest;
 import com.mrq.paljobs.firebase.Results;
-import com.mrq.paljobs.helpers.BaseFragment;
+import com.mrq.paljobs.helpers.BaseActivity;
 import com.mrq.paljobs.helpers.Constants;
 import com.mrq.paljobs.models.Proposal;
 import com.orhanobut.hawk.Hawk;
@@ -27,50 +20,37 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-public class CompanyFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
+public class CompanyActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
 
-    public CompanyFragment() {
-        // Required empty public constructor
-    }
-
-    public static CompanyFragment newInstance() {
-        CompanyFragment fragment = new CompanyFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    FragmentCompanyBinding binding;
+    ActivityCompanyBinding binding;
     CompanyAdapter adapter;
 
     @Override
-    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
-        binding = FragmentCompanyBinding.inflate(getLayoutInflater());
-        return binding.getRoot();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = ActivityCompanyBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         initView();
     }
 
     private void initView() {
+        binding.tvTool.setText(getString(R.string.our_jobs));
 
         binding.fab.setOnClickListener(view -> {
-            startActivity(new Intent(requireActivity(), AddProposalActivity.class)
+            startActivity(new Intent(this, AddProposalActivity.class)
                     .putExtra(Constants.TYPE_ID, Constants.TYPE_ADD)
             );
         });
 
-        adapter = new CompanyAdapter(getActivity());
+        binding.setting.setOnClickListener(view -> {
+            startActivity(new Intent(this, SettingActivity.class));
+        });
+
+        adapter = new CompanyAdapter(this);
         binding.include.swipeToRefresh.setOnRefreshListener(this);
         binding.include.recyclerView.setAdapter(adapter);
         binding.include.recyclerView.setHasFixedSize(true);
-        binding.include.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        binding.include.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         initJobs();
 
     }

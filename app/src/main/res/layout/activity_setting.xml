@@ -19,27 +19,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="20dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/general"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/shape_primary"
-                android:backgroundTint="#F1F9FF"
-                android:drawableStart="@drawable/ic_setting"
-                android:drawablePadding="20dp"
-                android:padding="15dp"
-                android:text="General"
-                android:textAllCaps="false"
-                android:textColor="@color/text"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:drawableTint="@color/colorAccent" />
+            android:orientation="vertical"
+            android:paddingBottom="20dp">
 
             <TextView
                 android:id="@+id/account"
@@ -53,7 +34,7 @@
                 android:drawableStart="@drawable/ic_user"
                 android:drawablePadding="20dp"
                 android:padding="15dp"
-                android:text="Account"
+                android:text="@string/account"
                 android:textAllCaps="false"
                 android:textColor="@color/text"
                 android:textSize="14sp"
@@ -72,7 +53,7 @@
                 android:drawableStart="@drawable/ic_submit2"
                 android:drawablePadding="20dp"
                 android:padding="15dp"
-                android:text="Privacy"
+                android:text="@string/privacy"
                 android:textAllCaps="false"
                 android:textColor="@color/text"
                 android:textSize="14sp"
@@ -91,7 +72,26 @@
                 android:drawableStart="@drawable/ic_help"
                 android:drawablePadding="20dp"
                 android:padding="15dp"
-                android:text="Help"
+                android:text="@string/help"
+                android:textAllCaps="false"
+                android:textColor="@color/text"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:drawableTint="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/about"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/shape_primary"
+                android:backgroundTint="#F1F9FF"
+                android:drawableStart="@drawable/ic_about"
+                android:drawablePadding="20dp"
+                android:padding="15dp"
+                android:text="@string/about"
                 android:textAllCaps="false"
                 android:textColor="@color/text"
                 android:textSize="14sp"

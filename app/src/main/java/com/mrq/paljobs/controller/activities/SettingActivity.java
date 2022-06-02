@@ -1,5 +1,6 @@
 package com.mrq.paljobs.controller.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.mrq.paljobs.R;
@@ -25,6 +26,10 @@ public class SettingActivity extends BaseActivity {
 
         binding.logout.setOnClickListener(view -> {
             Constants.logout(this);
+        });
+
+        binding.account.setOnClickListener(view -> {
+            startActivity(new Intent(this, ProfileActivity.class));
         });
     }
 

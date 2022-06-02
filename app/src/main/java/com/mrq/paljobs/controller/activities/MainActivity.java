@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.mrq.paljobs.R;
 import com.mrq.paljobs.controller.fragments.AboutFragment;
-import com.mrq.paljobs.controller.fragments.CompanyFragment;
 import com.mrq.paljobs.controller.fragments.HomeFragment;
 import com.mrq.paljobs.controller.fragments.ProfileFragment;
 import com.mrq.paljobs.controller.fragments.FavoriteFragment;
@@ -33,8 +32,6 @@ public class MainActivity extends BaseActivity {
     Toast backToasty;
     long backPressedTime;
 
-    // TODO : company
-    CompanyFragment companyFragment = CompanyFragment.newInstance();
     // TODO : Employee
     HomeFragment homeFragment = HomeFragment.newInstance();
     FavoriteFragment favoriteFragment = FavoriteFragment.newInstance();
@@ -54,20 +51,10 @@ public class MainActivity extends BaseActivity {
     private void initView() {
         context = MainActivity.this;
 
-        binding.main.bottomNavigation.getMenu().clear();
         if (Hawk.get(Constants.USER_TYPE, Constants.TYPE_EMPLOYEE).equals(Constants.TYPE_COMPANY)) {
-            binding.main.bottomNavigation.inflateMenu(R.menu.menu_bottom_company);
-            replaceFragment(companyFragment, R.string.my_jobs);
-            binding.main.bottomNavigation.setSelectedItemId(R.id.bottom_c_home);
-            binding.main.appbar.imgSearch.setImageResource(R.drawable.ic_settings);
-            binding.main.appbar.imgMenu.setVisibility(View.GONE);
-        } else {
-            binding.main.bottomNavigation.inflateMenu(R.menu.menu_bottom);
-            replaceFragment(homeFragment, R.string.jobs);
-            binding.main.bottomNavigation.setSelectedItemId(R.id.bottom_home);
-            binding.main.appbar.imgSearch.setImageResource(R.drawable.ic_search);
+            startActivity(new Intent(this, CompanyActivity.class));
+            finishAffinity();
         }
-
         initBottomNavigation();
         initNavView();
 
@@ -86,26 +73,21 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initBottomNavigation() {
+        replaceFragment(homeFragment, R.string.jobs);
+        binding.main.bottomNavigation.setSelectedItemId(R.id.bottom_home);
         binding.main.bottomNavigation.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.bottom_home:
-                    binding.navView.setCheckedItem(R.id.nav_explore);
                     replaceFragment(homeFragment, R.string.jobs);
                     return true;
                 case R.id.bottom_save:
-                    binding.navView.setCheckedItem(R.id.nav_save);
                     replaceFragment(favoriteFragment, R.string.save_jobs);
                     return true;
                 case R.id.bottom_submit:
-                    binding.navView.setCheckedItem(R.id.nav_submit);
                     replaceFragment(submitFragment, R.string.submit_jobs);
                     return true;
                 case R.id.bottom_profile:
                     replaceFragment(profileFragment, R.string.profile);
-                    return true;
-                // TODO : Company
-                case R.id.bottom_c_home:
-                    replaceFragment(companyFragment, R.string.our_jobs);
                     return true;
             }
             return false;
@@ -113,23 +95,12 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initNavView() {
-        binding.navView.setCheckedItem(R.id.nav_explore);
+        binding.navView.setCheckedItem(R.id.nav_home);
         binding.navView.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
-                case R.id.nav_explore:
+                case R.id.nav_home:
                     binding.main.bottomNavigation.setSelectedItemId(R.id.bottom_home);
                     replaceFragment(homeFragment, R.string.jobs);
-                    break;
-                case R.id.nav_save:
-                    binding.main.bottomNavigation.setSelectedItemId(R.id.bottom_save);
-                    replaceFragment(favoriteFragment, R.string.save_jobs);
-                    break;
-                case R.id.nav_submit:
-                    binding.main.bottomNavigation.setSelectedItemId(R.id.bottom_submit);
-                    replaceFragment(submitFragment, R.string.submit_jobs);
-                    break;
-                case R.id.nav_search:
-                    startActivity(new Intent(this, SearchActivity.class));
                     break;
                 case R.id.nav_setting:
                     replaceFragment(settingFragment, R.string.setting);
@@ -137,9 +108,8 @@ public class MainActivity extends BaseActivity {
                 case R.id.nav_about:
                     replaceFragment(aboutFragment, R.string.about);
                     break;
-                // TODO : Company
-                case R.id.nav_out_job:
-                    replaceFragment(companyFragment, R.string.our_jobs);
+                case R.id.nav_logout:
+                    Constants.logout(this);
                     break;
             }
             binding.drawer.close();

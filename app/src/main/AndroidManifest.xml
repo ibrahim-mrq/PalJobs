@@ -16,7 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/MaterialTheme"
         tools:ignore="AllowBackup">
-        <activity android:name=".controller.activities.JobDetailsActivity"></activity>
+        <activity android:name=".controller.activities.ProposalActivity"></activity>
+        <activity android:name=".controller.activities.ProfileActivity" />
+        <activity android:name=".controller.activities.CompanyActivity" />
+        <activity android:name=".controller.activities.JobDetailsActivity" />
         <activity
             android:name=".controller.activities.SplashActivity"
             android:exported="true"
@@ -55,7 +58,7 @@
             android:name=".controller.activities.AddProposalActivity"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".controller.activities.ProfileActivity"
+            android:name=".controller.activities.EditProfileActivity"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
             android:name=".controller.activities.ProposalDetailsActivity"

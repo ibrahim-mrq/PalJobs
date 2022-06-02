@@ -1,5 +1,6 @@
 package com.mrq.paljobs.controller.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.mrq.paljobs.R;
@@ -43,6 +44,12 @@ public class JobDetailsActivity extends BaseActivity {
 
         if (!model.getCompanyImage().isEmpty())
             Picasso.get().load(model.getCompanyImage()).into(binding.image);
+
+        binding.btnShow.setOnClickListener(view -> {
+            startActivity(new Intent(this, ProposalActivity.class)
+                    .putExtra(Constants.TYPE_MODEL, model)
+            );
+        });
 
     }
 
