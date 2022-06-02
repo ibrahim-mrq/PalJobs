@@ -234,8 +234,11 @@
                     android:id="@+id/recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     android:overScrollMode="never"
-                    tools:itemCount="1"
+                    app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                    app:spanCount="3"
+                    tools:itemCount="3"
                     tools:listitem="@layout/custom_skills" />
 
             </LinearLayout>

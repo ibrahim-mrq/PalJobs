@@ -51,11 +51,15 @@ public class RegisterActivity extends BaseActivity {
         });
 
         binding.btnRegister.setOnClickListener(view -> register());
+
+        if (type.equals(Constants.TYPE_COMPANY)) {
+            binding.tvLName.setVisibility(View.GONE);
+            binding.tvFName.setHint(getString(R.string.company_name));
+        }
     }
 
     private void register() {
         if (isNotEmpty(binding.etFName, binding.tvFName)
-                && isNotEmpty(binding.etLName, binding.tvLName)
                 && isNotEmpty(binding.etEmail, binding.tvEmail)
                 && isValidEmail(binding.etEmail, binding.tvEmail)
                 && isNotEmpty(binding.etPhone, binding.tvPhone)
@@ -70,7 +74,7 @@ public class RegisterActivity extends BaseActivity {
             User user = new User();
             user.setId("");
             user.setFirstName(getText(binding.etFName));
-            user.setLastName(getText(binding.etLName));
+            user.setLastName(getText(binding.etLName) + "");
             user.setEmail(getText(binding.etEmail));
             user.setPassword(getText(binding.etPassword));
             user.setPhone(getText(binding.etPhone));
