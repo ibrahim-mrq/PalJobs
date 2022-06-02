@@ -5,13 +5,13 @@
         android:id="@+id/bottom_c_home"
         android:enabled="true"
         android:icon="@drawable/ic_home"
-        android:title="@string/my_jobs" />
+        android:title="@string/our_jobs" />
 
-    <item
-        android:id="@+id/bottom_c_received"
-        android:enabled="true"
-        android:icon="@drawable/ic_submit"
-        android:title="@string/received_jobs" />
+<!--    <item-->
+<!--        android:id="@+id/bottom_c_received"-->
+<!--        android:enabled="true"-->
+<!--        android:icon="@drawable/ic_submit"-->
+<!--        android:title="@string/received_jobs" />-->
 
     <item
         android:id="@+id/bottom_profile"

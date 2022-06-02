@@ -15,6 +15,7 @@ import com.mrq.paljobs.R;
 import com.mrq.paljobs.helpers.Constants;
 import com.mrq.paljobs.helpers.NetworkHelper;
 import com.mrq.paljobs.models.Favorite;
+import com.mrq.paljobs.models.Proposal;
 import com.mrq.paljobs.models.Submit;
 import com.mrq.paljobs.models.User;
 import com.orhanobut.hawk.Hawk;
@@ -349,6 +350,30 @@ public class ApiRequest<T> {
             result.onLoading(true);
             db.collection("Submit")
                     .add(submit)
+                    .addOnSuccessListener(document -> {
+                        document.update("id", document.getId());
+                        result.onSuccess(context.getString(R.string.add_favorite_success));
+                        result.onLoading(false);
+                    })
+                    .addOnFailureListener(error -> {
+                        result.onLoading(false);
+                        result.onException(context.getString(R.string.error));
+                    });
+        } else {
+            result.onFailureInternet(context.getString(R.string.no_internet));
+        }
+    }
+
+
+    public void addToProposal(
+            Context context,
+            Proposal proposal,
+            Results<String> result
+    ) {
+        if (NetworkHelper.INSTANCE.isNetworkOnline(context)) {
+            result.onLoading(true);
+            db.collection("Proposal")
+                    .add(proposal)
                     .addOnSuccessListener(document -> {
                         document.update("id", document.getId());
                         result.onSuccess(context.getString(R.string.add_favorite_success));

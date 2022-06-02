@@ -88,6 +88,17 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
+    fun isNotEmpty(editText: EditText): Boolean {
+        return if (editText.text.toString().isBlank()) {
+            editText.background = getDrawable(R.drawable.shape_red_stroke)
+            editText.error = getString(R.string.empty_field)
+            false
+        } else {
+            editText.background = getDrawable(R.drawable.shape_gray2)
+            true
+        }
+    }
+
     fun isListNotEmpty(
         activity: Activity?,
         list: ArrayList<String>,

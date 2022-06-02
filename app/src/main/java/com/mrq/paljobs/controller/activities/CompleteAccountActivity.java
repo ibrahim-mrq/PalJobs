@@ -78,6 +78,7 @@ public class CompleteAccountActivity extends BaseActivity {
     private void complete() {
         if (isNotEmpty(binding.etJobField, binding.tvJobField)
                 && isNotEmpty(binding.etGender, binding.tvGender)
+                && isNotEmpty(binding.about)
                 && isNotEmpty(binding.tvCv, binding.cv)
                 && isListNotEmpty(this, localSkills, binding.uploadSkills)
                 && isListNotEmpty(this, localSkills, binding.uploadSkills)
@@ -96,6 +97,7 @@ public class CompleteAccountActivity extends BaseActivity {
                 enableElements(true);
                 startActivity(new Intent(this, MainActivity.class));
                 finish();
+
             });
         }
     }
@@ -124,7 +126,6 @@ public class CompleteAccountActivity extends BaseActivity {
         });
         binding.recyclerView.setHasFixedSize(true);
         binding.recyclerView.setAdapter(adapter);
-        binding.recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         loadSkills();
     }
 

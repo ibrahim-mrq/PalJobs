@@ -1,5 +1,6 @@
 package com.mrq.paljobs.controller.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,11 +8,11 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.mrq.paljobs.controller.activities.AddProposalActivity;
 import com.mrq.paljobs.controller.activities.MainActivity;
 import com.mrq.paljobs.controller.adapters.CompanyAdapter;
 import com.mrq.paljobs.databinding.FragmentCompanyBinding;
@@ -58,6 +59,13 @@ public class CompanyFragment extends BaseFragment implements SwipeRefreshLayout.
     }
 
     private void initView() {
+
+        binding.fab.setOnClickListener(view -> {
+            startActivity(new Intent(requireActivity(), AddProposalActivity.class)
+                    .putExtra(Constants.TYPE_ID, Constants.TYPE_ADD)
+            );
+        });
+
         adapter = new CompanyAdapter(getActivity());
         binding.include.swipeToRefresh.setOnRefreshListener(this);
         binding.include.recyclerView.setAdapter(adapter);
@@ -68,7 +76,7 @@ public class CompanyFragment extends BaseFragment implements SwipeRefreshLayout.
     }
 
     private void initJobs() {
-        Log.e("response", "token = " + Hawk.get(Constants.USER_TOKEN));
+        binding.include.swipeToRefresh.setRefreshing(false);
         new ApiRequest<Proposal>().getData(
                 MainActivity.context,
                 "Proposal",

@@ -1,18 +1,19 @@
 package com.mrq.paljobs.controller.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mrq.paljobs.R;
+import com.mrq.paljobs.controller.activities.JobDetailsActivity;
 import com.mrq.paljobs.databinding.CustomProposalCompanyBinding;
+import com.mrq.paljobs.helpers.Constants;
 import com.mrq.paljobs.models.Proposal;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -45,6 +46,11 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.CompanyV
     public void onBindViewHolder(@NonNull CompanyViewHolder holder, int position) {
         Proposal model = list.get(position);
         holder.bind(model);
+        holder.itemView.setOnClickListener(view -> {
+            mContext.startActivity(new Intent(mContext, JobDetailsActivity.class)
+                    .putExtra(Constants.TYPE_MODEL, model)
+            );
+        });
     }
 
     @Override
@@ -62,20 +68,11 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.CompanyV
         }
 
         private void bind(Proposal model) {
-            if (!model.getCompanyImage().isEmpty()) {
-                Picasso.get().load(model.getCompanyImage())
-                        .placeholder(R.drawable.ic_user)
-                        .error(R.drawable.ic_user)
-                        .into(binding.image);
-            }
-
             binding.title.setText(model.getTitle());
-            binding.name.setText(model.getCompanyName());
             binding.time.setText(model.getTime());
             binding.content.setText(model.getContent());
             SkillsAdapter adapter = new SkillsAdapter(mContext);
             adapter.setList(model.getSkills());
-//            binding.recyclerview.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false));
             binding.recyclerview.setHasFixedSize(true);
             binding.recyclerview.setAdapter(adapter);
         }

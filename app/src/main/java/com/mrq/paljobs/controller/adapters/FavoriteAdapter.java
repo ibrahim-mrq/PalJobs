@@ -7,11 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mrq.paljobs.R;
-import com.mrq.paljobs.controller.activities.JobDetailsActivity;
+import com.mrq.paljobs.controller.activities.ProposalDetailsActivity;
 import com.mrq.paljobs.controller.activities.SubmitActivity;
 import com.mrq.paljobs.controller.interfaceis.RemoveInterface;
 import com.mrq.paljobs.databinding.CustomFavoriteBinding;
@@ -66,7 +65,13 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
         });
 
         holder.itemView.setOnClickListener(view -> {
-            mContext.startActivity(new Intent(mContext, JobDetailsActivity.class)
+            mContext.startActivity(new Intent(mContext, ProposalDetailsActivity.class)
+                    .putExtra(Constants.TYPE_TITLE, Constants.TYPE_FAVORITE)
+                    .putExtra(Constants.TYPE_MODEL, model));
+        });
+
+        holder.binding.btnSubmit.setOnClickListener(view -> {
+            mContext.startActivity(new Intent(mContext, SubmitActivity.class)
                     .putExtra(Constants.TYPE_TITLE, Constants.TYPE_FAVORITE)
                     .putExtra(Constants.TYPE_MODEL, model));
         });

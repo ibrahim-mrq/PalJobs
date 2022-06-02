@@ -61,6 +61,9 @@ object Constants {
     const val TYPE_FAVORITE = "favorite"
     const val TYPE_PROPOSAL = "proposal"
 
+    const val TYPE_ADD = "add"
+    const val TYPE_EDIT = "edit"
+
     @JvmStatic
     fun getCurrentDate(): String? {
         val sdf = SimpleDateFormat("dd MMM yyyy, hh:mm:ss", Locale.US)
@@ -70,6 +73,7 @@ object Constants {
     @JvmStatic
     fun logout(context: Context) {
         Hawk.deleteAll()
+        Hawk.put(IS_FIRST_START, true)
         Toast.makeText(context, context.getString(R.string.logout_successfully), Toast.LENGTH_SHORT)
             .show()
         context.startActivity(Intent(context, SplashActivity::class.java))
