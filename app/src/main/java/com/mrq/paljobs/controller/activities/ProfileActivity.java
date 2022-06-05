@@ -1,5 +1,6 @@
 package com.mrq.paljobs.controller.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.mrq.paljobs.R;
@@ -30,6 +31,11 @@ public class ProfileActivity extends BaseActivity {
         binding.appbar.tvTool.setText(getString(R.string.profile));
         binding.appbar.imgBack.setOnClickListener(view -> onBackPressed());
         loadData();
+        binding.edit.setOnClickListener(view -> {
+            startActivity(new Intent(this, EditProfileActivity.class)
+                    .putExtra(Constants.TYPE_TITLE, Hawk.get(Constants.USER_TYPE, ""))
+            );
+        });
     }
 
     private void loadData() {

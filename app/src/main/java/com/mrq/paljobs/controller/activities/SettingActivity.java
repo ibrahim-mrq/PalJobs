@@ -3,6 +3,8 @@ package com.mrq.paljobs.controller.activities;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
+
 import com.mrq.paljobs.R;
 import com.mrq.paljobs.databinding.ActivitySettingBinding;
 import com.mrq.paljobs.helpers.BaseActivity;
@@ -25,7 +27,7 @@ public class SettingActivity extends BaseActivity {
         binding.appbar.tvTool.setText(getString(R.string.login));
 
         binding.logout.setOnClickListener(view -> {
-            Constants.logout(this);
+            logout();
         });
 
         binding.account.setOnClickListener(view -> {
@@ -50,6 +52,21 @@ public class SettingActivity extends BaseActivity {
             );
         });
 
+    }
+
+    private void logout() {
+        new AlertDialog.Builder(this)
+                .setMessage("Are you sure you want to logout?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", (dialog, id) -> {
+                    dialog.dismiss();
+                    Constants.logout(this);
+                })
+                .setNegativeButton("No", (dialog, id) -> {
+                    dialog.cancel();
+                })
+                .create()
+                .show();
     }
 
     @Override

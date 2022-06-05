@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,7 +51,7 @@ public class SettingFragment extends BaseFragment {
     private void initView() {
 
         binding.logout.setOnClickListener(view -> {
-            Constants.logout(requireActivity());
+            logout();
         });
 
         binding.privacy.setOnClickListener(view -> {
@@ -75,6 +76,20 @@ public class SettingFragment extends BaseFragment {
             startActivity(new Intent(requireActivity(), EditProfileActivity.class));
         });
 
+    }
 
+    private void logout() {
+        new AlertDialog.Builder(requireActivity())
+                .setMessage("Are you sure you want to logout?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", (dialog, id) -> {
+                    dialog.dismiss();
+                    Constants.logout(requireActivity());
+                })
+                .setNegativeButton("No", (dialog, id) -> {
+                    dialog.cancel();
+                })
+                .create()
+                .show();
     }
 }
