@@ -31,6 +31,25 @@ public class SettingActivity extends BaseActivity {
         binding.account.setOnClickListener(view -> {
             startActivity(new Intent(this, ProfileActivity.class));
         });
+
+        binding.privacy.setOnClickListener(view -> {
+            startActivity(new Intent(this, AboutActivity.class)
+                    .putExtra(Constants.TYPE_TITLE, Constants.TYPE_PRIVACY)
+            );
+        });
+
+        binding.help.setOnClickListener(view -> {
+            startActivity(new Intent(this, AboutActivity.class)
+                    .putExtra(Constants.TYPE_TITLE, Constants.TYPE_HELP)
+            );
+        });
+
+        binding.about.setOnClickListener(view -> {
+            startActivity(new Intent(this, AboutActivity.class)
+                    .putExtra(Constants.TYPE_TITLE, Constants.TYPE_ABOUT)
+            );
+        });
+
     }
 
     @Override

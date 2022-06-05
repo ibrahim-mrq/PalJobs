@@ -62,13 +62,11 @@ public class RegisterActivity extends BaseActivity {
         if (isNotEmpty(binding.etFName, binding.tvFName)
                 && isNotEmpty(binding.etEmail, binding.tvEmail)
                 && isValidEmail(binding.etEmail, binding.tvEmail)
-                && isNotEmpty(binding.etPhone, binding.tvPhone)
                 && isNotEmpty(binding.etPassword, binding.tvPassword)
                 && isPasswordLess(binding.etPassword, binding.tvPassword)
                 && isNotEmpty(binding.etConfirmPassword, binding.tvConfirmPassword)
                 && isPasswordLess(binding.etConfirmPassword, binding.tvConfirmPassword)
                 && isPasswordMatch(binding.etPassword, binding.tvPassword, binding.etConfirmPassword, binding.tvConfirmPassword)
-                && isNotEmpty(binding.etAddress, binding.tvAddress)
                 && isCheckBoxChecked(binding.checkBox)
         ) {
             User user = new User();
@@ -77,9 +75,9 @@ public class RegisterActivity extends BaseActivity {
             user.setLastName(getText(binding.etLName) + "");
             user.setEmail(getText(binding.etEmail));
             user.setPassword(getText(binding.etPassword));
-            user.setPhone(getText(binding.etPhone));
+            user.setPhone("");
             user.setPhoto("");
-            user.setAddress(getText(binding.etAddress));
+            user.setAddress("");
             user.setGender("");
             user.setJobField("");
             user.setAbout("");
@@ -92,11 +90,13 @@ public class RegisterActivity extends BaseActivity {
                 public void onSuccess(String s) {
                     showAlert(RegisterActivity.this, getString(R.string.create_an_account), R.color.green_success);
                     new Handler().postDelayed(() -> {
+                        Intent intent = new Intent(RegisterActivity.this, CompleteAccountActivity.class);
                         if (type.equals(Constants.TYPE_COMPANY)) {
-                            startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                            intent.putExtra(Constants.USER_TYPE, Constants.TYPE_COMPANY);
                         } else {
-                            startActivity(new Intent(RegisterActivity.this, CompleteAccountActivity.class));
+                            intent.putExtra(Constants.USER_TYPE, Constants.TYPE_EMPLOYEE);
                         }
+                        startActivity(intent);
                         finish();
                     }, 2000);
                 }
@@ -140,10 +140,8 @@ public class RegisterActivity extends BaseActivity {
         binding.etFName.setEnabled(enable);
         binding.etLName.setEnabled(enable);
         binding.etEmail.setEnabled(enable);
-        binding.etPhone.setEnabled(enable);
         binding.etPassword.setEnabled(enable);
         binding.etConfirmPassword.setEnabled(enable);
-        binding.etAddress.setEnabled(enable);
     }
 
     @Override

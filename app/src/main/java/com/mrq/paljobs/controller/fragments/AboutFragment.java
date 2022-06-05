@@ -2,15 +2,19 @@ package com.mrq.paljobs.controller.fragments;
 
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.mrq.paljobs.R;
+import com.mrq.paljobs.databinding.FragmentAboutBinding;
+import com.mrq.paljobs.helpers.BaseFragment;
 
-public class AboutFragment extends Fragment {
+import org.jetbrains.annotations.NotNull;
+
+public class AboutFragment extends BaseFragment {
 
     public AboutFragment() {
         // Required empty public constructor
@@ -23,10 +27,24 @@ public class AboutFragment extends Fragment {
         return fragment;
     }
 
+    FragmentAboutBinding binding;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_about, container, false);
+        binding = FragmentAboutBinding.inflate(getLayoutInflater());
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initView();
+    }
+
+
+    private void initView() {
+
     }
 }

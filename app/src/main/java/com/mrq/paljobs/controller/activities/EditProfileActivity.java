@@ -50,6 +50,7 @@ public class EditProfileActivity extends BaseActivity {
             binding.tvCv.setVisibility(View.GONE);
         }
 
+        loadData();
     }
 
     private void update() {
@@ -64,12 +65,6 @@ public class EditProfileActivity extends BaseActivity {
             showAlert(EditProfileActivity.this, getString(R.string.update_profile_successfully), R.color.green_success);
             enableElements(true);
         });
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        loadData();
     }
 
     private void loadData() {

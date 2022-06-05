@@ -4,13 +4,8 @@ package com.mrq.paljobs.helpers
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.DatePickerDialog
-import android.app.Dialog
-import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.provider.OpenableColumns
 import android.util.Log
@@ -22,21 +17,17 @@ import com.mrq.paljobs.R
 import com.mrq.paljobs.controller.activities.SplashActivity
 import com.mrq.paljobs.models.Favorite
 import com.mrq.paljobs.models.Proposal
+import com.mrq.paljobs.models.Skills
 import com.mrq.paljobs.models.Submit
 import com.orhanobut.hawk.Hawk
 import com.tapadoo.alerter.Alerter
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 @SuppressLint("SetTextI18n,Range")
 object Constants {
 
-    const val SERVER_KEY =
-        "AAAAiqQIIM4:APA91bH01z5ium3Xe62U2xEj7sBKXmUiWEJ8qO5bcqg1wL1SqR0oHngBVH3g78RAt7LJR86_R-Jgek-F1yQ3eI3fl5bCW4lHdkz01VkzDNVxuZk0ParkY_Wncht9vFpSce6DTUrog6g_"
-
-    const val REQUEST_COVER_GALLERY_CODE = 10001
     const val REQUEST_PHOTO_GALLERY_CODE = 10002
     const val REQUEST_FILE_CODE = 10003
 
@@ -63,6 +54,11 @@ object Constants {
 
     const val TYPE_ADD = "add"
     const val TYPE_EDIT = "edit"
+
+    const val TYPE_ABOUT = "about"
+    const val TYPE_HELP = "help"
+    const val TYPE_PRIVACY = "privacy"
+
 
     @JvmStatic
     fun getCurrentDate(): String? {
@@ -113,41 +109,6 @@ object Constants {
         }
         Log.e("response", "displayName = $displayName")
         return displayName
-    }
-
-    @JvmStatic
-    fun getDatePicker(context: Context, textView: TextView) {
-        val format = "dd MMM yyyy"
-        val calendar = Calendar.getInstance()
-        val datePickerDialog = DatePickerDialog(
-            context, { _: DatePicker?, year: Int, monthOfYear: Int, dayOfMonth: Int ->
-                calendar.set(Calendar.YEAR, year)
-                calendar.set(Calendar.MONTH, monthOfYear)
-                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                val dateFormat = SimpleDateFormat(format, Locale.ENGLISH)
-                textView.text = dateFormat.format(calendar.time)
-            }, calendar[Calendar.YEAR], calendar[Calendar.MONTH], calendar[Calendar.DAY_OF_MONTH]
-        )
-        datePickerDialog.show()
-        datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
-    }
-
-    @JvmStatic
-    fun getTimePicker(context: Context, textView: TextView) {
-        val calendar = Calendar.getInstance()
-        val picker = TimePickerDialog(
-            context, { _: TimePicker?, hourOfDay: Int, minute: Int ->
-                textView.text = getZeroPrefix(hourOfDay) + ":" + getZeroPrefix(minute)
-            }, calendar[Calendar.HOUR_OF_DAY], calendar[Calendar.MINUTE], true
-        )
-        picker.show()
-    }
-
-    @JvmStatic
-    fun getZeroPrefix(minute: Int): String {
-        return if (minute < 10)
-            "0$minute"
-        else minute.toString()
     }
 
     @JvmStatic
@@ -213,25 +174,69 @@ object Constants {
     }
 
     @JvmStatic
-    fun showFilterDialog(context: Activity) {
-        val dialog = Dialog(context)
-        dialog.setCancelable(true)
-        dialog.setCanceledOnTouchOutside(true)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.dialog_filter)
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.window!!.setWindowAnimations(R.style.animationName)
-
-        val params: ViewGroup.LayoutParams = context.window.attributes
-        params.width = ViewGroup.LayoutParams.MATCH_PARENT
-        context.window.attributes = params as WindowManager.LayoutParams
-
-
-        val relativeClose = dialog.findViewById(R.id.relativeClose) as RelativeLayout
-        relativeClose.setOnClickListener { dialog.dismiss() }
-
-        dialog.show()
-
+    fun field(): ArrayList<String> {
+        val list = ArrayList<String>()
+        list.add("IT")
+        list.add("Engineering")
+        list.add("Trade")
+        list.add("Science")
+        return list
     }
+
+    @JvmStatic
+    fun fieldSkills(text: String): ArrayList<String> {
+        val index = initFieldSkills().indexOfFirst { it.name == text } // -1 if not found
+        return if (index >= 0) {
+            initFieldSkills()[index].skills
+        } else {
+            arrayListOf()
+        }
+    }
+
+
+    @JvmStatic
+    private fun initFieldSkills(): ArrayList<Skills> {
+        val list = ArrayList<Skills>()
+        list.add(Skills("IT", itField()))
+        list.add(Skills("Engineering", engineeringField()))
+        list.add(Skills("Trade", tradeField()))
+        list.add(Skills("Science", scienceField()))
+        return list
+    }
+
+    private fun itField(): ArrayList<String> {
+        val itSkills = ArrayList<String>()
+        itSkills.add("Web")
+        itSkills.add("Android")
+        itSkills.add("IOS")
+        itSkills.add("Graphic design")
+        return itSkills
+    }
+
+    private fun engineeringField(): ArrayList<String> {
+        val itSkills = ArrayList<String>()
+        itSkills.add("Architectural Engineering")
+        itSkills.add("Civil Engineering")
+        itSkills.add("Computer Engineering")
+        itSkills.add("Interior design")
+        itSkills.add("Mechatronics")
+        return itSkills
+    }
+
+    private fun tradeField(): ArrayList<String> {
+        val itSkills = ArrayList<String>()
+        itSkills.add("Accounting")
+        itSkills.add("Electronic trade")
+        itSkills.add("E-Marketing")
+        return itSkills
+    }
+
+    private fun scienceField(): ArrayList<String> {
+        val itSkills = ArrayList<String>()
+        itSkills.add("Pharmacy")
+        itSkills.add("Nursing")
+        return itSkills
+    }
+
 
 }

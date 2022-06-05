@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/MaterialTheme"
         tools:ignore="AllowBackup">
-        <activity android:name=".controller.activities.ProposalActivity"></activity>
+        <activity android:name=".controller.activities.AboutActivity"></activity>
+        <activity android:name=".controller.activities.ProposalActivity" />
         <activity android:name=".controller.activities.ProfileActivity" />
         <activity android:name=".controller.activities.CompanyActivity" />
         <activity android:name=".controller.activities.JobDetailsActivity" />

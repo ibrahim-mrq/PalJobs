@@ -9,7 +9,6 @@ import androidx.fragment.app.FragmentTransaction;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
 
 import com.mrq.paljobs.R;
@@ -106,6 +105,7 @@ public class MainActivity extends BaseActivity {
                     replaceFragment(settingFragment, R.string.setting);
                     break;
                 case R.id.nav_about:
+//                    startActivity();
                     replaceFragment(aboutFragment, R.string.about);
                     break;
                 case R.id.nav_logout:

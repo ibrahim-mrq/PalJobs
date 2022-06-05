@@ -1,23 +1,24 @@
 package com.mrq.paljobs.controller.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.mrq.paljobs.R;
-import com.mrq.paljobs.databinding.ActivitySettingBinding;
+import com.mrq.paljobs.controller.activities.AboutActivity;
+import com.mrq.paljobs.controller.activities.EditProfileActivity;
 import com.mrq.paljobs.databinding.FragmentSettingBinding;
+import com.mrq.paljobs.helpers.BaseFragment;
 import com.mrq.paljobs.helpers.Constants;
 
 import org.jetbrains.annotations.NotNull;
 
-public class SettingFragment extends Fragment {
+public class SettingFragment extends BaseFragment {
 
     public SettingFragment() {
         // Required empty public constructor
@@ -51,5 +52,29 @@ public class SettingFragment extends Fragment {
         binding.logout.setOnClickListener(view -> {
             Constants.logout(requireActivity());
         });
+
+        binding.privacy.setOnClickListener(view -> {
+            startActivity(new Intent(requireActivity(), AboutActivity.class)
+                    .putExtra(Constants.TYPE_TITLE, Constants.TYPE_PRIVACY)
+            );
+        });
+
+        binding.help.setOnClickListener(view -> {
+            startActivity(new Intent(requireActivity(), AboutActivity.class)
+                    .putExtra(Constants.TYPE_TITLE, Constants.TYPE_HELP)
+            );
+        });
+
+        binding.about.setOnClickListener(view -> {
+            startActivity(new Intent(requireActivity(), AboutActivity.class)
+                    .putExtra(Constants.TYPE_TITLE, Constants.TYPE_ABOUT)
+            );
+        });
+
+        binding.account.setOnClickListener(view -> {
+            startActivity(new Intent(requireActivity(), EditProfileActivity.class));
+        });
+
+
     }
 }

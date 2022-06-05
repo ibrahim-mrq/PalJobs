@@ -126,6 +126,21 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
+    fun isTextViewNotEmpty(
+        activity: Activity?,
+        textView: TextView,
+        linear: LinearLayout
+    ): Boolean {
+        return if (textView.text.toString().trim().isEmpty()) {
+            Constants.showAlert(activity!!, getString(R.string.must_select_skills), R.color.red)
+            linear.setBackgroundResource(R.drawable.shape_red_error)
+            false
+        } else {
+            linear.setBackgroundResource(R.drawable.shape_gray2)
+            true
+        }
+    }
+
     fun isFileStringNotEmpty(
         activity: Activity?,
         string: String,
@@ -199,6 +214,10 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     fun getText(editText: EditText): String {
+        return editText.text.toString().trim()
+    }
+
+    fun getText(editText: TextView): String {
         return editText.text.toString().trim()
     }
 

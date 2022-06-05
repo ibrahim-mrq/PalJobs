@@ -74,7 +74,7 @@
     <string name="my_jobs">My Jobs</string>
     <string name="received_jobs">Received Jobs</string>
 
-    <string name="phone">Phone</string>
+    <string name="phone">Phone Number</string>
     <string name="address">Address</string>
     <string name="jobField">Job field</string>
     <string name="edit_cover_photo">Edit cover Photo</string>
@@ -135,10 +135,18 @@
     <string name="show_proposals">Show Proposals</string>
     <string name="our_jobs">Our Jobs</string>
     <string name="jobs_proposals">Jobs Proposals</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="upload_your_resume">Upload Your Resume</string>
     <string name="company_name">Company Name</string>
+    <string name="about_paljobs">About PalJobs</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="edit_account">Edit Account</string>
+    <string name="choose_your_field">Choose your field</string>
+    <string name="select_photo">Select Your Photo</string>
+    <string name="telephone_fax">Telephone/Fax</string>
+    <string name="type_about_yourself">Type about yourself</string>
+    <string name="type_about_your_company">Type about your company</string>
+    <string name="must_select_jobField">The job field must be selected first</string>
 
 
 </resources>

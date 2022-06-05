@@ -23,7 +23,6 @@ import com.mrq.paljobs.firebase.ApiRequest;
 import com.mrq.paljobs.firebase.Results;
 import com.mrq.paljobs.helpers.BaseActivity;
 import com.mrq.paljobs.helpers.Constants;
-import com.mrq.paljobs.models.Skills;
 import com.orhanobut.hawk.Hawk;
 import com.squareup.picasso.Picasso;
 
@@ -38,6 +37,7 @@ public class CompleteAccountActivity extends BaseActivity {
     ArrayList<String> skillsString = new ArrayList<>();
     ArrayList<String> localSkills = new ArrayList<>();
     SkillsSelectedAdapter adapter;
+    String type = "";
     String file = "";
     String photo = "";
 
@@ -50,10 +50,42 @@ public class CompleteAccountActivity extends BaseActivity {
     }
 
     private void initView() {
+        type = getIntent().getStringExtra(Constants.USER_TYPE);
         binding.appbar.tvTool.setText(getString(R.string.complete_profile));
 
-        genders();
-        skills();
+        switch (type) {
+            case Constants.TYPE_COMPANY:
+                binding.employee.setVisibility(View.GONE);
+                binding.company.setVisibility(View.VISIBLE);
+                binding.tvGender.setVisibility(View.GONE);
+                binding.tvPhone.setHint(getString(R.string.telephone_fax));
+
+                binding.tvSkills.setVisibility(View.GONE);
+                binding.jobSkills.setVisibility(View.GONE);
+                binding.ttvCv.setVisibility(View.GONE);
+                binding.cv.setVisibility(View.GONE);
+
+                binding.tvAbout.setText(getString(R.string.type_about_your_company));
+
+                break;
+            case Constants.TYPE_EMPLOYEE:
+                binding.employee.setVisibility(View.VISIBLE);
+                binding.company.setVisibility(View.GONE);
+                binding.tvGender.setVisibility(View.VISIBLE);
+                binding.tvPhone.setHint(getString(R.string.phone));
+
+                binding.tvSkills.setVisibility(View.VISIBLE);
+                binding.jobSkills.setVisibility(View.VISIBLE);
+                binding.ttvCv.setVisibility(View.VISIBLE);
+                binding.cv.setVisibility(View.VISIBLE);
+
+                binding.tvAbout.setText(getString(R.string.type_about_yourself));
+
+                break;
+        }
+
+        initGenders();
+        initSkills();
 
         binding.cv.setOnClickListener(view -> {
             Intent intent = new Intent();
@@ -70,26 +102,43 @@ public class CompleteAccountActivity extends BaseActivity {
                     .start(Constants.REQUEST_PHOTO_GALLERY_CODE);
         });
 
-        binding.btnConfirm.setOnClickListener(view -> complete());
+        binding.closes.setOnClickListener(view -> {
+            binding.closes.setVisibility(View.GONE);
+            binding.photo.setVisibility(View.GONE);
+            photo = "";
+        });
+
+
+        binding.btnConfirm.setOnClickListener(view -> {
+            if (type.equals(Constants.TYPE_COMPANY)) {
+                completeCompany();
+            } else {
+                completeEmployee();
+            }
+        });
 
     }
 
-    private void complete() {
-        if (isNotEmpty(binding.etJobField, binding.tvJobField)
+    private void completeEmployee() {
+        if (isNotEmpty(binding.etPhone, binding.tvPhone)
+                && isNotEmpty(binding.etAddress, binding.tvAddress)
                 && isNotEmpty(binding.etGender, binding.tvGender)
-                && isNotEmpty(binding.about)
-                && isNotEmpty(binding.tvCv, binding.cv)
-                && isListNotEmpty(this, localSkills, binding.uploadSkills)
-                && isListNotEmpty(this, localSkills, binding.uploadSkills)
                 && isStringNotEmpty(this, photo)
-                && isFileStringNotEmpty(this, file)
+                && isTextViewNotEmpty(this, binding.tvJobField, binding.jobField)
+                && isListNotEmpty(this, localSkills, binding.jobSkills)
+                && isNotEmpty(binding.tvCv, binding.cv)
+                && isNotEmpty(binding.about)
         ) {
             enableElements(false);
             DocumentReference docRef = db.collection("User").document(Hawk.get(Constants.USER_TOKEN));
-            docRef.update("jobField", getText(binding.etJobField));
+            docRef.update("phone", getText(binding.etPhone));
+            docRef.update("address", getText(binding.etAddress));
             docRef.update("gender", getText(binding.etGender));
+
+            docRef.update("jobField", getText(binding.tvJobField));
             docRef.update("skills", localSkills);
             docRef.update("about", getText(binding.about));
+
             docRef.addSnapshotListener((value, error) -> {
                 showAlert(CompleteAccountActivity.this,
                         getString(R.string.update_profile_successfully), R.color.green_success);
@@ -101,69 +150,93 @@ public class CompleteAccountActivity extends BaseActivity {
         }
     }
 
-    private void genders() {
+    private void completeCompany() {
+        if (isNotEmpty(binding.etPhone, binding.tvPhone)
+                && isNotEmpty(binding.etAddress, binding.tvAddress)
+                && isStringNotEmpty(this, photo)
+                && isTextViewNotEmpty(this, binding.tvJobField, binding.jobField)
+                && isNotEmpty(binding.about)
+        ) {
+            enableElements(false);
+            DocumentReference docRef = db.collection("User").document(Hawk.get(Constants.USER_TOKEN));
+            docRef.update("phone", getText(binding.etPhone));
+            docRef.update("address", getText(binding.etAddress));
+            docRef.update("gender", "");
+
+            docRef.update("jobField", getText(binding.tvJobField));
+            docRef.update("skills", new ArrayList<>());
+            docRef.update("about", getText(binding.about));
+
+            docRef.addSnapshotListener((value, error) -> {
+                showAlert(CompleteAccountActivity.this,
+                        getString(R.string.update_profile_successfully), R.color.green_success);
+                enableElements(true);
+                startActivity(new Intent(this, MainActivity.class));
+                finish();
+
+            });
+        }
+    }
+
+    private void initGenders() {
         ArrayList<String> genders = new ArrayList<>();
         genders.add("Male");
         genders.add("Female");
         ArrayAdapter<String> gendersAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, genders);
         binding.etGender.setAdapter(gendersAdapter);
-        binding.tvGender.setVisibility(View.VISIBLE);
     }
 
-    private void skills() {
-        binding.uploadSkills.setVisibility(View.GONE);
+    private void initSkills() {
+        binding.linearSkills.setVisibility(View.GONE);
         adapter = new SkillsSelectedAdapter(this);
         adapter.removeSkills((model, position) -> {
             skillsString.add(model);
             localSkills.remove(position);
             if (localSkills.isEmpty()) {
-                binding.uploadSkills.setVisibility(View.GONE);
+                binding.linearSkills.setVisibility(View.GONE);
             } else {
-                binding.uploadSkills.setVisibility(View.VISIBLE);
+                binding.linearSkills.setVisibility(View.VISIBLE);
             }
             adapter.setList(localSkills);
         });
         binding.recyclerView.setHasFixedSize(true);
         binding.recyclerView.setAdapter(adapter);
-        loadSkills();
+
+        binding.jobField.setOnClickListener(view -> {
+            dialogField(getString(R.string.choose_your_field), Constants.field());
+        });
+
+        binding.jobSkills.setOnClickListener(view -> {
+            if (!binding.tvJobField.getText().toString().isEmpty()) {
+                dialogSkills(getString(R.string.choose_your_skills), skillsString);
+            } else {
+                showAlert(CompleteAccountActivity.this, getString(R.string.must_select_jobField), R.color.orange);
+            }
+        });
+
     }
 
-    private void loadSkills() {
-        new ApiRequest<Skills>().getData(
-                this,
-                "Skills",
-                Skills.class,
-                new Results<ArrayList<Skills>>() {
-                    @Override
-                    public void onSuccess(ArrayList<Skills> listSkills) {
-                        for (int i = 0; i < listSkills.size(); i++) {
-                            skillsString.add(listSkills.get(i).getName());
-                        }
-                        binding.skills.setOnClickListener(view -> {
-                            dialogSkills(getString(R.string.select_skills), skillsString);
-                        });
-                    }
+    private void dialogField(String title, ArrayList<String> list) {
+        Dialog dialog = new Dialog(this);
+        CustomDialogListBinding dialogBinding = CustomDialogListBinding.inflate(getLayoutInflater());
+        dialog.setContentView(dialogBinding.getRoot());
+        dialogBinding.tvTitle.setText(title);
+        DialogAdapter dialogAdapter = new DialogAdapter(this);
+        dialogAdapter.setAnInterface(model -> {
+            binding.tvJobField.setText(model);
+            skillsString = Constants.fieldSkills(model);
 
-                    @Override
-                    public void onFailureInternet(@NotNull String offline) {
-                        binding.uploadSkills.setVisibility(View.GONE);
-                    }
+            localSkills = new ArrayList<>();
+            adapter.setList(localSkills);
+            binding.linearSkills.setVisibility(View.GONE);
 
-                    @Override
-                    public void onException(@NotNull String exception) {
-                        binding.uploadSkills.setVisibility(View.GONE);
-                    }
-
-                    @Override
-                    public void onEmpty() {
-
-                    }
-
-                    @Override
-                    public void onLoading(boolean loading) {
-
-                    }
-                });
+            dialog.dismiss();
+        });
+        dialogBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        dialogBinding.recyclerView.setHasFixedSize(true);
+        dialogBinding.recyclerView.setAdapter(dialogAdapter);
+        dialogAdapter.setList(list);
+        dialog.show();
     }
 
     private void dialogSkills(String title, ArrayList<String> list) {
@@ -176,9 +249,9 @@ public class CompleteAccountActivity extends BaseActivity {
             localSkills.add(model);
             dialogAdapter.remove(model);
             if (localSkills.isEmpty()) {
-                binding.uploadSkills.setVisibility(View.GONE);
+                binding.linearSkills.setVisibility(View.GONE);
             } else {
-                binding.uploadSkills.setVisibility(View.VISIBLE);
+                binding.linearSkills.setVisibility(View.VISIBLE);
             }
             adapter.setList(localSkills);
             dialog.dismiss();
@@ -206,12 +279,18 @@ public class CompleteAccountActivity extends BaseActivity {
             binding.progressBar.setVisibility(View.INVISIBLE);
         }
         binding.photo.setEnabled(enable);
+        binding.closes.setEnabled(enable);
         binding.camera.setEnabled(enable);
 
-        binding.etJobField.setEnabled(enable);
+        binding.etPhone.setEnabled(enable);
+        binding.etAddress.setEnabled(enable);
         binding.etGender.setEnabled(enable);
-        binding.skills.setEnabled(enable);
+
+        binding.jobField.setEnabled(enable);
+        binding.jobSkills.setEnabled(enable);
+        binding.linearSkills.setEnabled(enable);
         binding.cv.setEnabled(enable);
+        binding.about.setEnabled(enable);
     }
 
     @Override
@@ -221,11 +300,13 @@ public class CompleteAccountActivity extends BaseActivity {
             if (requestCode == Constants.REQUEST_FILE_CODE) {
                 file = data.getData().toString();
                 binding.tvCv.setText(Constants.getFileName(this, data.getData()));
-                uploadFile(data.getData(), Constants.getFileName(this, data.getData()));
+//                uploadFile(data.getData(), Constants.getFileName(this, data.getData()));
             } else if (requestCode == Constants.REQUEST_PHOTO_GALLERY_CODE) {
+                binding.closes.setVisibility(View.VISIBLE);
+                binding.photo.setVisibility(View.VISIBLE);
                 photo = data.getData().toString();
                 Picasso.get().load(data.getData()).into(binding.photo);
-                uploadImage(data.getData(), Constants.getFileName(this, data.getData()));
+//                uploadImage(data.getData(), Constants.getFileName(this, data.getData()));
             }
         }
     }
@@ -304,4 +385,5 @@ public class CompleteAccountActivity extends BaseActivity {
         super.onBackPressed();
         finish();
     }
+
 }
