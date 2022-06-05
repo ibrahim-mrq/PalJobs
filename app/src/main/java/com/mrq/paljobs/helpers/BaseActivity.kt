@@ -116,7 +116,7 @@ open class BaseActivity : AppCompatActivity() {
 
     fun isStringNotEmpty(
         activity: Activity?,
-        string: String,
+        string: String
     ): Boolean {
         return if (string.isEmpty()) {
             Constants.showAlert(activity!!, getString(R.string.must_select_photo), R.color.red)

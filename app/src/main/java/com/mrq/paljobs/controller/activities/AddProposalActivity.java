@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 
 import androidx.core.content.ContextCompat;
@@ -19,7 +20,6 @@ import com.mrq.paljobs.firebase.Results;
 import com.mrq.paljobs.helpers.BaseActivity;
 import com.mrq.paljobs.helpers.Constants;
 import com.mrq.paljobs.models.Proposal;
-import com.mrq.paljobs.models.Skills;
 import com.mrq.paljobs.models.User;
 import com.orhanobut.hawk.Hawk;
 
@@ -122,45 +122,15 @@ public class AddProposalActivity extends BaseActivity {
         });
         binding.recyclerview.setHasFixedSize(true);
         binding.recyclerview.setAdapter(adapter);
-        loadSkills();
-    }
 
-    private void loadSkills() {
-        new ApiRequest<Skills>().getData(
-                this,
-                "Skills",
-                Skills.class,
-                new Results<ArrayList<Skills>>() {
-                    @Override
-                    public void onSuccess(ArrayList<Skills> listSkills) {
-                        for (int i = 0; i < listSkills.size(); i++) {
-                            skillsString.add(listSkills.get(i).getName());
-                        }
-                        binding.skills.setOnClickListener(view -> {
-                            dialogSkills(getString(R.string.select_skills), skillsString);
-                        });
-                    }
+        User user = Hawk.get(Constants.USER);
+        skillsString = Constants.fieldSkills(user.getJobField());
 
-                    @Override
-                    public void onFailureInternet(@NotNull String offline) {
-                        binding.linearSkills.setVisibility(View.GONE);
-                    }
+        Log.e("response", "field = " + user.getJobField());
+        binding.skills.setOnClickListener(view -> {
+            dialogSkills(getString(R.string.choose_your_skills), skillsString);
+        });
 
-                    @Override
-                    public void onException(@NotNull String exception) {
-                        binding.linearSkills.setVisibility(View.GONE);
-                    }
-
-                    @Override
-                    public void onEmpty() {
-
-                    }
-
-                    @Override
-                    public void onLoading(boolean loading) {
-
-                    }
-                });
     }
 
     private void dialogSkills(String title, ArrayList<String> list) {
@@ -215,4 +185,5 @@ public class AddProposalActivity extends BaseActivity {
         super.onBackPressed();
         finish();
     }
+
 }

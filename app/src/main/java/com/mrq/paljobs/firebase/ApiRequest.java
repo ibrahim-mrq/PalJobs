@@ -103,7 +103,7 @@ public class ApiRequest<T> {
     }
 
     public void uploadImage(
-            Activity context,
+            Context context,
             Uri imagePath,
             String fileName,
             String photoType,
@@ -118,7 +118,8 @@ public class ApiRequest<T> {
                         result.onLoading(false);
                         reference.getDownloadUrl().addOnSuccessListener(uri -> {
                             result.onSuccess(uri.toString());
-                            DocumentReference docRef = db.collection("User").document(Hawk.get(Constants.USER_TOKEN));
+                            DocumentReference docRef = db.collection("User")
+                                    .document(Hawk.get(Constants.USER_TOKEN));
                             docRef.update(photoType, uri.toString());
                         });
                     })
@@ -132,7 +133,7 @@ public class ApiRequest<T> {
     }
 
     public void uploadFile(
-            Activity context,
+            Context context,
             Uri filePath,
             String fileName,
             Results<String> result
@@ -146,7 +147,8 @@ public class ApiRequest<T> {
                         result.onLoading(false);
                         reference.getDownloadUrl().addOnSuccessListener(uri -> {
                             result.onSuccess(uri.toString());
-                            DocumentReference docRef = db.collection("User").document(Hawk.get(Constants.USER_TOKEN));
+                            DocumentReference docRef = db.collection("User")
+                                    .document(Hawk.get(Constants.USER_TOKEN));
                             docRef.update("cv", uri.toString());
                         });
                     })

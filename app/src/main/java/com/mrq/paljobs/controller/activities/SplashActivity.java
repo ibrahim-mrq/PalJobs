@@ -23,19 +23,15 @@ public class SplashActivity extends BaseActivity {
         decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
 
         new Handler().postDelayed(() -> {
-            startActivity(new Intent(SplashActivity.this, CompleteAccountActivity.class)
-//                    .putExtra(Constants.USER_TYPE, Constants.TYPE_EMPLOYEE)
-                    .putExtra(Constants.USER_TYPE, Constants.TYPE_COMPANY)
-            );
-//            if (!Hawk.get(Constants.IS_FIRST_START, false)) {
-//                startActivity(new Intent(SplashActivity.this, BoardActivity.class));
-//            } else {
-//                if (Hawk.get(Constants.IS_LOGIN, false)) {
-//                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
-//                } else {
-//                    startActivity(new Intent(SplashActivity.this, LoginActivity.class));
-//                }
-//            }
+            if (!Hawk.get(Constants.IS_FIRST_START, false)) {
+                startActivity(new Intent(SplashActivity.this, BoardActivity.class));
+            } else {
+                if (Hawk.get(Constants.IS_LOGIN, false)) {
+                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                } else {
+                    startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                }
+            }
             finish();
         }, 2000);
     }

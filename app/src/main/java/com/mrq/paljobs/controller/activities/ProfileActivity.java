@@ -45,8 +45,10 @@ public class ProfileActivity extends BaseActivity {
                         binding.email.setText(user.getEmail());
                         binding.address.setText(user.getAddress());
                         binding.about.setText(user.getAbout());
+                        binding.jobField.setText(user.getJobField());
                         if (!user.getPhoto().isEmpty())
                             Picasso.get().load(user.getPhoto()).placeholder(R.drawable.shape_accent).into(binding.photo);
+                        else Picasso.get().load(R.drawable.ic_company_logo).into(binding.photo);
                     }
 
                     @Override

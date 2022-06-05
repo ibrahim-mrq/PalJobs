@@ -1,9 +1,13 @@
 package com.mrq.paljobs.controller.activities;
 
 import android.app.Dialog;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 
@@ -17,16 +21,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.mrq.paljobs.R;
 import com.mrq.paljobs.controller.adapters.DialogAdapter;
 import com.mrq.paljobs.controller.adapters.SkillsSelectedAdapter;
+import com.mrq.paljobs.controller.services.MyService;
 import com.mrq.paljobs.databinding.ActivityCompleteAccountBinding;
 import com.mrq.paljobs.databinding.CustomDialogListBinding;
-import com.mrq.paljobs.firebase.ApiRequest;
-import com.mrq.paljobs.firebase.Results;
 import com.mrq.paljobs.helpers.BaseActivity;
 import com.mrq.paljobs.helpers.Constants;
+import com.mrq.paljobs.models.User;
 import com.orhanobut.hawk.Hawk;
 import com.squareup.picasso.Picasso;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -40,6 +42,8 @@ public class CompleteAccountActivity extends BaseActivity {
     String type = "";
     String file = "";
     String photo = "";
+    Uri imagePath;
+    Uri filePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +112,6 @@ public class CompleteAccountActivity extends BaseActivity {
             photo = "";
         });
 
-
         binding.btnConfirm.setOnClickListener(view -> {
             if (type.equals(Constants.TYPE_COMPANY)) {
                 completeCompany();
@@ -139,6 +142,17 @@ public class CompleteAccountActivity extends BaseActivity {
             docRef.update("skills", localSkills);
             docRef.update("about", getText(binding.about));
 
+            User user = Hawk.get(Constants.USER);
+            user.setPhoto(getText(binding.etPhone));
+            user.setAddress(getText(binding.etAddress));
+            user.setGender(getText(binding.etGender));
+            user.setJobField(getText(binding.tvJobField));
+            user.setSkills(localSkills);
+            user.setAbout(getText(binding.about));
+            Hawk.put(Constants.USER, user);
+
+            uploadFile();
+            uploadImage();
             docRef.addSnapshotListener((value, error) -> {
                 showAlert(CompleteAccountActivity.this,
                         getString(R.string.update_profile_successfully), R.color.green_success);
@@ -167,13 +181,20 @@ public class CompleteAccountActivity extends BaseActivity {
             docRef.update("skills", new ArrayList<>());
             docRef.update("about", getText(binding.about));
 
+            User user = Hawk.get(Constants.USER);
+            user.setPhoto(getText(binding.etPhone));
+            user.setAddress(getText(binding.etAddress));
+            user.setJobField(getText(binding.tvJobField));
+            user.setAbout(getText(binding.about));
+            Hawk.put(Constants.USER, user);
+
+            uploadImage();
             docRef.addSnapshotListener((value, error) -> {
                 showAlert(CompleteAccountActivity.this,
                         getString(R.string.update_profile_successfully), R.color.green_success);
                 enableElements(true);
                 startActivity(new Intent(this, MainActivity.class));
                 finish();
-
             });
         }
     }
@@ -299,85 +320,42 @@ public class CompleteAccountActivity extends BaseActivity {
         if (resultCode == RESULT_OK && data != null) {
             if (requestCode == Constants.REQUEST_FILE_CODE) {
                 file = data.getData().toString();
+                filePath = data.getData();
                 binding.tvCv.setText(Constants.getFileName(this, data.getData()));
-//                uploadFile(data.getData(), Constants.getFileName(this, data.getData()));
             } else if (requestCode == Constants.REQUEST_PHOTO_GALLERY_CODE) {
                 binding.closes.setVisibility(View.VISIBLE);
                 binding.photo.setVisibility(View.VISIBLE);
                 photo = data.getData().toString();
+                imagePath = data.getData();
                 Picasso.get().load(data.getData()).into(binding.photo);
-//                uploadImage(data.getData(), Constants.getFileName(this, data.getData()));
             }
         }
     }
 
-    private void uploadImage(Uri imagePath, String fileName) {
-        new ApiRequest<>().uploadImage(
-                this,
-                imagePath,
-                fileName,
-                Constants.TYPE_PHOTO,
-                new Results<String>() {
-                    @Override
-                    public void onSuccess(String s) {
-                        showAlert(CompleteAccountActivity.this,
-                                getString(R.string.upload_picture_successfully), R.color.green_success);
-                    }
-
-                    @Override
-                    public void onFailureInternet(@NotNull String offline) {
-                        showAlert(CompleteAccountActivity.this, offline, R.color.orange);
-                    }
-
-                    @Override
-                    public void onException(@NotNull String exception) {
-                        showAlert(CompleteAccountActivity.this, exception, R.color.red);
-                    }
-
-                    @Override
-                    public void onEmpty() {
-
-                    }
-
-                    @Override
-                    public void onLoading(boolean loading) {
-                        enableElements(!loading);
-                    }
-                });
+    private void uploadImage() {
+        PersistableBundle bundle = new PersistableBundle();
+        bundle.putString("name", Constants.getFileName(this, imagePath));
+        bundle.putString("path", photo);
+        bundle.putString("type", Constants.TYPE_PHOTO);
+        ComponentName componentName = new ComponentName(this, MyService.class);
+        JobInfo jobInfo = new JobInfo.Builder(10, componentName)
+                .setExtras(bundle)
+                .build();
+        JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+        scheduler.schedule(jobInfo);
     }
 
-    private void uploadFile(Uri filePath, String fileName) {
-        new ApiRequest<>().uploadFile(
-                this,
-                filePath,
-                fileName,
-                new Results<String>() {
-                    @Override
-                    public void onSuccess(String s) {
-                        showAlert(CompleteAccountActivity.this,
-                                getString(R.string.upload_file_successfully), R.color.green_success);
-                    }
-
-                    @Override
-                    public void onFailureInternet(@NotNull String offline) {
-                        showAlert(CompleteAccountActivity.this, offline, R.color.orange);
-                    }
-
-                    @Override
-                    public void onException(@NotNull String exception) {
-                        showAlert(CompleteAccountActivity.this, exception, R.color.red);
-                    }
-
-                    @Override
-                    public void onEmpty() {
-
-                    }
-
-                    @Override
-                    public void onLoading(boolean loading) {
-                        enableElements(!loading);
-                    }
-                });
+    private void uploadFile() {
+        PersistableBundle bundle = new PersistableBundle();
+        bundle.putString("name", Constants.getFileName(this, filePath));
+        bundle.putString("path", file);
+        bundle.putString("type", Constants.TYPE_FILE);
+        ComponentName componentName = new ComponentName(this, MyService.class);
+        JobInfo jobInfo = new JobInfo.Builder(11, componentName)
+                .setExtras(bundle)
+                .build();
+        JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+        scheduler.schedule(jobInfo);
     }
 
     @Override

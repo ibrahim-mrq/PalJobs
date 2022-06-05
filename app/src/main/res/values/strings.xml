@@ -77,6 +77,7 @@
     <string name="phone">Phone Number</string>
     <string name="address">Address</string>
     <string name="jobField">Job field</string>
+    <string name="jobTitle">Job title</string>
     <string name="edit_cover_photo">Edit cover Photo</string>
     <string name="upload_profile_picture">Upload Profile Picture</string>
     <string name="skills">Skills</string>
@@ -95,6 +96,7 @@
     <string name="complete_profile">Complete Your Profile</string>
     <string name="select_skills">Select the skills you have</string>
     <string name="update_profile_successfully">Update Profile Successfully</string>
+    <string name="delete_proposal_successfully">Delete Proposal Successfully</string>
     <string name="update_image_file">Edit Image and CV File</string>
     <string name="update">Update</string>
     <string name="must_select_skills">At least one skill must be selected</string>
@@ -126,7 +128,7 @@
     <string name="choose_your_skills">Choose your skills</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="resume">Resume</string>
-    <string name="enter_job_field">Enter Job Field</string>
+    <string name="enter_job_field">Enter Job Title</string>
     <string name="description">Description</string>
     <string name="add_a_job_requirements">Add a job requirements</string>
     <string name="add_new_job">Add New Job</string>
@@ -147,6 +149,8 @@
     <string name="type_about_yourself">Type about yourself</string>
     <string name="type_about_your_company">Type about your company</string>
     <string name="must_select_jobField">The job field must be selected first</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 
 
 </resources>

@@ -31,4 +31,9 @@
         <item name="android:windowExitAnimation">@anim/animation_off</item>
     </style>
 
+    <!-- TODO :  image picker -->
+    <color name="ucrop_color_toolbar">@color/colorPrimaryDark</color>
+    <color name="ucrop_color_statusbar">@color/colorPrimaryDark</color>
+    <color name="ucrop_color_widget_active">@color/colorPrimaryDark</color>
+
 </resources>

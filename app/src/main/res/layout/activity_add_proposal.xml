@@ -27,7 +27,7 @@
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="20dp"
                 android:gravity="center"
-                android:text="@string/jobField"
+                android:text="@string/jobTitle"
                 android:textAllCaps="false"
                 android:textColor="@color/colorAccent"
                 android:textSize="16sp"
@@ -124,7 +124,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="5dp"
+                android:paddingVertical="10dp"
+                android:background="@drawable/shape_gray2">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerview"
@@ -137,6 +139,7 @@
                     app:spanCount="3"
                     tools:itemCount="7"
                     tools:listitem="@layout/custom_skills" />
+
             </LinearLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout

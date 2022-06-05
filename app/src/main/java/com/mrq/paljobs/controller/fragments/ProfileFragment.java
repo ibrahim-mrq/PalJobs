@@ -3,6 +3,7 @@ package com.mrq.paljobs.controller.fragments;
 import android.annotation.SuppressLint;
 import android.app.DownloadManager;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mrq.paljobs.R;
+import com.mrq.paljobs.controller.activities.EditProfileActivity;
 import com.mrq.paljobs.controller.activities.MainActivity;
 import com.mrq.paljobs.controller.adapters.SkillsAdapter;
 import com.mrq.paljobs.databinding.FragmentProfileBinding;
@@ -62,12 +64,12 @@ public class ProfileFragment extends BaseFragment {
         adapter = new SkillsAdapter(requireActivity());
         binding.recyclerView.setHasFixedSize(true);
         binding.recyclerView.setAdapter(adapter);
-
+        binding.edit.setOnClickListener(view -> {
+            startActivity(new Intent(requireContext(), EditProfileActivity.class)
+                    .putExtra(Constants.TYPE_TITLE, Hawk.get(Constants.USER_TYPE, ""))
+            );
+        });
         loadData();
-        if (Hawk.get(Constants.USER_TYPE, Constants.TYPE_EMPLOYEE).equals(Constants.TYPE_COMPANY)) {
-            binding.linearUser.setVisibility(View.GONE);
-        }
-
     }
 
     private void loadData() {
@@ -83,6 +85,7 @@ public class ProfileFragment extends BaseFragment {
                         binding.email.setText(user.getEmail());
                         binding.address.setText(user.getAddress());
                         binding.about.setText(user.getAbout());
+                        binding.jobField.setText(user.getJobField());
 
                         adapter.setList(user.getSkills());
 
@@ -93,6 +96,7 @@ public class ProfileFragment extends BaseFragment {
 
                         if (!user.getPhoto().isEmpty())
                             Picasso.get().load(user.getPhoto()).placeholder(R.drawable.shape_accent).into(binding.photo);
+                        else Picasso.get().load(R.drawable.ic_user_logo).into(binding.photo);
 
                         binding.cv.setOnClickListener(view -> load(user.getCv()));
                     }

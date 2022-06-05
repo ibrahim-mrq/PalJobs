@@ -1,8 +1,5 @@
 package com.mrq.paljobs.controller.activities;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.view.View;
 
@@ -36,24 +33,48 @@ public class EditProfileActivity extends BaseActivity {
     }
 
     private void initView() {
+        binding.appbar.tvTool.setText(getString(R.string.edit_profile));
+        binding.appbar.imgBack.setOnClickListener(view -> onBackPressed());
+
         adapter = new SkillsAdapter(EditProfileActivity.this);
         binding.recyclerView.setHasFixedSize(true);
         binding.recyclerView.setAdapter(adapter);
-        binding.recyclerView.setLayoutManager(new LinearLayoutManager(EditProfileActivity.this, RecyclerView.HORIZONTAL, false));
-        binding.btnUpdate.setOnClickListener(view -> update());
 
-        if (Hawk.get(Constants.USER_TYPE, Constants.TYPE_EMPLOYEE).equals(Constants.TYPE_COMPANY)) {
+        if (Hawk.get(Constants.USER_TYPE).equals(Constants.TYPE_COMPANY)) {
             binding.tvSkills.setVisibility(View.GONE);
             binding.uploadSkills.setVisibility(View.GONE);
-            binding.tvJobField.setVisibility(View.GONE);
             binding.tvGender.setVisibility(View.GONE);
             binding.tvCv.setVisibility(View.GONE);
+            binding.tvLName.setVisibility(View.GONE);
+            binding.tvFName.setHint(getString(R.string.company_name));
+            binding.tvPhone.setHint(getString(R.string.telephone_fax));
         }
-
         loadData();
+        binding.btnUpdate.setOnClickListener(view -> {
+            if (Hawk.get(Constants.USER_TYPE).equals(Constants.TYPE_COMPANY)) {
+                updateCompany();
+            } else {
+                updateEmployee();
+            }
+        });
+
     }
 
-    private void update() {
+    private void updateCompany() {
+        enableElements(false);
+        DocumentReference docRef = db.collection("User").document(Hawk.get(Constants.USER_TOKEN));
+        docRef.update("firstName", getText(binding.etFName));
+        docRef.update("lastName", "");
+        docRef.update("phone", getText(binding.etPhone));
+        docRef.update("address", getText(binding.etAddress));
+        docRef.update("jobField", getText(binding.etJobField));
+        docRef.addSnapshotListener((value, error) -> {
+            showAlert(EditProfileActivity.this, getString(R.string.update_profile_successfully), R.color.green_success);
+            enableElements(true);
+        });
+    }
+
+    private void updateEmployee() {
         enableElements(false);
         DocumentReference docRef = db.collection("User").document(Hawk.get(Constants.USER_TOKEN));
         docRef.update("firstName", getText(binding.etFName));
@@ -130,6 +151,11 @@ public class EditProfileActivity extends BaseActivity {
         binding.etLName.setEnabled(enable);
         binding.etPhone.setEnabled(enable);
         binding.etAddress.setEnabled(enable);
-        binding.etJobField.setEnabled(enable);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

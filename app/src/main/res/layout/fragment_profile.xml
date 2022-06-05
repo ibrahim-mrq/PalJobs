@@ -19,7 +19,7 @@
             android:layout_height="100dp"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
-            android:src="@drawable/shape_customer"
+            android:src="@drawable/ic_user_logo"
             app:shapeAppearanceOverlay="@style/cornerImageView" />
 
         <LinearLayout
@@ -96,7 +96,7 @@
             android:textAllCaps="false"
             android:textColor="@color/textPrimary"
             android:textSize="14sp"
-            tools:text="Hi! My name is John, I’m a creative geek from S an Francisco, CA. I enjoy creating eye candy sol utions for web and mobile apps. Contact me at john@mail.com" />
+            tools:text="Hi. Contact mcom" />
 
         <LinearLayout
             android:id="@+id/linear_user"
@@ -105,6 +105,29 @@
             android:layout_marginTop="20dp"
             android:background="#FAFAFA"
             android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:paddingHorizontal="10dp"
+                android:text="@string/jobField"
+                android:textAllCaps="true"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/jobField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:paddingHorizontal="10dp"
+                android:text="@string/jobField"
+                android:textAllCaps="false"
+                android:textColor="@color/textPrimary"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/tv_skills"

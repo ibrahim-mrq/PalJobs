@@ -14,6 +14,7 @@ import com.mrq.paljobs.helpers.BaseActivity;
 import com.mrq.paljobs.helpers.Constants;
 import com.mrq.paljobs.models.Favorite;
 import com.mrq.paljobs.models.Proposal;
+import com.mrq.paljobs.models.Submit;
 import com.orhanobut.hawk.Hawk;
 import com.squareup.picasso.Picasso;
 
@@ -23,8 +24,6 @@ public class ProposalDetailsActivity extends BaseActivity {
 
     ActivityProposalDetailsBinding binding;
     SkillsAdapter adapter;
-    Proposal proposal;
-    Favorite favorite;
     String type;
     boolean saved = true;
 
@@ -41,9 +40,12 @@ public class ProposalDetailsActivity extends BaseActivity {
         binding.appbar.imgBack.setOnClickListener(view -> onBackPressed());
         binding.appbar.tvTool.setText(getString(R.string.submit_proposal));
 
+        adapter = new SkillsAdapter(this);
+        binding.recyclerview.setHasFixedSize(true);
+        binding.recyclerview.setAdapter(adapter);
 
         if (type.equals(Constants.TYPE_FAVORITE)) {
-            favorite = (Favorite) getIntent().getSerializableExtra(Constants.TYPE_MODEL);
+            Favorite favorite = (Favorite) getIntent().getSerializableExtra(Constants.TYPE_MODEL);
 
             binding.name.setText(favorite.getCompanyName());
             binding.time.setText(favorite.getTime());
@@ -54,10 +56,7 @@ public class ProposalDetailsActivity extends BaseActivity {
             if (!favorite.getCompanyImage().isEmpty())
                 Picasso.get().load(favorite.getCompanyImage()).into(binding.image);
 
-            adapter = new SkillsAdapter(this);
             adapter.setList(favorite.getSkills());
-            binding.recyclerview.setHasFixedSize(true);
-            binding.recyclerview.setAdapter(adapter);
             binding.save.setImageResource(R.drawable.ic_save);
 
             binding.save.setOnClickListener(view -> {
@@ -88,8 +87,40 @@ public class ProposalDetailsActivity extends BaseActivity {
                 );
             });
 
+        } else if (type.equals(Constants.TYPE_SUBMIT)) {
+            Submit submit = (Submit) getIntent().getSerializableExtra(Constants.TYPE_MODEL);
+
+            binding.name.setText(submit.getCompanyName());
+            binding.time.setText(submit.getTime());
+            binding.title.setText(submit.getTitle());
+            binding.content.setText(submit.getContent());
+            binding.requirements.setText(submit.getRequirement());
+
+            if (!submit.getCompanyImage().isEmpty())
+                Picasso.get().load(submit.getCompanyImage()).into(binding.image);
+
+            adapter.setList(submit.getSkills());
+
+            if (submit.isSaved()) {
+                binding.save.setImageResource(R.drawable.ic_save);
+            } else {
+                binding.save.setImageResource(R.drawable.ic_unsave);
+            }
+            binding.save.setOnClickListener(view -> {
+                if (submit.isSaved()) {
+                    showAlert(this, getString(R.string.proposal_already__saved), R.color.green);
+                } else {
+                    addFavorite(submit);
+                }
+            });
+
+            binding.btnSubmit.setBackgroundResource(R.drawable.shape_gray);
+            binding.btnSubmit.setText(R.string.submitted);
+            binding.btnSubmit.setTextColor(ContextCompat.getColor(this, R.color.textPrimary));
+            binding.btnSubmit.setEnabled(false);
+
         } else {
-            proposal = (Proposal) getIntent().getSerializableExtra(Constants.TYPE_MODEL);
+            Proposal proposal = (Proposal) getIntent().getSerializableExtra(Constants.TYPE_MODEL);
 
             binding.name.setText(proposal.getCompanyName());
             binding.time.setText(proposal.getTime());
@@ -100,10 +131,7 @@ public class ProposalDetailsActivity extends BaseActivity {
             if (!proposal.getCompanyImage().isEmpty())
                 Picasso.get().load(proposal.getCompanyImage()).into(binding.image);
 
-            adapter = new SkillsAdapter(this);
             adapter.setList(proposal.getSkills());
-            binding.recyclerview.setHasFixedSize(true);
-            binding.recyclerview.setAdapter(adapter);
 
             if (proposal.getSaved()) {
                 binding.save.setImageResource(R.drawable.ic_save);
@@ -141,6 +169,58 @@ public class ProposalDetailsActivity extends BaseActivity {
 
     }
 
+    private void addFavorite(Submit model) {
+
+        Favorite favorite = new Favorite();
+        favorite.setCompanyId(model.getCompanyId());
+        favorite.setCompanyImage(model.getCompanyImage());
+        favorite.setCompanyName(model.getCompanyName());
+        favorite.setContent(model.getContent());
+        favorite.setId("");
+        favorite.setProposalId(model.getId());
+        favorite.setRequirement(model.getRequirement());
+
+        favorite.setSkills(model.getSkills());
+        favorite.setTime(Constants.getCurrentDate());
+        favorite.setTitle(model.getTitle());
+        favorite.setCustomerId(Hawk.get(Constants.USER_TOKEN));
+
+        new ApiRequest<String>().addFavorite(
+                MainActivity.context,
+                favorite,
+                new Results<String>() {
+                    @Override
+                    public void onSuccess(String success) {
+                        model.setSaved(true);
+                        binding.save.setImageResource(R.drawable.ic_save);
+                        showAlert(ProposalDetailsActivity.this, success, R.color.green_success);
+                    }
+
+                    @Override
+                    public void onFailureInternet(@NotNull String offline) {
+                        showAlert(ProposalDetailsActivity.this, offline, R.color.orange);
+                    }
+
+                    @Override
+                    public void onException(@NotNull String exception) {
+                        showAlert(ProposalDetailsActivity.this, exception, R.color.red);
+                    }
+
+                    @Override
+                    public void onEmpty() {
+
+                    }
+
+                    @Override
+                    public void onLoading(boolean loading) {
+                        if (loading)
+                            showCustomProgress(false);
+                        else dismissCustomProgress();
+                    }
+                }
+        );
+    }
+
     private void addFavorite(Proposal model) {
 
         Favorite favorite = new Favorite();
@@ -163,8 +243,8 @@ public class ProposalDetailsActivity extends BaseActivity {
                 new Results<String>() {
                     @Override
                     public void onSuccess(String success) {
-                        proposal.setSubmit(true);
-                        proposal.setSaved(true);
+                        model.setSubmit(true);
+                        model.setSaved(true);
                         binding.save.setImageResource(R.drawable.ic_save);
                         showAlert(ProposalDetailsActivity.this, success, R.color.green_success);
                     }

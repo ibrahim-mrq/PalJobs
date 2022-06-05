@@ -1,38 +1,44 @@
 package com.mrq.paljobs.controller.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mrq.paljobs.R;
 import com.mrq.paljobs.controller.activities.JobDetailsActivity;
+import com.mrq.paljobs.controller.interfaceis.DeleteInterface;
 import com.mrq.paljobs.databinding.CustomProposalCompanyBinding;
 import com.mrq.paljobs.helpers.Constants;
 import com.mrq.paljobs.models.Proposal;
 
 import java.util.ArrayList;
 
+@SuppressLint("NonConstantResourceId")
 public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.CompanyViewHolder> {
 
     Context mContext;
     ArrayList<Proposal> list;
+    DeleteInterface anInterface;
 
     public CompanyAdapter(Context mContext) {
         this.mContext = mContext;
     }
 
-    public ArrayList<Proposal> getList() {
-        return list;
-    }
-
     public void setList(ArrayList<Proposal> list) {
         this.list = list;
         notifyDataSetChanged();
+    }
+
+    public void deleteInterface(DeleteInterface anInterface) {
+        this.anInterface = anInterface;
     }
 
     @NonNull
@@ -50,6 +56,23 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.CompanyV
             mContext.startActivity(new Intent(mContext, JobDetailsActivity.class)
                     .putExtra(Constants.TYPE_MODEL, model)
             );
+        });
+
+        holder.binding.more.setOnClickListener(view -> {
+            PopupMenu popupMenu = new PopupMenu(mContext, holder.binding.more, Gravity.BOTTOM);
+            popupMenu.getMenuInflater().inflate(R.menu.menu_popup, popupMenu.getMenu());
+            popupMenu.setOnMenuItemClickListener(item -> {
+                switch (item.getItemId()) {
+                    case R.id.popup_edit:
+                        break;
+                    case R.id.popup_delete:
+                        anInterface.delete(model);
+                        popupMenu.dismiss();
+                        break;
+                }
+                return true;
+            });
+            popupMenu.show();
         });
     }
 

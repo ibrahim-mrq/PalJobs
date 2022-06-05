@@ -85,42 +85,47 @@ public class RegisterActivity extends BaseActivity {
             user.setUserType(type);
             user.setSkills(new ArrayList<>());
 
-            new ApiRequest<String>().register(this, user, new Results<String>() {
-                @Override
-                public void onSuccess(String s) {
-                    showAlert(RegisterActivity.this, getString(R.string.create_an_account), R.color.green_success);
-                    new Handler().postDelayed(() -> {
-                        Intent intent = new Intent(RegisterActivity.this, CompleteAccountActivity.class);
-                        if (type.equals(Constants.TYPE_COMPANY)) {
-                            intent.putExtra(Constants.USER_TYPE, Constants.TYPE_COMPANY);
-                        } else {
-                            intent.putExtra(Constants.USER_TYPE, Constants.TYPE_EMPLOYEE);
+            new ApiRequest<String>().register(
+                    this,
+                    user,
+                    new Results<String>() {
+                        @Override
+                        public void onSuccess(String s) {
+                            showAlert(RegisterActivity.this, getString(R.string.create_an_account), R.color.green_success);
+                            new Handler().postDelayed(() -> {
+                                Intent intent = new Intent(RegisterActivity.this, CompleteAccountActivity.class);
+                                if (type.equals(Constants.TYPE_COMPANY)) {
+                                    intent.putExtra(Constants.USER_TYPE, Constants.TYPE_COMPANY);
+                                } else {
+                                    intent.putExtra(Constants.USER_TYPE, Constants.TYPE_EMPLOYEE);
+                                }
+                                startActivity(intent);
+                                finish();
+                            }, 2000);
                         }
-                        startActivity(intent);
-                        finish();
-                    }, 2000);
-                }
 
-                @Override
-                public void onFailureInternet(@NotNull String offline) {
-                    showAlert(RegisterActivity.this, offline, R.color.orange);
-                }
+                        @Override
+                        public void onFailureInternet(@NotNull String offline) {
+                            enableElements(true);
+                            showAlert(RegisterActivity.this, offline, R.color.orange);
+                        }
 
-                @Override
-                public void onEmpty() {
+                        @Override
+                        public void onEmpty() {
 
-                }
+                        }
 
-                @Override
-                public void onException(@NotNull String message) {
-                    showAlert(RegisterActivity.this, message, R.color.red);
-                }
+                        @Override
+                        public void onException(@NotNull String message) {
+                            enableElements(true);
+                            showAlert(RegisterActivity.this, message, R.color.red);
+                        }
 
-                @Override
-                public void onLoading(boolean loading) {
-                    enableElements(!loading);
-                }
-            });
+                        @Override
+                        public void onLoading(boolean loading) {
+                            enableElements(false);
+                        }
+                    });
 
 
         }

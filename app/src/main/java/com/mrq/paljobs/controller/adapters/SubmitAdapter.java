@@ -1,6 +1,7 @@
 package com.mrq.paljobs.controller.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mrq.paljobs.R;
+import com.mrq.paljobs.controller.activities.ProposalDetailsActivity;
 import com.mrq.paljobs.databinding.CustomSubmitBinding;
+import com.mrq.paljobs.helpers.Constants;
 import com.mrq.paljobs.models.Submit;
 import com.squareup.picasso.Picasso;
 
@@ -45,6 +48,13 @@ public class SubmitAdapter extends RecyclerView.Adapter<SubmitAdapter.SubmitView
     public void onBindViewHolder(@NonNull SubmitViewHolder holder, int position) {
         Submit model = list.get(position);
         holder.bind(model);
+
+        holder.itemView.setOnClickListener(view -> {
+            mContext.startActivity(new Intent(mContext, ProposalDetailsActivity.class)
+                    .putExtra(Constants.TYPE_TITLE, Constants.TYPE_SUBMIT)
+                    .putExtra(Constants.TYPE_MODEL, model));
+        });
+
     }
 
     @Override

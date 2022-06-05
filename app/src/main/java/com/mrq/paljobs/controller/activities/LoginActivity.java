@@ -73,16 +73,17 @@ public class LoginActivity extends BaseActivity {
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                 finish();
                             }, 2000);
-
                         }
 
                         @Override
                         public void onFailureInternet(@NotNull String offline) {
+                            enableElements(true);
                             showAlert(LoginActivity.this, offline, R.color.orange);
                         }
 
                         @Override
                         public void onException(@NotNull String exception) {
+                            enableElements(true);
                             showAlert(LoginActivity.this, exception, R.color.red);
                         }
 

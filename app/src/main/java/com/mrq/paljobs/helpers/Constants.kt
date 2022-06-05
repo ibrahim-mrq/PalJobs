@@ -44,12 +44,14 @@ object Constants {
     const val TYPE_COMPANY = "Company"
 
     const val TYPE_PHOTO = "photo"
+    const val TYPE_FILE = "file"
 
     const val TYPE_LANGUAGE = "type_language"
     const val TYPE_LANGUAGE_AR = "ar"
     const val TYPE_LANGUAGE_EN = "en"
 
     const val TYPE_FAVORITE = "favorite"
+    const val TYPE_SUBMIT = "submit"
     const val TYPE_PROPOSAL = "proposal"
 
     const val TYPE_ADD = "add"

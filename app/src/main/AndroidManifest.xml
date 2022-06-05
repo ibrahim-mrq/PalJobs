@@ -16,11 +16,11 @@
         android:supportsRtl="true"
         android:theme="@style/MaterialTheme"
         tools:ignore="AllowBackup">
-        <activity android:name=".controller.activities.AboutActivity"></activity>
-        <activity android:name=".controller.activities.ProposalActivity" />
-        <activity android:name=".controller.activities.ProfileActivity" />
-        <activity android:name=".controller.activities.CompanyActivity" />
-        <activity android:name=".controller.activities.JobDetailsActivity" />
+
+        <service
+            android:name=".controller.services.MyService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
         <activity
             android:name=".controller.activities.SplashActivity"
             android:exported="true"
@@ -70,6 +70,22 @@
         <activity
             android:name=".controller.activities.SearchActivity"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+        <activity
+            android:name=".controller.activities.AboutActivity"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+        <activity
+            android:name=".controller.activities.ProposalActivity"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+        <activity
+            android:name=".controller.activities.ProfileActivity"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+        <activity
+            android:name=".controller.activities.CompanyActivity"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+        <activity
+            android:name=".controller.activities.JobDetailsActivity"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+
     </application>
 
 </manifest>
