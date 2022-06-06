@@ -25,6 +25,7 @@
 
     <string name="remove_favorite_success">Successfully removed from favourites</string>
     <string name="add_favorite_success">Successfully added to favourites</string>
+    <string name="submit_proposal_success">Successfully submit proposal</string>
 
     <string name="login_successfully">You are logged in successfully</string>
     <string name="no_cv">There is no pdf cv file</string>
@@ -110,7 +111,7 @@
     <string name="help">Help</string>
     <string name="jobs">Jobs</string>
     <string name="submitted">Submitted</string>
-    <string name="proposal_already__saved">Proposal has already been saved</string>
+    <string name="proposal_already__saved">Job has already been saved</string>
     <string name="search_here">search here</string>
     <string name="filters">Filters</string>
     <string name="date_first">Date Added (latest First)</string>

@@ -28,8 +28,10 @@
 
     <!-- TODO :  Dialog Animation   -->
     <style name="animationName" parent="android:Animation">
-        <item name="android:windowEnterAnimation">@anim/animation_on</item>
-        <item name="android:windowExitAnimation">@anim/animation_off</item>
+                <item name="android:windowEnterAnimation">@anim/animation_on</item>
+                <item name="android:windowExitAnimation">@anim/animation_off</item>
+<!--        <item name="android:windowEnterAnimation">@android:anim/slide_in_left</item>-->
+<!--        <item name="android:windowExitAnimation">@android:anim/slide_out_right</item>-->
     </style>
 
     <!-- TODO :  image picker -->

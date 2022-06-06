@@ -1,7 +1,6 @@
 package com.mrq.paljobs.controller.activities;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -101,8 +100,7 @@ public class AddProposalActivity extends BaseActivity {
                             showAlert(AddProposalActivity.this, getString(R.string.add_new_job_successfully), R.color.green_success);
                             new Handler().postDelayed(() -> {
                                 enableElements(true);
-                                startActivity(new Intent(AddProposalActivity.this, MainActivity.class));
-                                finish();
+                                onBackPressed();
                             }, 2000);
                         }
 
@@ -146,7 +144,10 @@ public class AddProposalActivity extends BaseActivity {
 
             docRef.addSnapshotListener((value, error) -> {
                 showAlert(this, getString(R.string.update_job_successfully), R.color.green_success);
-                enableElements(true);
+                new Handler().postDelayed(() -> {
+                    enableElements(true);
+                    onBackPressed();
+                }, 2000);
             });
 
         }

@@ -247,7 +247,7 @@ public class SubmitActivity extends BaseActivity {
                 this,
                 filePath,
                 fileName,
-                "update",
+                "add",
                 new Results<String>() {
                     @Override
                     public void onSuccess(String s) {

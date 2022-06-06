@@ -357,7 +357,7 @@ public class ApiRequest<T> {
                     .add(submit)
                     .addOnSuccessListener(document -> {
                         document.update("id", document.getId());
-                        result.onSuccess(context.getString(R.string.add_favorite_success));
+                        result.onSuccess(context.getString(R.string.submit_proposal_success));
                         result.onLoading(false);
                     })
                     .addOnFailureListener(error -> {

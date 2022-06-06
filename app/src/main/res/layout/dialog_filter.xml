@@ -68,13 +68,15 @@
                         android:padding="5dp">
 
                         <TextView
+                            android:id="@+id/tv_field"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
+                            android:hint="@string/job_field"
                             android:paddingHorizontal="10dp"
-                            android:text="@string/job_field"
-                            android:textColor="@color/textSecondary"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/textSecondary"
                             android:textStyle="bold"
                             tools:ignore="KeyboardInaccessibleWidget" />
 
@@ -117,13 +119,15 @@
                         android:padding="5dp">
 
                         <TextView
+                            android:id="@+id/tv_skills"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
+                            android:hint="@string/specific_job"
                             android:paddingHorizontal="10dp"
-                            android:text="@string/specific_job"
-                            android:textColor="@color/textSecondary"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/textSecondary"
                             android:textStyle="bold"
                             tools:ignore="KeyboardInaccessibleWidget" />
 

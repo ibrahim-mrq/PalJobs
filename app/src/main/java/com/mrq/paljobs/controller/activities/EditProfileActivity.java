@@ -71,6 +71,7 @@ public class EditProfileActivity extends BaseActivity {
             binding.tvFName.setHint(getString(R.string.company_name));
             binding.tvPhone.setHint(getString(R.string.telephone_fax));
         } else {
+            binding.tvSkills.setVisibility(View.GONE);
             binding.uploadSkills.setVisibility(View.GONE);
             binding.jobField.setVisibility(View.GONE);
         }
