@@ -27,6 +27,7 @@
     <string name="add_favorite_success">Successfully added to favourites</string>
 
     <string name="login_successfully">You are logged in successfully</string>
+    <string name="no_cv">There is no pdf cv file</string>
     <string name="logout_successfully">Signed out successfully</string>
     <string name="logout">Logout</string>
     <string name="skip">Skip</string>

@@ -81,9 +81,6 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="5dp"
             android:layout_marginTop="5dp"
-            android:ellipsize="end"
-            android:ems="3"
-            android:lines="3"
             android:textColor="@color/black"
             android:textSize="14sp"
             tools:text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore" />

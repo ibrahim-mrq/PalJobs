@@ -1,5 +1,6 @@
 package com.mrq.paljobs.controller.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,7 +54,12 @@ public class SubmitProposalAdapter extends RecyclerView.Adapter<SubmitProposalAd
 //        });
 
         holder.binding.btnDownloadCv.setOnClickListener(view -> {
-            Constants.loadFile(mContext, model.getCustomerCv());
+            try {
+                Constants.loadFile(mContext, model.getCustomerCv());
+            } catch (Exception ignored) {
+                Constants.showAlert((Activity) mContext,
+                        mContext.getString(R.string.no_cv), R.color.orange);
+            }
         });
     }
 

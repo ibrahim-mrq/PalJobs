@@ -12,7 +12,9 @@ import com.mrq.paljobs.databinding.ActivityLoginBinding;
 import com.mrq.paljobs.firebase.ApiRequest;
 import com.mrq.paljobs.firebase.Results;
 import com.mrq.paljobs.helpers.BaseActivity;
+import com.mrq.paljobs.helpers.Constants;
 import com.mrq.paljobs.models.User;
+import com.orhanobut.hawk.Hawk;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -70,7 +72,11 @@ public class LoginActivity extends BaseActivity {
                             showAlert(LoginActivity.this, getString(R.string.login_successfully), R.color.green_success);
                             new Handler().postDelayed(() -> {
                                 enableElements(true);
-                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                if (Hawk.get(Constants.USER_TYPE).equals(Constants.TYPE_COMPANY)) {
+                                    startActivity(new Intent(LoginActivity.this, CompanyActivity.class));
+                                } else {
+                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                }
                                 finish();
                             }, 2000);
                         }
