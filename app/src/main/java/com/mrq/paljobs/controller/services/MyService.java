@@ -67,6 +67,7 @@ public class MyService extends JobService {
                 getBaseContext(),
                 filePath,
                 fileName,
+                "add",
                 new Results<String>() {
                     @Override
                     public void onSuccess(String s) {

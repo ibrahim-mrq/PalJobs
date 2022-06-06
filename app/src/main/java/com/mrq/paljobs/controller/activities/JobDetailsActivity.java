@@ -42,11 +42,23 @@ public class JobDetailsActivity extends BaseActivity {
         binding.content.setText(model.getContent());
         binding.requirements.setText(model.getRequirement());
 
-        if (!model.getCompanyImage().isEmpty())
-            Picasso.get().load(model.getCompanyImage()).into(binding.image);
+        if (!model.getCompanyImage().isEmpty()) {
+            Picasso.get().load(model.getCompanyImage())
+                    .placeholder(R.drawable.ic_company_logo)
+                    .into(binding.image);
+        } else {
+            binding.image.setImageResource(R.drawable.ic_company_logo);
+        }
 
         binding.btnShow.setOnClickListener(view -> {
             startActivity(new Intent(this, ProposalActivity.class)
+                    .putExtra(Constants.TYPE_MODEL, model)
+            );
+        });
+
+        binding.edit.setOnClickListener(view -> {
+            startActivity(new Intent(this, AddProposalActivity.class)
+                    .putExtra(Constants.TYPE_ID, Constants.TYPE_EDIT)
                     .putExtra(Constants.TYPE_MODEL, model)
             );
         });

@@ -24,14 +24,16 @@ public class SettingActivity extends BaseActivity {
 
     private void initView() {
         binding.appbar.imgBack.setOnClickListener(view -> onBackPressed());
-        binding.appbar.tvTool.setText(getString(R.string.login));
+        binding.appbar.tvTool.setText(getString(R.string.setting));
 
         binding.logout.setOnClickListener(view -> {
-            logout();
+            Constants.logout(this);
         });
 
         binding.account.setOnClickListener(view -> {
-            startActivity(new Intent(this, ProfileActivity.class));
+            startActivity(new Intent(this, ProfileActivity.class)
+                    .putExtra(Constants.TYPE_TITLE, Constants.TYPE_ADD)
+            );
         });
 
         binding.privacy.setOnClickListener(view -> {
@@ -52,21 +54,6 @@ public class SettingActivity extends BaseActivity {
             );
         });
 
-    }
-
-    private void logout() {
-        new AlertDialog.Builder(this)
-                .setMessage("Are you sure you want to logout?")
-                .setCancelable(false)
-                .setPositiveButton("Yes", (dialog, id) -> {
-                    dialog.dismiss();
-                    Constants.logout(this);
-                })
-                .setNegativeButton("No", (dialog, id) -> {
-                    dialog.cancel();
-                })
-                .create()
-                .show();
     }
 
     @Override

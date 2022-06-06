@@ -2,6 +2,7 @@ package com.mrq.paljobs.controller.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mrq.paljobs.R;
+import com.mrq.paljobs.controller.activities.ProfileActivity;
 import com.mrq.paljobs.controller.activities.ProposalDetailsActivity;
 import com.mrq.paljobs.controller.activities.SubmitActivity;
 import com.mrq.paljobs.controller.interfaceis.SaveInterface;
@@ -80,6 +82,18 @@ public class ProposalAdapter extends RecyclerView.Adapter<ProposalAdapter.Propos
                     .putExtra(Constants.TYPE_MODEL, model));
         });
 
+        holder.binding.image.setOnClickListener(view -> {
+            mContext.startActivity(new Intent(mContext, ProfileActivity.class)
+                    .putExtra(Constants.TYPE_TITLE, Constants.TYPE_EDIT)
+            );
+        });
+
+        holder.binding.name.setOnClickListener(view -> {
+            mContext.startActivity(new Intent(mContext, ProfileActivity.class)
+                    .putExtra(Constants.TYPE_TITLE, Constants.TYPE_EDIT)
+            );
+        });
+
     }
 
     @Override
@@ -99,18 +113,17 @@ public class ProposalAdapter extends RecyclerView.Adapter<ProposalAdapter.Propos
         private void bind(Proposal model) {
             if (!model.getCompanyImage().isEmpty()) {
                 Picasso.get().load(model.getCompanyImage())
-                        .placeholder(R.drawable.ic_user)
-                        .error(R.drawable.ic_user)
+                        .placeholder(R.drawable.ic_company_logo)
                         .into(binding.image);
+            } else {
+                binding.image.setImageResource(R.drawable.ic_company_logo);
             }
-
             binding.title.setText(model.getTitle());
             binding.name.setText(model.getCompanyName());
             binding.time.setText(model.getTime());
             binding.content.setText(model.getContent());
             SkillsAdapter adapter = new SkillsAdapter(mContext);
             adapter.setList(model.getSkills());
-//            binding.recyclerview.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false));
             binding.recyclerview.setHasFixedSize(true);
             binding.recyclerview.setAdapter(adapter);
 

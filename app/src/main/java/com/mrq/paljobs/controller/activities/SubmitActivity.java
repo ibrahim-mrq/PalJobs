@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -30,6 +31,7 @@ public class SubmitActivity extends BaseActivity {
     Proposal proposal;
     Favorite favorite;
     String type;
+    String url = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +60,6 @@ public class SubmitActivity extends BaseActivity {
 
             adapter = new SkillsAdapter(this);
             adapter.setList(favorite.getSkills());
-//            binding.recyclerview.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
             binding.recyclerview.setHasFixedSize(true);
             binding.recyclerview.setAdapter(adapter);
 
@@ -110,7 +111,11 @@ public class SubmitActivity extends BaseActivity {
         submit.setCustomerName(user.getFirstName() + " " + user.getLastName());
         submit.setCustomerEmail(user.getEmail());
         submit.setCustomerPhone(user.getPhone());
-        submit.setCustomerCv(user.getCv());
+        if (!url.isEmpty()) {
+            submit.setCustomerCv(url);
+        } else {
+            submit.setCustomerCv(user.getCv());
+        }
         submit.setCustomerSkills(user.getSkills());
 
         submit.setProposalId(model.getId());
@@ -173,7 +178,15 @@ public class SubmitActivity extends BaseActivity {
         submit.setCustomerName(user.getFirstName() + " " + user.getLastName());
         submit.setCustomerEmail(user.getEmail());
         submit.setCustomerPhone(user.getPhone());
-        submit.setCustomerCv(user.getCv());
+        if (!url.isEmpty()) {
+            submit.setCustomerCv(url);
+        } else {
+            submit.setCustomerCv(user.getCv());
+        }
+
+        Log.e("response", "url = " + url);
+        Log.e("response", "user.getCv() = " + user.getCv());
+
         submit.setCustomerSkills(user.getSkills());
 
         submit.setProposalId(model.getId());
@@ -234,9 +247,11 @@ public class SubmitActivity extends BaseActivity {
                 this,
                 filePath,
                 fileName,
+                "update",
                 new Results<String>() {
                     @Override
                     public void onSuccess(String s) {
+                        url = s;
                         showAlert(SubmitActivity.this,
                                 getString(R.string.upload_file_successfully), R.color.green_success);
                     }
@@ -275,4 +290,5 @@ public class SubmitActivity extends BaseActivity {
             }
         }
     }
+
 }

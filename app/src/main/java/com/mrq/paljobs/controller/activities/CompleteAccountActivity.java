@@ -193,7 +193,7 @@ public class CompleteAccountActivity extends BaseActivity {
                 showAlert(CompleteAccountActivity.this,
                         getString(R.string.update_profile_successfully), R.color.green_success);
                 enableElements(true);
-                startActivity(new Intent(this, MainActivity.class));
+                startActivity(new Intent(this, CompanyActivity.class));
                 finish();
             });
         }

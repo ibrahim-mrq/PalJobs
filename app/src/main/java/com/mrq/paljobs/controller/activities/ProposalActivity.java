@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.mrq.paljobs.R;
-import com.mrq.paljobs.controller.adapters.SubmitAdapter;
+import com.mrq.paljobs.controller.adapters.SubmitProposalAdapter;
 import com.mrq.paljobs.databinding.ActivityProposalBinding;
 import com.mrq.paljobs.firebase.ApiRequest;
 import com.mrq.paljobs.firebase.Results;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public class ProposalActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     ActivityProposalBinding binding;
-    SubmitAdapter adapter;
+    SubmitProposalAdapter adapter;
     Proposal model;
 
     @Override
@@ -37,11 +37,11 @@ public class ProposalActivity extends BaseActivity implements SwipeRefreshLayout
     private void initView() {
         model = (Proposal) getIntent().getSerializableExtra(Constants.TYPE_MODEL);
 
-        binding.appbar.tvTool.setText(getString(R.string.profile));
+        binding.appbar.tvTool.setText(getString(R.string.see_proposals));
         binding.appbar.imgBack.setOnClickListener(view -> onBackPressed());
 
         binding.include.swipeToRefresh.setOnRefreshListener(this);
-        adapter = new SubmitAdapter(this);
+        adapter = new SubmitProposalAdapter(this);
         binding.include.recyclerView.setAdapter(adapter);
         binding.include.recyclerView.setHasFixedSize(true);
         binding.include.recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -52,7 +52,7 @@ public class ProposalActivity extends BaseActivity implements SwipeRefreshLayout
     private void loadData() {
         binding.include.swipeToRefresh.setRefreshing(false);
         new ApiRequest<Submit>().getData(
-                MainActivity.context,
+                this,
                 "Submit",
                 "companyId",
                 Hawk.get(Constants.USER_TOKEN),

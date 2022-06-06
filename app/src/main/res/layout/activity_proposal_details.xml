@@ -139,13 +139,13 @@
                 android:id="@+id/recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:background="@null"
                 android:orientation="vertical"
                 android:overScrollMode="never"
                 app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-                app:spanCount="4"
-                tools:itemCount="10"
+                app:spanCount="3"
+                tools:itemCount="4"
                 tools:listitem="@layout/custom_skills" />
 
             <LinearLayout

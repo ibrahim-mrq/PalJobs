@@ -132,7 +132,9 @@
     <string name="description">Description</string>
     <string name="add_a_job_requirements">Add a job requirements</string>
     <string name="add_new_job">Add New Job</string>
-    <string name="add_new_job_successfully">SuccessfullyAdd New Job</string>
+    <string name="edit_job">Edit Job</string>
+    <string name="add_new_job_successfully">Successfully Add New Job</string>
+    <string name="update_job_successfully">Successfully Update Job</string>
     <string name="job_details">Job Details</string>
     <string name="show_proposals">Show Proposals</string>
     <string name="our_jobs">Our Jobs</string>
@@ -151,6 +153,8 @@
     <string name="must_select_jobField">The job field must be selected first</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="company_details">Company Details</string>
+    <string name="see_proposals">See Proposals</string>
 
 
 </resources>

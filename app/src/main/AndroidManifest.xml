@@ -85,7 +85,6 @@
         <activity
             android:name=".controller.activities.JobDetailsActivity"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-
     </application>
 
 </manifest>

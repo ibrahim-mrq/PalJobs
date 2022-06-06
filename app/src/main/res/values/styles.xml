@@ -8,6 +8,7 @@
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
         <item name="colorControlHighlight">@color/textSecondary</item>
         <item name="android:screenOrientation">portrait</item>
+        <item name="android:layoutDirection">ltr</item>
     </style>
 
     <!-- TODO :  corner ImageView   -->

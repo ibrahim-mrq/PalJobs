@@ -13,7 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mrq.paljobs.R;
+import com.mrq.paljobs.controller.activities.AddProposalActivity;
 import com.mrq.paljobs.controller.activities.JobDetailsActivity;
+import com.mrq.paljobs.controller.activities.ProposalActivity;
 import com.mrq.paljobs.controller.interfaceis.DeleteInterface;
 import com.mrq.paljobs.databinding.CustomProposalCompanyBinding;
 import com.mrq.paljobs.helpers.Constants;
@@ -52,9 +54,17 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.CompanyV
     public void onBindViewHolder(@NonNull CompanyViewHolder holder, int position) {
         Proposal model = list.get(position);
         holder.bind(model);
+
+        holder.binding.see.setOnClickListener(view -> {
+            mContext.startActivity(new Intent(mContext, ProposalActivity.class)
+                    .putExtra(Constants.TYPE_MODEL, model)
+            );
+        });
+
         holder.itemView.setOnClickListener(view -> {
             mContext.startActivity(new Intent(mContext, JobDetailsActivity.class)
                     .putExtra(Constants.TYPE_MODEL, model)
+
             );
         });
 
@@ -64,6 +74,10 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.CompanyV
             popupMenu.setOnMenuItemClickListener(item -> {
                 switch (item.getItemId()) {
                     case R.id.popup_edit:
+                        mContext.startActivity(new Intent(mContext, AddProposalActivity.class)
+                                .putExtra(Constants.TYPE_ID, Constants.TYPE_EDIT)
+                                .putExtra(Constants.TYPE_MODEL, model)
+                        );
                         break;
                     case R.id.popup_delete:
                         anInterface.delete(model);

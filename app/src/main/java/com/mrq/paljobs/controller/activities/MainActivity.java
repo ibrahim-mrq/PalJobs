@@ -49,11 +49,6 @@ public class MainActivity extends BaseActivity {
 
     private void initView() {
         context = MainActivity.this;
-
-        if (Hawk.get(Constants.USER_TYPE, Constants.TYPE_EMPLOYEE).equals(Constants.TYPE_COMPANY)) {
-            startActivity(new Intent(this, CompanyActivity.class));
-            finishAffinity();
-        }
         initBottomNavigation();
         initNavView();
 

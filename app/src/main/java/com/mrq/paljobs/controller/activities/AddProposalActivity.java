@@ -4,12 +4,13 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.mrq.paljobs.R;
 import com.mrq.paljobs.controller.adapters.DialogAdapter;
 import com.mrq.paljobs.controller.adapters.SkillsSelectedAdapter;
@@ -30,9 +31,12 @@ import java.util.ArrayList;
 public class AddProposalActivity extends BaseActivity {
 
     ActivityAddProposalBinding binding;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     ArrayList<String> skillsString = new ArrayList<>();
     ArrayList<String> localSkills = new ArrayList<>();
     SkillsSelectedAdapter adapter;
+    String type = "";
+    Proposal proposal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +47,29 @@ public class AddProposalActivity extends BaseActivity {
     }
 
     private void initView() {
-        binding.appbar.tvTool.setText(getString(R.string.add_new_job));
+        type = getIntent().getStringExtra(Constants.TYPE_ID);
         binding.appbar.imgBack.setOnClickListener(view -> onBackPressed());
-        binding.btnSave.setOnClickListener(view -> addJob());
         initSkills();
+
+        if (type.equals(Constants.TYPE_ADD)) {
+            binding.appbar.tvTool.setText(getString(R.string.add_new_job));
+            binding.btnSave.setText(getString(R.string.save));
+            binding.linearSkills.setVisibility(View.GONE);
+        } else {
+            proposal = (Proposal) getIntent().getSerializableExtra(Constants.TYPE_MODEL);
+            binding.appbar.tvTool.setText(getString(R.string.edit_job));
+            binding.btnSave.setText(getString(R.string.update));
+            initProposal();
+            binding.linearSkills.setVisibility(View.VISIBLE);
+        }
+
+        binding.btnSave.setOnClickListener(view -> {
+            if (type.equals(Constants.TYPE_ADD)) {
+                addJob();
+            } else {
+                editJob();
+            }
+        });
     }
 
     private void addJob() {
@@ -107,8 +130,40 @@ public class AddProposalActivity extends BaseActivity {
         }
     }
 
+    private void editJob() {
+        if (isNotEmpty(binding.jobField)
+                && isNotEmpty(binding.description)
+                && isNotEmpty(binding.requirements)
+                && isListNotEmpty(this, localSkills, binding.linearSkills)
+        ) {
+            enableElements(false);
+            DocumentReference docRef = db.collection("Proposal").document(proposal.getId());
+
+            docRef.update("title", getText(binding.jobField));
+            docRef.update("content", getText(binding.description));
+            docRef.update("requirement", getText(binding.requirements));
+            docRef.update("skills", localSkills);
+
+            docRef.addSnapshotListener((value, error) -> {
+                showAlert(this, getString(R.string.update_job_successfully), R.color.green_success);
+                enableElements(true);
+            });
+
+        }
+    }
+
+    private void initProposal() {
+        binding.jobField.setText(proposal.getTitle());
+        binding.description.setText(proposal.getContent());
+        binding.requirements.setText(proposal.getRequirement());
+        adapter.setList(proposal.getSkills());
+        for (int i = 0; i < proposal.getSkills().size(); i++) {
+            skillsString.remove(proposal.getSkills().get(i));
+            localSkills.add(proposal.getSkills().get(i));
+        }
+    }
+
     private void initSkills() {
-        binding.linearSkills.setVisibility(View.GONE);
         adapter = new SkillsSelectedAdapter(this);
         adapter.removeSkills((model, position) -> {
             skillsString.add(model);
@@ -125,8 +180,6 @@ public class AddProposalActivity extends BaseActivity {
 
         User user = Hawk.get(Constants.USER);
         skillsString = Constants.fieldSkills(user.getJobField());
-
-        Log.e("response", "field = " + user.getJobField());
         binding.skills.setOnClickListener(view -> {
             dialogSkills(getString(R.string.choose_your_skills), skillsString);
         });

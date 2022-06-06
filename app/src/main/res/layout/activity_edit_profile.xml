@@ -208,90 +208,108 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tv_gender"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="10dp"
                 android:hint="@string/gender"
-                app:boxStrokeColor="@color/textSecondary"
-                app:hintAnimationEnabled="true"
-                app:hintEnabled="true"
-                app:hintTextColor="@color/textSecondary">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_gender"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:enabled="false"
-                    android:imeOptions="actionDone"
-                    android:inputType="text"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/textSecondary"
-                    android:textStyle="bold"
-                    tools:ignore="RtlSymmetry" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tv_jobField"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="10dp"
-                android:hint="@string/job_field"
-                app:boxStrokeColor="@color/textSecondary"
-                app:hintAnimationEnabled="true"
-                app:hintEnabled="true"
-                app:hintTextColor="@color/textSecondary">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_jobField"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:imeOptions="actionDone"
-                    android:enabled="false"
-                    android:inputType="text"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/textSecondary"
-                    android:textStyle="bold"
-                    tools:ignore="RtlSymmetry" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tv_cv"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="10dp"
-                android:hint="@string/cv_new"
                 app:boxStrokeColor="@color/colorAccent"
-                app:endIconDrawable="@drawable/ic_upload"
-                app:endIconMode="custom"
-                app:endIconTint="@color/colorAccent"
                 app:hintAnimationEnabled="true"
                 app:hintEnabled="true"
                 app:hintTextColor="@color/colorAccent">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_cv"
+                <AutoCompleteTextView
+                    android:id="@+id/et_gender"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:clickable="true"
                     android:cursorVisible="false"
-                    android:enabled="false"
                     android:focusable="false"
-                    android:inputType="text"
+                    android:inputType="textAutoComplete"
                     android:longClickable="false"
                     android:textAlignment="textStart"
                     android:textColor="@color/colorAccent"
                     android:textStyle="bold"
-                    tools:ignore="KeyboardInaccessibleWidget,RtlSymmetry" />
+                    tools:ignore="KeyboardInaccessibleWidget,LabelFor" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:id="@+id/jobField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/shape_gray3"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/tv_jobField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:hint="@string/jobField"
+                    android:paddingHorizontal="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/textSecondary"
+                    android:textStyle="bold"
+                    tools:ignore="KeyboardInaccessibleWidget" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_arrow_down"
+                    android:tint="@color/colorAccent"
+                    tools:ignore="ContentDescription" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/cv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/shape_gray3"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/tv_cv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:hint="@string/cv"
+                    android:paddingHorizontal="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/textSecondary"
+                    android:textStyle="bold"
+                    tools:ignore="KeyboardInaccessibleWidget" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_upload"
+                    android:tint="@color/colorAccent"
+                    tools:ignore="ContentDescription" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_skills"
@@ -327,6 +345,35 @@
                     tools:listitem="@layout/custom_skills" />
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_about"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:text="@string/type_about_yourself"
+                android:textAllCaps="false"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/about"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:autofillHints="@string/write_a_description_about_your_job"
+                android:background="@drawable/shape_gray2"
+                android:gravity="start"
+                android:hint="@string/write_a_description_about_your_job"
+                android:inputType="textMultiLine"
+                android:lines="7"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

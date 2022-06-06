@@ -1,10 +1,7 @@
 package com.mrq.paljobs.controller.fragments;
 
 import android.annotation.SuppressLint;
-import android.app.DownloadManager;
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -86,7 +83,7 @@ public class ProfileFragment extends BaseFragment {
                         binding.address.setText(user.getAddress());
                         binding.about.setText(user.getAbout());
                         binding.jobField.setText(user.getJobField());
-
+                        binding.phone.setText(user.getPhone());
                         adapter.setList(user.getSkills());
 
                         if (user.getSkills().isEmpty()) {
@@ -98,7 +95,9 @@ public class ProfileFragment extends BaseFragment {
                             Picasso.get().load(user.getPhoto()).placeholder(R.drawable.shape_accent).into(binding.photo);
                         else Picasso.get().load(R.drawable.ic_user_logo).into(binding.photo);
 
-                        binding.cv.setOnClickListener(view -> load(user.getCv()));
+                        binding.cv.setOnClickListener(view -> {
+                            Constants.loadFile(requireContext(), user.getCv());
+                        });
                     }
 
                     @Override
@@ -123,17 +122,6 @@ public class ProfileFragment extends BaseFragment {
                         else dismissCustomProgress();
                     }
                 });
-    }
-
-    private void load(String url) {
-        DownloadManager downloadmanager = (DownloadManager)
-                requireActivity().getSystemService(Context.DOWNLOAD_SERVICE);
-        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
-        request.setTitle("My CV File");
-        request.setDescription("Downloading");
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        request.setVisibleInDownloadsUi(true);
-        downloadmanager.enqueue(request);
     }
 
 }

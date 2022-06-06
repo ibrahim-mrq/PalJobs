@@ -32,7 +32,7 @@
         app:itemIconTint="@drawable/shape_bottom_bar"
         app:itemRippleColor="@color/colorPrimary"
         app:itemTextColor="@drawable/shape_bottom_bar"
-        app:labelVisibilityMode="selected"
+        app:labelVisibilityMode="labeled"
         app:menu="@menu/menu_bottom" />
 
 </RelativeLayout>

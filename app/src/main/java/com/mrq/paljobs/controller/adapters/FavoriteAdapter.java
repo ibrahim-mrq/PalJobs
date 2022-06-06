@@ -95,9 +95,10 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
         private void bind(Favorite model) {
             if (!model.getCompanyImage().isEmpty()) {
                 Picasso.get().load(model.getCompanyImage())
-                        .placeholder(R.drawable.ic_user)
-                        .error(R.drawable.ic_user)
+                        .placeholder(R.drawable.ic_company_logo)
                         .into(binding.image);
+            } else {
+                binding.image.setImageResource(R.drawable.ic_company_logo);
             }
 
             binding.title.setText(model.getTitle());
@@ -106,7 +107,6 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
             binding.content.setText(model.getContent());
             SkillsAdapter adapter = new SkillsAdapter(mContext);
             adapter.setList(model.getSkills());
-//            binding.recyclerview.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false));
             binding.recyclerview.setHasFixedSize(true);
             binding.recyclerview.setAdapter(adapter);
             binding.save.setImageResource(R.drawable.ic_save);

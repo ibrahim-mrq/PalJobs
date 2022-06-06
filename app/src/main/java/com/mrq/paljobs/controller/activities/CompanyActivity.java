@@ -6,6 +6,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -64,7 +65,7 @@ public class CompanyActivity extends BaseActivity implements SwipeRefreshLayout.
     private void initJobs() {
         binding.include.swipeToRefresh.setRefreshing(false);
         new ApiRequest<Proposal>().getData(
-                MainActivity.context,
+                this,
                 "Proposal",
                 "companyId",
                 Hawk.get(Constants.USER_TOKEN),
@@ -131,4 +132,23 @@ public class CompanyActivity extends BaseActivity implements SwipeRefreshLayout.
         });
     }
 
+    Toast backToasty;
+    long backPressedTime;
+
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 1)
+            getSupportFragmentManager().popBackStack();
+        else {
+            if (backPressedTime + 2000 > System.currentTimeMillis()) {
+                backToasty.cancel();
+                super.onBackPressed();
+                return;
+            } else {
+                backToasty = Toast.makeText(this, getString(R.string.back_exit), Toast.LENGTH_SHORT);
+                backToasty.show();
+            }
+            backPressedTime = System.currentTimeMillis();
+        }
+    }
 }

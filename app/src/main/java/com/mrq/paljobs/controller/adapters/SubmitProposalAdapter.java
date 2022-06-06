@@ -1,7 +1,6 @@
 package com.mrq.paljobs.controller.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,20 +9,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mrq.paljobs.R;
-import com.mrq.paljobs.controller.activities.ProposalDetailsActivity;
-import com.mrq.paljobs.databinding.CustomSubmitBinding;
+import com.mrq.paljobs.databinding.CustomSubmitProposalBinding;
 import com.mrq.paljobs.helpers.Constants;
 import com.mrq.paljobs.models.Submit;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class SubmitAdapter extends RecyclerView.Adapter<SubmitAdapter.SubmitViewHolder> {
+public class SubmitProposalAdapter extends RecyclerView.Adapter<SubmitProposalAdapter.SubmitViewHolder> {
 
     Context mContext;
     ArrayList<Submit> list;
 
-    public SubmitAdapter(Context mContext) {
+    public SubmitProposalAdapter(Context mContext) {
         this.mContext = mContext;
     }
 
@@ -39,7 +37,7 @@ public class SubmitAdapter extends RecyclerView.Adapter<SubmitAdapter.SubmitView
     @NonNull
     @Override
     public SubmitViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_submit, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_submit_proposal, parent, false);
         return new SubmitViewHolder(v);
     }
 
@@ -48,12 +46,15 @@ public class SubmitAdapter extends RecyclerView.Adapter<SubmitAdapter.SubmitView
         Submit model = list.get(position);
         holder.bind(model);
 
-        holder.itemView.setOnClickListener(view -> {
-            mContext.startActivity(new Intent(mContext, ProposalDetailsActivity.class)
-                    .putExtra(Constants.TYPE_TITLE, Constants.TYPE_SUBMIT)
-                    .putExtra(Constants.TYPE_MODEL, model));
-        });
+//        holder.itemView.setOnClickListener(view -> {
+//            mContext.startActivity(new Intent(mContext, ProposalDetailsActivity.class)
+//                    .putExtra(Constants.TYPE_TITLE, Constants.TYPE_SUBMIT)
+//                    .putExtra(Constants.TYPE_MODEL, model));
+//        });
 
+        holder.binding.btnDownloadCv.setOnClickListener(view -> {
+            Constants.loadFile(mContext, model.getCustomerCv());
+        });
     }
 
     @Override
@@ -63,27 +64,27 @@ public class SubmitAdapter extends RecyclerView.Adapter<SubmitAdapter.SubmitView
 
     class SubmitViewHolder extends RecyclerView.ViewHolder {
 
-        CustomSubmitBinding binding;
+        CustomSubmitProposalBinding binding;
 
         private SubmitViewHolder(@NonNull View itemView) {
             super(itemView);
-            binding = CustomSubmitBinding.bind(itemView);
+            binding = CustomSubmitProposalBinding.bind(itemView);
         }
 
         private void bind(Submit model) {
             if (!model.getCompanyImage().isEmpty()) {
                 Picasso.get().load(model.getCompanyImage())
-                        .placeholder(R.drawable.ic_company_logo)
+                        .placeholder(R.drawable.ic_user)
                         .into(binding.image);
             } else {
-                binding.image.setImageResource(R.drawable.ic_company_logo);
+                binding.image.setImageResource(R.drawable.ic_user);
             }
             binding.title.setText(model.getTitle());
-            binding.name.setText(model.getCompanyName());
+            binding.name.setText(model.getCustomerName());
             binding.time.setText(model.getTime());
-            binding.content.setText(model.getContent());
+            binding.content.setText(model.getProposal());
             SkillsAdapter adapter = new SkillsAdapter(mContext);
-            adapter.setList(model.getSkills());
+            adapter.setList(model.getCustomerSkills());
             binding.recyclerview.setHasFixedSize(true);
             binding.recyclerview.setAdapter(adapter);
         }

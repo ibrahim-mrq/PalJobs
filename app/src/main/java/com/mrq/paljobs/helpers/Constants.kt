@@ -4,14 +4,19 @@ package com.mrq.paljobs.helpers
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.DownloadManager
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.provider.OpenableColumns
 import android.util.Log
-import android.view.*
-import android.widget.*
+import android.view.Gravity
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.annotation.ColorRes
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.mrq.paljobs.R
 import com.mrq.paljobs.controller.activities.SplashActivity
@@ -46,10 +51,6 @@ object Constants {
     const val TYPE_PHOTO = "photo"
     const val TYPE_FILE = "file"
 
-    const val TYPE_LANGUAGE = "type_language"
-    const val TYPE_LANGUAGE_AR = "ar"
-    const val TYPE_LANGUAGE_EN = "en"
-
     const val TYPE_FAVORITE = "favorite"
     const val TYPE_SUBMIT = "submit"
     const val TYPE_PROPOSAL = "proposal"
@@ -68,13 +69,40 @@ object Constants {
         return sdf.format(Date())
     }
 
-    @JvmStatic
-    fun logout(context: Context) {
+
+    fun logoutSuccessfully(context: Context) {
         Hawk.deleteAll()
         Hawk.put(IS_FIRST_START, true)
         Toast.makeText(context, context.getString(R.string.logout_successfully), Toast.LENGTH_SHORT)
             .show()
         context.startActivity(Intent(context, SplashActivity::class.java))
+    }
+
+    @JvmStatic
+    fun logout(context: Context) {
+        AlertDialog.Builder(context)
+            .setMessage("Are you sure you want to logout?")
+            .setCancelable(false)
+            .setPositiveButton("Yes") { dialog: DialogInterface, id: Int ->
+                dialog.dismiss()
+                logoutSuccessfully(context)
+            }
+            .setNegativeButton(
+                "No"
+            ) { dialog: DialogInterface, id: Int -> dialog.cancel() }
+            .create()
+            .show()
+    }
+
+    @JvmStatic
+    fun loadFile(context: Context, url: String) {
+        val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        val request = DownloadManager.Request(Uri.parse(url))
+        request.setTitle("My CV File")
+        request.setDescription("Downloading")
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+        request.setVisibleInDownloadsUi(true)
+        downloadManager.enqueue(request)
     }
 
     @JvmStatic
@@ -211,6 +239,7 @@ object Constants {
         itSkills.add("Web")
         itSkills.add("Android")
         itSkills.add("IOS")
+        itSkills.add("UX/UI")
         itSkills.add("Graphic design")
         return itSkills
     }

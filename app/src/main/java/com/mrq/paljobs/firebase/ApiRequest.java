@@ -136,6 +136,7 @@ public class ApiRequest<T> {
             Context context,
             Uri filePath,
             String fileName,
+            String type,
             Results<String> result
     ) {
         if (NetworkHelper.INSTANCE.isNetworkOnline(context)) {
@@ -147,9 +148,11 @@ public class ApiRequest<T> {
                         result.onLoading(false);
                         reference.getDownloadUrl().addOnSuccessListener(uri -> {
                             result.onSuccess(uri.toString());
-                            DocumentReference docRef = db.collection("User")
-                                    .document(Hawk.get(Constants.USER_TOKEN));
-                            docRef.update("cv", uri.toString());
+                            if (type.equals("update")) {
+                                DocumentReference docRef = db.collection("User")
+                                        .document(Hawk.get(Constants.USER_TOKEN));
+                                docRef.update("cv", uri.toString());
+                            }
                         });
                     })
                     .addOnFailureListener(e -> {

@@ -2,6 +2,7 @@ package com.mrq.paljobs.controller.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.mrq.paljobs.R;
 import com.mrq.paljobs.databinding.ActivityProfileBinding;
@@ -18,6 +19,7 @@ import org.jetbrains.annotations.NotNull;
 public class ProfileActivity extends BaseActivity {
 
     ActivityProfileBinding binding;
+    String type = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +30,18 @@ public class ProfileActivity extends BaseActivity {
     }
 
     private void initView() {
-        binding.appbar.tvTool.setText(getString(R.string.profile));
+        type = getIntent().getStringExtra(Constants.TYPE_TITLE);
+
+
         binding.appbar.imgBack.setOnClickListener(view -> onBackPressed());
         loadData();
+
+        if (type.equals(Constants.TYPE_EDIT)) {
+            binding.edit.setVisibility(View.GONE);
+            binding.appbar.tvTool.setText(getString(R.string.company_details));
+        } else {
+            binding.appbar.tvTool.setText(getString(R.string.profile));
+        }
         binding.edit.setOnClickListener(view -> {
             startActivity(new Intent(this, EditProfileActivity.class)
                     .putExtra(Constants.TYPE_TITLE, Hawk.get(Constants.USER_TYPE, ""))
@@ -40,7 +51,7 @@ public class ProfileActivity extends BaseActivity {
 
     private void loadData() {
         new ApiRequest<User>().getData(
-                MainActivity.context,
+                this,
                 "User",
                 Hawk.get(Constants.USER_TOKEN),
                 User.class,
@@ -52,9 +63,13 @@ public class ProfileActivity extends BaseActivity {
                         binding.address.setText(user.getAddress());
                         binding.about.setText(user.getAbout());
                         binding.jobField.setText(user.getJobField());
+                        binding.phone.setText(user.getPhone());
                         if (!user.getPhoto().isEmpty())
-                            Picasso.get().load(user.getPhoto()).placeholder(R.drawable.shape_accent).into(binding.photo);
-                        else Picasso.get().load(R.drawable.ic_company_logo).into(binding.photo);
+                            Picasso.get().load(user.getPhoto())
+                                    .placeholder(R.drawable.ic_company_logo).into(binding.photo);
+                        else {
+                            binding.photo.setImageResource(R.drawable.ic_company_logo);
+                        }
                     }
 
                     @Override

@@ -149,14 +149,14 @@ CV as pdf file"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:src="@drawable/help"
+                    android:src="@drawable/ic_help"
                     tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="-35dp"
+                    android:layout_marginTop="-20dp"
                     android:text="Help Center"
                     android:textColor="@color/colorAccent"
                     android:textSize="25sp"

@@ -27,7 +27,11 @@ public class SplashActivity extends BaseActivity {
                 startActivity(new Intent(SplashActivity.this, BoardActivity.class));
             } else {
                 if (Hawk.get(Constants.IS_LOGIN, false)) {
-                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                    if (Hawk.get(Constants.USER_TYPE).equals(Constants.TYPE_COMPANY)) {
+                        startActivity(new Intent(this, CompanyActivity.class));
+                    } else {
+                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                    }
                 } else {
                     startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                 }
