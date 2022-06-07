@@ -1,11 +1,13 @@
 package com.mrq.paljobs.controller.activities;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
@@ -27,11 +29,14 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-public class SearchActivity extends BaseActivity {
+public class SearchActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     ActivitySearchBinding binding;
     SearchAdapter adapter;
     ArrayList<String> skillsString = new ArrayList<>();
+
+    String skills = "";
+    String field = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +49,7 @@ public class SearchActivity extends BaseActivity {
     private void initView() {
         binding.appbar.tvTool.setText(getString(R.string.search));
         binding.appbar.imgBack.setOnClickListener(view -> onBackPressed());
-
+        binding.include.swipeToRefresh.setOnRefreshListener(this);
         adapter = new SearchAdapter(this);
         binding.include.recyclerView.setAdapter(adapter);
         binding.include.recyclerView.setHasFixedSize(true);
@@ -65,15 +70,23 @@ public class SearchActivity extends BaseActivity {
         new ApiRequest<Proposal>().getData(
                 this,
                 "Proposal",
-//                "title",
-//                getText(binding.search),
                 Proposal.class,
                 new Results<ArrayList<Proposal>>() {
                     @Override
                     public void onSuccess(ArrayList<Proposal> proposals) {
-                        binding.include.statefulLayout.showContent();
-                        adapter.setList(proposals);
-                        adapter.getFilter().filter(getText(binding.search));
+                        adapter.setList(new ArrayList<>());
+                        for (int i = 0; i < proposals.size(); i++) {
+                            for (int j = 0; j < proposals.get(i).getSkills().size(); j++) {
+                                if (proposals.get(i).getSkills().get(j).equals(skills)) {
+                                    adapter.addItem(proposals.get(i));
+                                }
+                            }
+                        }
+                        if (adapter.getList().isEmpty()) {
+                            binding.include.statefulLayout.showEmpty();
+                        } else
+                            binding.include.statefulLayout.showContent();
+//                        adapter.getFilter().filter(getText(binding.search));
                     }
 
                     @Override
@@ -121,16 +134,37 @@ public class SearchActivity extends BaseActivity {
         });
 
         filterBinding.skills.setOnClickListener(view -> {
-            dialogSkills(getString(R.string.choose_your_skills), filterBinding.tvSkills, skillsString);
+            if (!skillsString.isEmpty()) {
+                dialogSkills(getString(R.string.choose_your_skills), filterBinding.tvSkills, skillsString);
+            } else {
+                showAlert(SearchActivity.this, getString(R.string.must_select_jobField), R.color.orange);
+            }
         });
 
+        if (!skills.isEmpty()) {
+            filterBinding.tvSkills.setText(skills);
+            filterBinding.tvField.setText(field);
+        }
+
         filterBinding.btnApply.setOnClickListener(view -> {
+            if (!skills.isEmpty()) {
+                binding.text.setText(skills);
+                binding.text.setVisibility(View.VISIBLE);
+            }
+            initProposal();
+            skillsString.clear();
             dialog.dismiss();
         });
 
         filterBinding.btbReset.setOnClickListener(view -> {
             filterBinding.tvField.setText("");
             filterBinding.tvSkills.setText("");
+            binding.search.setText("");
+            binding.text.setText("");
+            binding.text.setVisibility(View.GONE);
+            skillsString.clear();
+            skills = "";
+            field = "";
         });
 
         dialog.show();
@@ -145,6 +179,7 @@ public class SearchActivity extends BaseActivity {
         dialogAdapter.setAnInterface(model -> {
             skillsString = Constants.fieldSkills(model);
             tvField.setText(model);
+            field = model;
             tvSkills.setText("");
             dialog.dismiss();
         });
@@ -155,14 +190,15 @@ public class SearchActivity extends BaseActivity {
         dialog.show();
     }
 
-    private void dialogSkills(String title, TextView textView, ArrayList<String> list) {
+    private void dialogSkills(String title, TextView tvSkills, ArrayList<String> list) {
         Dialog dialog = new Dialog(this);
         CustomDialogListBinding dialogBinding = CustomDialogListBinding.inflate(getLayoutInflater());
         dialog.setContentView(dialogBinding.getRoot());
         dialogBinding.tvTitle.setText(title);
         DialogAdapter dialogAdapter = new DialogAdapter(this);
         dialogAdapter.setAnInterface(model -> {
-            textView.setText(model);
+            tvSkills.setText(model);
+            skills = model;
             dialog.dismiss();
         });
         dialogBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -176,5 +212,10 @@ public class SearchActivity extends BaseActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+
+    @Override
+    public void onRefresh() {
+        binding.include.swipeToRefresh.setRefreshing(false);
     }
 }

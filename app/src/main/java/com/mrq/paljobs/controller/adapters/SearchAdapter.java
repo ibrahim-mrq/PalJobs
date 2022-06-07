@@ -38,6 +38,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ProposalVi
         notifyDataSetChanged();
     }
 
+    public void addItem(Proposal proposal) {
+        list.add(proposal);
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ProposalViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

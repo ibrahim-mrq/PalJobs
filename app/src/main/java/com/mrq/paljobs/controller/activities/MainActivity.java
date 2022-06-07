@@ -9,8 +9,11 @@ import androidx.fragment.app.FragmentTransaction;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.imageview.ShapeableImageView;
 import com.mrq.paljobs.R;
 import com.mrq.paljobs.controller.fragments.AboutFragment;
 import com.mrq.paljobs.controller.fragments.HomeFragment;
@@ -21,15 +24,21 @@ import com.mrq.paljobs.controller.fragments.SubmitFragment;
 import com.mrq.paljobs.databinding.ActivityMainBinding;
 import com.mrq.paljobs.helpers.BaseActivity;
 import com.mrq.paljobs.helpers.Constants;
+import com.mrq.paljobs.models.User;
 import com.orhanobut.hawk.Hawk;
+import com.squareup.picasso.Picasso;
 
-@SuppressLint("NonConstantResourceId")
+@SuppressLint("NonConstantResourceId,SetTextI18n,StaticFieldLeak")
 public class MainActivity extends BaseActivity {
 
     ActivityMainBinding binding;
     public static MainActivity context;
+    // TODO : Toast
     Toast backToasty;
     long backPressedTime;
+
+    ShapeableImageView image;
+    TextView name, email;
 
     // TODO : Employee
     HomeFragment homeFragment = HomeFragment.newInstance();
@@ -51,6 +60,19 @@ public class MainActivity extends BaseActivity {
         context = MainActivity.this;
         initBottomNavigation();
         initNavView();
+
+        View headerLayout = binding.navView.getHeaderView(0);
+        name = headerLayout.findViewById(R.id.name);
+        email = headerLayout.findViewById(R.id.email);
+        image = headerLayout.findViewById(R.id.image);
+        User user = Hawk.get(Constants.USER);
+        name.setText(user.getFirstName() + " " + user.getLastName());
+        email.setText("" + user.getEmail());
+        if (!user.getPhoto().isEmpty()) {
+            Picasso.get().load(user.getPhoto()).placeholder(R.drawable.ic_user_logo).into(image);
+        } else {
+            image.setImageResource(R.drawable.ic_user_logo);
+        }
 
         binding.main.appbar.imgMenu.setOnClickListener(view -> {
             binding.drawer.open();

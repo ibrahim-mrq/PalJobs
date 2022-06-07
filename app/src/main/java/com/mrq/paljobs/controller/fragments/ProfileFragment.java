@@ -78,6 +78,7 @@ public class ProfileFragment extends BaseFragment {
                 new Results<User>() {
                     @Override
                     public void onSuccess(User user) {
+                        Hawk.put(Constants.USER, user);
                         binding.name.setText(user.getFirstName() + " " + user.getLastName());
                         binding.email.setText(user.getEmail());
                         binding.address.setText(user.getAddress());
@@ -92,8 +93,9 @@ public class ProfileFragment extends BaseFragment {
                         }
 
                         if (!user.getPhoto().isEmpty())
-                            Picasso.get().load(user.getPhoto()).placeholder(R.drawable.shape_accent).into(binding.photo);
-                        else Picasso.get().load(R.drawable.ic_user_logo).into(binding.photo);
+                            Picasso.get().load(user.getPhoto()).placeholder(R.drawable.ic_user_logo).into(binding.photo);
+                        else binding.photo.setImageResource(R.drawable.ic_user_logo);
+
 
                         binding.cv.setOnClickListener(view -> {
                             Constants.loadFile(requireContext(), user.getCv());
