@@ -63,7 +63,6 @@ public class SearchActivity extends BaseActivity implements SwipeRefreshLayout.O
             return false;
         });
 
-
     }
 
     private void initProposal() {
@@ -74,19 +73,28 @@ public class SearchActivity extends BaseActivity implements SwipeRefreshLayout.O
                 new Results<ArrayList<Proposal>>() {
                     @Override
                     public void onSuccess(ArrayList<Proposal> proposals) {
-                        adapter.setList(new ArrayList<>());
-                        for (int i = 0; i < proposals.size(); i++) {
-                            for (int j = 0; j < proposals.get(i).getSkills().size(); j++) {
-                                if (proposals.get(i).getSkills().get(j).equals(skills)) {
-                                    adapter.addItem(proposals.get(i));
+                        if (!skills.isEmpty()) {
+                            adapter.setList(new ArrayList<>());
+                            for (int i = 0; i < proposals.size(); i++) {
+                                for (int j = 0; j < proposals.get(i).getSkills().size(); j++) {
+                                    if (proposals.get(i).getSkills().get(j).equals(skills)) {
+                                        adapter.addItem(proposals.get(i));
+                                    }
                                 }
                             }
-                        }
-                        if (adapter.getList().isEmpty()) {
-                            binding.include.statefulLayout.showEmpty();
-                        } else
+                            if (adapter.getList().isEmpty()) {
+                                binding.include.statefulLayout.showEmpty();
+                            } else {
+                                binding.include.statefulLayout.showContent();
+                                if (!getText(binding.search).isEmpty())
+                                    adapter.getFilter().filter(getText(binding.search));
+                            }
+                        } else {
                             binding.include.statefulLayout.showContent();
-//                        adapter.getFilter().filter(getText(binding.search));
+                            adapter.setList(proposals);
+                            if (!getText(binding.search).isEmpty())
+                                adapter.getFilter().filter(getText(binding.search));
+                        }
                     }
 
                     @Override

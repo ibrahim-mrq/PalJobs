@@ -101,7 +101,7 @@ object Constants {
         request.setTitle("My CV File")
         request.setDescription("Downloading")
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-        request.setVisibleInDownloadsUi(true)
+//        request.setVisibleInDownloadsUi(true)
         downloadManager.enqueue(request)
     }
 
@@ -223,6 +223,18 @@ object Constants {
         }
     }
 
+    @JvmStatic
+    fun call(context: Context, phone: String) {
+        val intent = Intent(Intent.ACTION_DIAL)
+        intent.data = Uri.parse("tel:$phone")
+        context.startActivity(intent)
+    }
+
+    @JvmStatic
+    fun sendEmail(context: Context, email: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("mailto:$email"))
+        context.startActivity(intent)
+    }
 
     @JvmStatic
     private fun initFieldSkills(): ArrayList<Skills> {

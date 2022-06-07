@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mrq.paljobs.R;
+import com.mrq.paljobs.controller.activities.ProfileActivity;
 import com.mrq.paljobs.controller.activities.ProposalDetailsActivity;
 import com.mrq.paljobs.controller.activities.SubmitActivity;
 import com.mrq.paljobs.controller.interfaceis.RemoveInterface;
@@ -76,6 +77,17 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
                     .putExtra(Constants.TYPE_MODEL, model));
         });
 
+        holder.binding.image.setOnClickListener(view -> {
+            mContext.startActivity(new Intent(mContext, ProfileActivity.class)
+                    .putExtra(Constants.TYPE_TITLE, Constants.TYPE_EDIT)
+            );
+        });
+
+        holder.binding.name.setOnClickListener(view -> {
+            mContext.startActivity(new Intent(mContext, ProfileActivity.class)
+                    .putExtra(Constants.TYPE_TITLE, Constants.TYPE_EDIT)
+            );
+        });
     }
 
     @Override

@@ -1,13 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".controller.fragments.HomeFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="20dp"
+        android:background="@drawable/shape_primary"
+        android:orientation="horizontal"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="12dp">
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="start"
+            android:layout_marginHorizontal="5dp"
+            android:background="@drawable/shape_accent_stroke"
+            android:gravity="start"
+            android:paddingHorizontal="5dp"
+            android:paddingVertical="5dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="12sp"
+            android:visibility="gone"
+            tools:hint="Android"
+            tools:ignore="Autofill" />
+
+        <ImageView
+            android:id="@+id/filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginHorizontal="5dp"
+            android:contentDescription="@string/search"
+            android:src="@drawable/ic_filter" />
+
+    </RelativeLayout>
 
     <include
         android:id="@+id/include"
         layout="@layout/include_recycler_swipe" />
 
-</FrameLayout>
+</LinearLayout>

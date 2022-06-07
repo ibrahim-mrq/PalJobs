@@ -63,6 +63,18 @@ public class JobDetailsActivity extends BaseActivity {
             );
         });
 
+        binding.image.setOnClickListener(view -> {
+            startActivity(new Intent(this, ProfileActivity.class)
+                    .putExtra(Constants.TYPE_TITLE, Constants.TYPE_EDIT)
+            );
+        });
+
+        binding.name.setOnClickListener(view -> {
+            startActivity(new Intent(this, ProfileActivity.class)
+                    .putExtra(Constants.TYPE_TITLE, Constants.TYPE_EDIT)
+            );
+        });
+
     }
 
     @Override

@@ -47,6 +47,13 @@ public class ProposalAdapter extends RecyclerView.Adapter<ProposalAdapter.Propos
         notifyDataSetChanged();
     }
 
+    public void addItem(Proposal proposal, ArrayList<Favorite> favorites, ArrayList<Submit> submit) {
+        list.add(proposal);
+        this.favorites = favorites;
+        this.submit = submit;
+        notifyDataSetChanged();
+    }
+
     public void setSaveInterface(SaveInterface anInterface) {
         this.anInterface = anInterface;
     }

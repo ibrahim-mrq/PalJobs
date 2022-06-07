@@ -40,6 +40,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ProposalVi
 
     public void addItem(Proposal proposal) {
         list.add(proposal);
+        filterList = new ArrayList<>(list);
         notifyDataSetChanged();
     }
 

@@ -44,6 +44,18 @@ public class ProposalDetailsActivity extends BaseActivity {
         binding.recyclerview.setHasFixedSize(true);
         binding.recyclerview.setAdapter(adapter);
 
+        binding.image.setOnClickListener(view -> {
+            startActivity(new Intent(this, ProfileActivity.class)
+                    .putExtra(Constants.TYPE_TITLE, Constants.TYPE_EDIT)
+            );
+        });
+
+        binding.name.setOnClickListener(view -> {
+            startActivity(new Intent(this, ProfileActivity.class)
+                    .putExtra(Constants.TYPE_TITLE, Constants.TYPE_EDIT)
+            );
+        });
+
         if (type.equals(Constants.TYPE_FAVORITE)) {
             Favorite favorite = (Favorite) getIntent().getSerializableExtra(Constants.TYPE_MODEL);
 

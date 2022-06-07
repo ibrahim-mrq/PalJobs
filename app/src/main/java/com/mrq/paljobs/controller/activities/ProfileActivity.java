@@ -39,6 +39,14 @@ public class ProfileActivity extends BaseActivity {
         if (type.equals(Constants.TYPE_EDIT)) {
             binding.edit.setVisibility(View.GONE);
             binding.appbar.tvTool.setText(getString(R.string.company_details));
+
+            binding.phone.setOnClickListener(view -> {
+                Constants.call(this, getText(binding.phone));
+            });
+            binding.email.setOnClickListener(view -> {
+                Constants.sendEmail(this, getText(binding.email));
+            });
+
         } else {
             binding.appbar.tvTool.setText(getString(R.string.profile));
         }
