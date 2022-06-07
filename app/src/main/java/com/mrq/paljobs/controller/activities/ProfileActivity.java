@@ -20,6 +20,7 @@ public class ProfileActivity extends BaseActivity {
 
     ActivityProfileBinding binding;
     String type = "";
+    String id = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,14 +32,14 @@ public class ProfileActivity extends BaseActivity {
 
     private void initView() {
         type = getIntent().getStringExtra(Constants.TYPE_TITLE);
-
-
+        id = getIntent().getStringExtra(Constants.TYPE_ID);
         binding.appbar.imgBack.setOnClickListener(view -> onBackPressed());
-        loadData();
+
 
         if (type.equals(Constants.TYPE_EDIT)) {
             binding.edit.setVisibility(View.GONE);
             binding.appbar.tvTool.setText(getString(R.string.company_details));
+            loadData(id);
 
             binding.phone.setOnClickListener(view -> {
                 Constants.call(this, getText(binding.phone));
@@ -49,6 +50,7 @@ public class ProfileActivity extends BaseActivity {
 
         } else {
             binding.appbar.tvTool.setText(getString(R.string.profile));
+            loadData(Hawk.get(Constants.USER_TOKEN));
         }
         binding.edit.setOnClickListener(view -> {
             startActivity(new Intent(this, EditProfileActivity.class)
@@ -57,11 +59,12 @@ public class ProfileActivity extends BaseActivity {
         });
     }
 
-    private void loadData() {
+    private void loadData(String id) {
         new ApiRequest<User>().getData(
                 this,
                 "User",
-                Hawk.get(Constants.USER_TOKEN),
+//                Hawk.get(Constants.USER_TOKEN),
+                id,
                 User.class,
                 new Results<User>() {
                     @Override

@@ -80,12 +80,14 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
         holder.binding.image.setOnClickListener(view -> {
             mContext.startActivity(new Intent(mContext, ProfileActivity.class)
                     .putExtra(Constants.TYPE_TITLE, Constants.TYPE_EDIT)
+                    .putExtra(Constants.TYPE_ID, model.getCompanyId())
             );
         });
 
         holder.binding.name.setOnClickListener(view -> {
             mContext.startActivity(new Intent(mContext, ProfileActivity.class)
                     .putExtra(Constants.TYPE_TITLE, Constants.TYPE_EDIT)
+                    .putExtra(Constants.TYPE_ID, model.getCompanyId())
             );
         });
     }

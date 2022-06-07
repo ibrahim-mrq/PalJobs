@@ -26,6 +26,7 @@
 
     <color name="blue">#71D0F6</color>
     <color name="blueLight">#F1F9FF</color>
+    <color name="blueLight2">#F8FCFF</color>
     <color name="green">#91C556</color>
     <color name="green_success">#388E3C</color>
     <color name="red">#EE3636</color>

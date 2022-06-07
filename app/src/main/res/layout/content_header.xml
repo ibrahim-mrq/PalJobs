@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/blueLight">
+    android:background="@color/blueLight2">
 
     <RelativeLayout
         android:id="@+id/relative"
@@ -25,9 +25,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignTop="@+id/image"
-            android:layout_alignBottom="@id/image"
+            android:layout_alignBottom="@+id/image"
             android:layout_marginHorizontal="10dp"
             android:layout_toEndOf="@+id/image"
             android:gravity="center_vertical"
@@ -35,8 +35,11 @@
 
             <TextView
                 android:id="@+id/name"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:ems="3"
+                android:lines="1"
                 android:textColor="@color/colorAccent"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -44,12 +47,15 @@
 
             <TextView
                 android:id="@+id/email"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
+                android:ellipsize="end"
+                android:ems="3"
+                android:lines="1"
                 android:textColor="@color/black"
                 android:textSize="12sp"
-                tools:text="Ibrahim@gmail.com" />
+                tools:text="Ibrahim@gmail.comIbrahim@gmail.comIbrahim@gmail.comIbrahim@gmail.comIbrahim@gmail.comIbrahim@gmail.com" />
 
         </LinearLayout>
 
